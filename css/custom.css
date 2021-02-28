@@ -1,0 +1,126 @@
+/*default colours*/
+:root {
+    --primary: white;
+    --secondary: #355c7d;
+    --tertiary: #f67280;
+    --text-icon-colour: black;
+
+}
+
+/* Dark theme coloured*/
+[data-theme="dark"] {
+    --primary: #2A2C2C;
+    --secondary: #474747;
+    --tertiary: #2A2C2C;
+    --text-icon-colour: white;
+
+}
+
+/* Candy coloured*/
+[data-theme="purple"] {
+    --primary: white;
+    --secondary: #FF7A45;
+    --tertiary: #BA68C8;
+    --text--icon-colour: black;
+}
+
+[data-theme="forest"] {
+    --primary: white;
+    --secondary: #45C5FF;
+    --tertiary: #008933;
+    --text-icon-colour: black;
+
+}
+
+.primary {
+    background: var(--primary) !important;
+}
+
+.secondary {
+
+    background: var(--secondary) !important;
+    color: white;
+
+}
+
+.secondary:hover {
+
+    color: white;
+}
+
+
+.tertiary {
+    background: var(--tertiary) !important;
+}
+
+.icon-top {
+    color: white;
+}
+
+.dropdown-item,
+a,
+fas {
+    color: var(--text-icon-colour);
+
+}
+
+.dropdown-item:hover,
+a:hover,
+.fas:hover {
+    background-color: var(--secondary);
+    color: white;
+
+}
+
+.dropdown-header {
+    border: 0 !important;
+}
+
+
+.dropdown-toggle {
+    color: white;
+}
+
+.dropdown-toggle:hover {
+    color: white;
+}
+
+.theme {
+    place-self: center;
+    margin-bottom:10px;
+}
+
+.theme button {
+    border: 1px white solid;
+    border-radius: 50%;
+    color: white;
+    padding: 10px;
+    
+}
+
+.theme #light {
+    background-color: #f67280;
+}
+
+.theme #forest {
+    background: linear-gradient(90deg, #45C5FF, #008933);
+}
+
+.theme #dark {
+    background-color: #2A2C2C;
+}
+
+.theme #purple {
+    background: linear-gradient(90deg, #BA68C8, #FF7A45);
+}
+
+
+i,
+a {
+    font-size: 1.2em;
+}
+
+.badge {
+    background-color: var(--secondary);
+    font-size: 0.9em;
+}
