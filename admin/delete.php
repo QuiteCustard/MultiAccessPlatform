@@ -1,12 +1,27 @@
 <?php 
 require_once("connect.php");
 
-$UID=$_GET["UID"];
+$id = 0;
+if(isset($_POST['id'])){
+   $id = mysqli_real_escape_string($db_connect,$_POST['id']);
+}
+if($id > 0){
 
-$query="DELETE FROM `t_users` WHERE `t_users`.`UID` = $UID";
-header("location:index.php");
+  // Check record exists
+  $checkRecord = mysqli_query($db_connect,"SELECT * FROM `t_users` WHERE `t_users`.`UID`=".$id);
+  $totalrows = mysqli_num_rows($checkRecord);
 
-mysqli_query($db_connect,$query);
+  if($totalrows > 0){
+    // Delete record
+    $query = "DELETE FROM `t_users` WHERE `t_users`.`UID`=".$id;
+    mysqli_query($db_connect,$query);
+    echo 1;
+    exit;
+  }else{
+    echo 0;
+    exit;
+  }
+}
 
-
-?>
+echo 0;
+exit;

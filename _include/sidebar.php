@@ -37,8 +37,8 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Tools:</h6>
-                <a class="collapse-item" href="#" onclick="showUser()">Users</a>
-                <a class="collapse-item" href="#" onclick="showCourse()">Courses</a>
+                <a class="collapse-item" id="user" href="#">Users</a>
+                <a class="collapse-item" href="#" id="course">Courses</a>
                 <a class="collapse-item" href="/forgot-password.html">Forgot Password</a>
                 <div class="collapse-divider"></div>
                 <h6 class="collapse-header">Other Pages:</h6>
@@ -47,7 +47,44 @@
             </div>
         </div>
     </li>
+    <script>
+        $(document).ready(function() {
+            $("#user").click(function(str) {
+                if (str == "") {
+                    $("ajaxContent").html = "";
+                    return;
+                } else {
+                    $.ajax({ //create an ajax request to users.php
+                        type: "GET",
+                        url: "users.php",
+                        dataType: "html", //expect html to be returned
+                        success: function(response) {
+                            $("#ajaxContent").html(response);
+                        }
+                    });
+                };
+            })
+        });
 
+        $(document).ready(function() {
+            $("#course").click(function(str) {
+                if (str == "") {
+                    $("ajaxContent").html = "";
+                    return;
+                } else {
+                    $.ajax({ //create an ajax request to courses.php
+                        type: "GET",
+                        url: "courses.php",
+                        dataType: "html", //expect html to be returned
+                        success: function(response) {
+                            $("#ajaxContent").html(response);
+                        }
+                    });
+                };
+            })
+        });
+
+    </script>
 
     <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">

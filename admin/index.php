@@ -4,8 +4,6 @@
         {
             include_once("../_include/head.php");
             echo '
-                <!DOCTYPE html>
-                <html lang="en">
                 <body id="page-top">
                     <!-- Page Wrapper -->
                     <div id="wrapper">';
@@ -48,10 +46,12 @@
                 <a class="scroll-to-top rounded" href="#page-top">
                     <i class="fas fa-angle-up"></i>
                 </a>
-                </body>
-
-                </html>';
+                ';
         include_once("../_include/footer.php");
+               echo '
+               </body>
+                </html>';
+
         }
         else
         {
