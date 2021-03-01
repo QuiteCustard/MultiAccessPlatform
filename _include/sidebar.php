@@ -50,6 +50,7 @@
     <script>
         $(document).ready(function() {
             $("#user").click(function(str) {
+                // If content is already filled then remove it
                 if (str == "") {
                     $("ajaxContent").html = "";
                     return;
@@ -68,6 +69,7 @@
 
         $(document).ready(function() {
             $("#course").click(function(str) {
+                // If content is already filled then remove it
                 if (str == "") {
                     $("ajaxContent").html = "";
                     return;

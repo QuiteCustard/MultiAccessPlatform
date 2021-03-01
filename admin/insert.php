@@ -1,5 +1,6 @@
 <?php
-
+// Not currently in use
+/*
 if(!isset($_POST["Email"]) or !isset($_POST["Password"]))
 {
     die("no input");
@@ -14,3 +15,4 @@ else
                      mysqli_query($db_connect,$sql);
                      Echo "User $email has been added";
 }
+*/

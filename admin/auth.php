@@ -2,7 +2,7 @@
 
 if( !isset($_POST["Email"]) or !isset($_POST["Password"]))
 {
-//if no values are passed from login form, do this
+//if no values are passed from login form, return to previous page (login)
 header("Location: ../index.php?e=1");
 }
 //if values are found, proceed:

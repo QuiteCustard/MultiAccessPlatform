@@ -1,95 +1,137 @@
 <?php 
-    include_once("_logincheck.php");
-// If admin then display course table and allow deletion of course also display
-    if ($auth == "admin")
-        {
-            echo "
-                <div class='table-responsive'>
-                    <table class='table table-hover'>
-                        <thead>
-                            <tr>
-                                <th scope='col'>CID</th>
-                                <th scope='col'>Title</th>
-                                <th scope='col'>Date</th>
-                                <th scope='col'>Duration</th>
-                                <th scope='col'>Description</th>
-                                <th scope='col'>Max Attendees</th>
-                                <th scope='col'>Time</th>
-                                <th scope='col'>Delete</th>
-                            </tr>
-                        </thead>";
-include_once("connect.php");
-// Select all users from database
-$query = "SELECT * FROM `t_courses`";
-$run = mysqli_query($db_connect,$query);
-$result =  mysqli_fetch_assoc($run);
-        while ($result = mysqli_fetch_assoc($run))
-            {
-            //Display Courses in rows
+include_once("_logincheck.php");
+// Check to ensure only admin accounts can access
+if ($auth == "admin") {
+  //Table headers
+  ?>
+<div class='table-responsive'>
+    <table class='table table-hover'>
+        <thead>
+            <tr>
+                <th scope='col'>CID</th>
+                <th scope='col'>Title</th>
+                <th scope='col'>Date</th>
+                <th scope='col'>Duration</th>
+                <th scope='col'>Description</th>
+                <th scope='col'>Max Attendees</th>
+                <th scope='col'>Time</th>
+                <th scope='col' id='delete'>Delete</th>
+            </tr>
+        </thead>
+        <tbody class="courseTable"></tbody>
+    </table>
+</div>
 
-                echo "
-                    <tbody>
-                        <tr>
-                        <td>$result[CID]</td>
-                        <td>$result[Title]</td>
-                        <td>$result[Date]</td>
-                        <td>$result[Duration]</td>
-                        <td>$result[Description]</td>
-                        <td>$result[Max_attendees]</td>
-                        <td>$result[Timestamp]</td>
-                        <td><a href='#' class='hi'>Delete:</a></td></tr>
-                    </tbody>
-                    ";
-            }
-        echo "</table></div>";
-        }
-    else if($auth = "user")
-    {
-         echo "
-         <h2>This currently displays the user table again as I have not set up the view courses page for users</h2>
-            <div class='table-responsive'>
-                <table class='table table-hover'>
-                    <thead>
-                        <tr>
-                            <th scope='col'>UID</th>
-                            <th scope='col'>Email</th>
-                            <!--<th scope='col'>Password</th>-->
-                            <th scope='col'>Fname</th>
-                            <th scope='col'>Lname</th>
-                            <th scope='col'>Access Level</th>
-                            <th scope='col'>Current Course</th>
-                            <th scope='col'>Time</th>
-                        </tr>
-                </thead>";
-include_once("connect.php");
-// Select all users from database
-$query = "SELECT * FROM `t_users`";
-$run = mysqli_query($db_connect,$query);
-$result =  mysqli_fetch_assoc($run);
-        while ($result = mysqli_fetch_assoc($run))
-            {
-            //Display users in rows
-          //  $jsonobj = json_encode($result['UID']);
-            
-                echo "
-                    <tbody>
-                        <tr>
-                            <td>$result[UID]</td>
-                            <td>$result[Email]</td>
-                            <!--<td>$result[Password]</td>-->
-                            <td>$result[Fname]</td>
-                            <td>$result[Lname]</td>
-                            <td>$result[Access]</td>
-                            <td>$result[Currentcourse]</td>
-                            <td>$result[Timestamp]</td>
-                        </tr>
-                    </tbody>";
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        function getData() {
+            console.log('running data...');
+            $.ajax({
+                url: 'getCourse.php',
+                type: 'GET',
+            }).done(function(response) {
+                console.log('response', response);
+                $('.courseTable').html(response);
+            });
         }
-        echo "</table></div>";
-    }
-    else 
-        {
-        header("Location:../index.php");
-        die("Access denied");
+
+        getData();
+
+        // Delete
+        $('body').on('click', '.delete', function() {
+            console.log('DELETE');
+            // Delete id
+            var deleteid = $(this).data('id');
+            console.log('DELETE', deleteid);
+            // AJAX Request
+            $.ajax({
+                url: 'delete.php',
+                type: 'POST',
+                data: {
+                    id: deleteid
+                }
+            }).done(function(response) {
+                console.log(response);
+                getData();
+            });
+        });
+
+        setInterval(getData, 1000);
+    });
+
+</script>
+<?php
+}
+    // If not admin then display
+    elseif($auth == "user")
+{
+        ?>
+<h1>Currently displays user table as have not sorted user courses</h1>
+<div class='table-responsive'>
+    <table class='table table-hover'>
+        <thead>
+            <tr>
+                <th scope='col'>UID</th>
+                <th scope='col'>Email</th>
+                <!--<th scope='col'>Password</th>-->
+                <th scope='col'>Fname</th>
+                <th scope='col'>Lname</th>
+                <th scope='col'>Job title</th>
+                <th scope='col'>Access Level</th>
+                <th scope='col'>Current Course</th>
+                <th scope='col'>Time</th>
+                <th scope='col' id='delete'>Delete</th>
+            </tr>
+        </thead>
+        <tbody class="userTable"></tbody>
+    </table>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        function getData() {
+            console.log('running data...');
+            $.ajax({
+                url: 'getUser.php',
+                type: 'GET',
+            }).done(function(response) {
+                console.log('response', response);
+                $('.userTable').html(response);
+            });
         }
+
+        getData();
+
+        // Delete
+        $('body').on('click', '.delete', function() {
+            console.log('DELETE');
+            // Delete id
+            var deleteid = $(this).data('id');
+            console.log('DELETE', deleteid);
+            // AJAX Request
+            $.ajax({
+                url: 'delete.php',
+                type: 'POST',
+                data: {
+                    id: deleteid
+                }
+            }).done(function(response) {
+                console.log(response);
+                getData();
+            });
+        });
+
+        setInterval(getData, 1000);
+    });
+
+</script>
+
+<?php
+        }
+else {
+header("Location:../index.php");
+echo "Please enter admin credentials";
+die("access denied");
+};

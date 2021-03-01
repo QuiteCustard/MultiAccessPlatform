@@ -1,5 +1,6 @@
-<?php
 
+<?php
+// Logger to record attempted logins
 if(isset($email))
 {
    $username = $email; 
@@ -33,7 +34,7 @@ if(isset($_GET["e"])){
 $line = $time." IP:".$ip." User:".$username." Error:".$error."\r\n";
 echo $line;
 
-$file = "errorlog.txt";
+$file = "../errorlog.txt";
 $log = fopen($file,"a+") or die("Unable to open error log");
 fwrite($log,$line) or die("unable to write to file");
 fclose($log);

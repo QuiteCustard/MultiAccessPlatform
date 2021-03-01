@@ -7,7 +7,7 @@
 
 <body class="bg-gradient-primary">
     <div class="container">
-        
+
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
@@ -37,7 +37,7 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        
+
                                         <button class="btn btn-primary btn-user btn-block" type="submit">Sign in</button>
 
                                         <hr>
@@ -67,7 +67,7 @@
 
     </div>
 
-<?php include_once("_include/footer.php")?>
+    <?php include_once("_include/footer.php")?>
 
 </body>
 

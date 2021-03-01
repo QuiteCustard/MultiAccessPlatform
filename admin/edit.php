@@ -1,5 +1,6 @@
 <?php 
-require_once("connect.php");
+// Not currently in use
+/*require_once("connect.php");
 
 
 
