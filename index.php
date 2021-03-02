@@ -82,7 +82,6 @@
         // Not verified - show form error
     }
 }
-
                                         ?>
                                         <script>
                                             grecaptcha.ready(function() {
@@ -91,6 +90,7 @@
                                                 }).then(function(token) {
                                                     var recaptchaResponse = document.getElementById('recaptchaResponse');
                                                     recaptchaResponse.value = token;
+                                                    console.log(recapthaResponse);
                                                 });
                                             });
 
