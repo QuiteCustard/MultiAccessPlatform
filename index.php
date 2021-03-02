@@ -90,7 +90,7 @@
                                                 }).then(function(token) {
                                                     var recaptchaResponse = document.getElementById('recaptchaResponse');
                                                     recaptchaResponse.value = token;
-                                                    console.log(recapthaResponse);
+                                                    console.log(recaptchaResponse);
                                                 });
                                             });
 
