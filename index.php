@@ -38,7 +38,29 @@
                                                     Me</label>
                                             </div>
                                         </div>
+                                        <?php
+                                            if(isset($_GET["e"])){
+                                                 include_once("admin/logging.php");
 
+
+                                                if($_GET["e"]=="1")
+                                                {
+                                                    echo "<h3> No username or password entered </h3>";
+                                                }
+                                                else if ($_GET["e"]=="2")
+                                                {
+                                                    echo "<h3> Wrong information </h3>";
+                                                }
+                                                else if ($_GET["e"]=="3")
+                                                {
+                                                    echo "<h3>Trying to enter page you don't have permission for / Insecure </h3>";
+                                                }
+                                                else if ($_GET["e"]=="4")
+                                                {
+                                                    echo "Logged out";
+                                                }
+                                            }
+                                            ?>
                                         <button class="btn btn-primary btn-user btn-block" type="submit">Sign in</button>
                                         <script>
                                             grecaptcha.ready(function() {
@@ -49,7 +71,6 @@
                                                     recaptchaResponse.value = token;
                                                 });
                                             });
-
                                         </script>
                                         <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                                     </form>
@@ -64,42 +85,9 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
     <?php include_once("_include/footer.php")?>
-
 </body>
-
 </html>
-
-
-
-
-<?php
-if(isset($_GET["e"])){
-     include_once("admin/logging.php");   
-
-
-    if($_GET["e"]=="1")
-    {
-        echo "<h3> No username or password entered </h3>";
-    }
-    else if ($_GET["e"]=="2")
-    {
-        echo "<h3> Wrong information </h3>";
-    }
-    else if ($_GET["e"]=="3")
-    {
-        echo "<h3>Trying to enter page you don't have permission for / Insecure </h3>";
-    }
-    else if ($_GET["e"]=="4")
-    {
-        echo "Logged out";
-    }
-}     
-?>
