@@ -61,11 +61,11 @@
                                                 }
                                             }
                                             ?>
-                                        <button class="btn btn-primary btn-user btn-block" type="submit">Sign in</button>
+                                        <button class="btn btn-primary btn-user btn-block" action="submit "type="submit">Sign in</button>
                                         <script>
                                             grecaptcha.ready(function() {
                                                 grecaptcha.execute('6Le7Tm4aAAAAAOnwdIrgEorh4MnL8giOGo2N-z8-', {
-                                                    action: 'login'
+                                                    action: 'submit'
                                                 }).then(function(token) {
                                                     var recaptchaResponse = document.getElementById('recaptchaResponse');
                                                     recaptchaResponse.value = token;
