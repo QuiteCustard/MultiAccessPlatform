@@ -11,7 +11,7 @@ if ($result) {
     ?>
 <tr>
     <td><?= $id ?></td>
-    <td><?= $result["Email"] ?></td>
+    <td id="email"><?= $result["Email"] ?></td>
     <!--<td>$result[Password]</td>-->
     <td><?= $result["Fname"] ?></td>
     <td><?= $result["Lname"] ?></td>
@@ -20,12 +20,18 @@ if ($result) {
     <td><?= $result["Currentcourse"] ?></td>
     <td><?= $result["Timestamp"] ?></td>
     <td>
-        <button data-id='<?= $id ?>' class='btn bg-warning text-white edit'>Edit</button>
+        <button data-id="<?= $id ?>" onclick="edit()" class='btn bg-warning text-white edit'>Edit</button>
     </td>
     <td>
         <button data-id='<?= $id ?>' class='btn bg-danger text-white delete'>Delete</button>
     </td>
 </tr>
+<script>
+    function edit() {
+        //clearInterval(intervalTiming);
+        if ($(this).attr("data-id")) {
+            $("email").replaceWith("<input></input");
+        }};
+</script>
 <?php
-  }
-}
+  }}

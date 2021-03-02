@@ -28,61 +28,66 @@ if ($auth == "admin") {
 <!-- Jquery Ajax to get user data and display in <tbody>-->
 <script type="text/javascript">
     $(document).ready(function() {
-        function getData() {
-            console.log('running data population...');
-            $.ajax({
-                url: 'getUser.php',
-                type: 'GET',
-            }).done(function(response) {
-                console.log('response', response);
-                $('.userTable').html(response);
-            });
-        }
-        getData();
-
-        // Delete
-        $('body').on('click', '.delete', function() {
-            console.log('DELETE');
-            // Delete id
-            var deleteid = $(this).data('id');
-            console.log('DELETE', deleteid);
-            // AJAX Request
-            $.ajax({
-                url: 'delete.php',
-                type: 'POST',
-                data: {
-                    id: deleteid
+                function getData() {
+                    console.log('running data population...');
+                    $.ajax({
+                        url: 'getUser.php',
+                        type: 'GET',
+                    }).done(function(response) {
+                        console.log('response', response);
+                        $('.userTable').html(response);
+                    });
                 }
-            }).done(function(response) {
-                console.log(response);
                 getData();
-            });
-        });
 
-        //Edit
-        $('body').on('click', '.edit', function() {
-            console.log('EDIT');
-            // Delete id
-            var editid = $(this).data('id');
-            console.log('EDIT', editid);
-            // AJAX Request
-            $.ajax({
-                url: 'edit.php',
-                type: 'POST',
-                data: {
-                    id: editid
-                }
-            }).done(function(response) {
-                console.log(response);
-                getData();
-            });
-        });
+                // Delete
+                $('body').on('click', '.delete', function() {
+                    console.log('DELETE');
+                    // Delete id
+                    var deleteid = $(this).data('id');
+                    console.log('DELETE', deleteid);
+                    // AJAX Request
+                    $.ajax({
+                        url: 'delete.php',
+                        type: 'POST',
+                        data: {
+                            id: deleteid
+                        }
+                    }).done(function(response) {
+                        console.log(response);
+                        getData();
+                    });
+                });
+
+                //Edit
+                $('body').on('click', '.edit', function() {
+                    console.log('EDIT');
+                    // Delete id
+                    var editid = $(this).data('id');
+                    console.log('EDIT', editid);
+                    // AJAX Request
+                    $.ajax({
+                        url: 'edit.php',
+                        type: 'POST',
+                        data: {
+                            id: editid
+                        }
+                    }).done(function(response) {
+                        console.log(response);
+                        getData();
+                    });
+                });
 
 
-        setInterval(getData, 1000); // Update table every second
-    });
+                var intervalTiming = setInterval(getData, 1000); // Update table every second
 
+
+                    //setInterval(getData, 1000);
+
+
+});
 </script>
+
 <?php
 }
 else {
