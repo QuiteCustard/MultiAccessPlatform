@@ -9,20 +9,23 @@ if ($result) {
     //Display users in rows
     $id= $result["UID"];
     ?>
-    <tr>
-      <td><?= $id ?></td>
-      <td><?= $result["Email"] ?></td>
-      <!--<td>$result[Password]</td>-->
-      <td><?= $result["Fname"] ?></td>
-      <td><?= $result["Lname"] ?></td>
-      <td><?= $result["Jobtitle"] ?></td>
-      <td><?= $result["Access"] ?></td>
-      <td><?= $result["Currentcourse"] ?></td>
-      <td><?= $result["Timestamp"] ?></td>
-      <td>
-        <button data-id='<?= $id ?>' class='delete'>Delete</button>
-      </td>
-    </tr>
-    <?php
+<tr>
+    <td><?= $id ?></td>
+    <td><?= $result["Email"] ?></td>
+    <!--<td>$result[Password]</td>-->
+    <td><?= $result["Fname"] ?></td>
+    <td><?= $result["Lname"] ?></td>
+    <td><?= $result["Jobtitle"] ?></td>
+    <td><?= $result["Access"] ?></td>
+    <td><?= $result["Currentcourse"] ?></td>
+    <td><?= $result["Timestamp"] ?></td>
+    <td>
+        <button data-id='<?= $id ?>' class='btn bg-warning text-white edit'>Edit</button>
+    </td>
+    <td>
+        <button data-id='<?= $id ?>' class='btn bg-danger text-white delete'>Delete</button>
+    </td>
+</tr>
+<?php
   }
 }

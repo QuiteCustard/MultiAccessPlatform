@@ -17,6 +17,7 @@ if ($auth == "admin") {
                 <th scope='col'>Access Level</th>
                 <th scope='col'>Current Course</th>
                 <th scope='col'>Time</th>
+                <th scope='col' id='edit'>Edit</th>
                 <th scope='col' id='delete'>Delete</th>
             </tr>
         </thead>
@@ -57,6 +58,27 @@ if ($auth == "admin") {
                 getData();
             });
         });
+
+        //Edit
+        $('body').on('click', '.edit', function() {
+            console.log('EDIT');
+            // Delete id
+            var editid = $(this).data('id');
+            console.log('EDIT', editid);
+            // AJAX Request
+            $.ajax({
+                url: 'edit.php',
+                type: 'POST',
+                data: {
+                    id: editid
+                }
+            }).done(function(response) {
+                console.log(response);
+                getData();
+            });
+        });
+
+
         setInterval(getData, 1000); // Update table every second
     });
 
