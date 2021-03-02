@@ -61,7 +61,29 @@
                                                 }
                                             }
                                             ?>
-                                        <button class="btn btn-primary btn-user btn-block" action="submit "type="submit">Sign in</button>
+                                        <button class="btn btn-primary btn-user btn-block" action="submit " type="submit">Sign in</button>
+                                        <?php
+                                        //Recapta
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recaptcha_response'])) {
+
+    // Build POST request:
+    $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+    $recaptcha_secret = '6Le7Tm4aAAAAAHXN67gA7d9ajGAUdH_g0iW_K7z0';
+    $recaptcha_response = $_POST['recaptcha_response'];
+
+    // Make and decode POST request:
+    $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
+    $recaptcha = json_decode($recaptcha);
+
+    // Take action based on the score returned:
+    if ($recaptcha->score >= 0.5) {
+        // Verified - send email
+    } else {
+        // Not verified - show form error
+    }
+}
+
+                                        ?>
                                         <script>
                                             grecaptcha.ready(function() {
                                                 grecaptcha.execute('6Le7Tm4aAAAAAOnwdIrgEorh4MnL8giOGo2N-z8-', {
@@ -71,6 +93,7 @@
                                                     recaptchaResponse.value = token;
                                                 });
                                             });
+
                                         </script>
                                         <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                                     </form>
@@ -90,4 +113,5 @@
     </div>
     <?php include_once("_include/footer.php")?>
 </body>
+
 </html>

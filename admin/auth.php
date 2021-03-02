@@ -19,25 +19,7 @@ mysqli_query($db_connect, "UPDATE `t_users` SET `Attempts` = '$newAttempts' WHER
 if($currentAttempts > 4)
 {
     echo "hi";
- //Recapta
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recaptcha_response'])) {
 
-    // Build POST request:
-    $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-    $recaptcha_secret = '6Le7Tm4aAAAAAHXN67gA7d9ajGAUdH_g0iW_K7z0';
-    $recaptcha_response = $_POST['recaptcha_response'];
-
-    // Make and decode POST request:
-    $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
-    $recaptcha = json_decode($recaptcha);
-
-    // Take action based on the score returned:
-    if ($recaptcha->score >= 0.5) {
-        // Verified - send email
-    } else {
-        // Not verified - show form error
-    }
-}
 }
 
 //run query
