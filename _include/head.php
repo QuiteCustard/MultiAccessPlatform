@@ -17,4 +17,5 @@
     <link href="/css/custom.css" rel="stylesheet">
      <script src="/js/themeSwitcher.js" defer="defer"></script>
     <script src="/vendor/jquery/jquery.min.js"></script>
+     <script src="https://www.google.com/recaptcha/api.js"></script>
 </head>

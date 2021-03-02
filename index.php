@@ -23,7 +23,8 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user" method="post" action="admin/auth.php">
+
+                                    <form class="user" id="loginForm" method="post" action="admin/auth.php">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user" name="Email" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." required>
                                         </div>
@@ -39,16 +40,19 @@
                                         </div>
 
                                         <button class="btn btn-primary btn-user btn-block" type="submit">Sign in</button>
+                                        <script>
+                                            grecaptcha.ready(function() {
+                                                grecaptcha.execute('6Le7Tm4aAAAAAOnwdIrgEorh4MnL8giOGo2N-z8-', {
+                                                    action: 'login'
+                                                }).then(function(token) {
+                                                    var recaptchaResponse = document.getElementById('recaptchaResponse');
+                                                    recaptchaResponse.value = token;
+                                                });
+                                            });
 
-                                        <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a>
+                                        </script>
+                                        <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                                     </form>
-                                    <hr>
                                     <div class="text-center">
                                         <a class="small" href="forgot-password.html">Forgot Password?</a>
                                     </div>
