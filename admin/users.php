@@ -28,60 +28,67 @@ if ($auth == "admin") {
 <!-- Jquery Ajax to get user data and display in <tbody>-->
 <script type="text/javascript">
     $(document).ready(function() {
-                function getData() {
-                    console.log('running data population...');
-                    $.ajax({
-                        url: 'getUser.php',
-                        type: 'GET',
-                    }).done(function(response) {
-                        console.log('response', response);
-                        $('.userTable').html(response);
-                    });
+        function getData() {
+            console.log('running data population...');
+            $.ajax({
+                url: 'getUser.php',
+                type: 'GET',
+            }).done(function(response) {
+                console.log('response', response);
+                $('.userTable').html(response);
+            });
+        }
+        getData();
+
+        // Delete
+        $('body').on('click', '.delete', function() {
+            console.log('DELETE');
+            // Delete id
+            var deleteid = $(this).data('id');
+            console.log('DELETE', deleteid);
+            // AJAX Request
+            $.ajax({
+                url: 'delete.php',
+                type: 'POST',
+                data: {
+                    id: deleteid
                 }
+            }).done(function(response) {
+                console.log(response);
                 getData();
+            });
+        });
 
-                // Delete
-                $('body').on('click', '.delete', function() {
-                    console.log('DELETE');
-                    // Delete id
-                    var deleteid = $(this).data('id');
-                    console.log('DELETE', deleteid);
-                    // AJAX Request
-                    $.ajax({
-                        url: 'delete.php',
-                        type: 'POST',
-                        data: {
-                            id: deleteid
-                        }
-                    }).done(function(response) {
-                        console.log(response);
-                        getData();
-                    });
-                });
-
-                //Edit
-                $('body').on('click', '.edit', function(e) {
-                        console.log('EDIT');
-                        // Delete id
-                        var editid = $(this).data('id');
-                        console.log('EDIT', editid);
-                        // AJAX Request
-                        $.ajax({
-                            url: 'edit.php',
-                            type: 'POST',
-                            data: {
-                                id: editid
-                            }
-                        }).done(function(response) {
-                             $(e.target).closest().replaceWith('<input name type />')
-
-                        });
-
-                        //var intervalTiming = setInterval(getData, 1000); // Update table every second
+        //Edit
+        $('body').on('click', '.edit', function(e) {
+            console.log('EDIT');
+            // Delete id
+            var editid = $(this).data('id');
+            console.log('EDIT', editid);
+            // AJAX Request
+            $.ajax({
+                url: 'edit.php',
+                type: 'POST',
+                data: {
+                    id: editid
+                }
+            }).done(function(response) {
+                const emailField = $(e.target).closest('tr').find('.editable');
+                const currValue = emailField.html();
+                console.log(currValue);
+                emailField.html(`<input value="${currValue}" />`);
+                $(".edit").html('Save');
+                $(".edit").addClass('save');
+                $(".edit").removeClass('bg-warning');
+                $(".save").addClass('bg-success');
+                $(".save").removeClass('edit');
+            });
 
 
-                });
-                });
+            // Add save feature to edit
+            //var intervalTiming = setInterval(getData, 1000); // Update table every second
+        });
+    });
 
 </script>
 

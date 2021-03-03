@@ -18,8 +18,8 @@ if($id > 0){
     $email = $result["Lname"];
 
     if($totalrows > 0){
-    // Delete record
-    $sqlQuery="UPDATE `t_users` SET `UID` = 'UID', `email` = '$email',"/*`PW` = '$password', */. "`Fname` = '$fname', `Lname` = '$lname' WHERE `UID` = $id";
+    // edit record
+    $sqlQuery="UPDATE `t_users` SET `UID` = 'UID', `email` = '$email', `Fname` = '$fname', `Lname` = '$lname' WHERE `UID` = $id";
     mysqli_query($db_connect,$sqlQuery);
     echo 1;
     exit;
