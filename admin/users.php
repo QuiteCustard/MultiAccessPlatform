@@ -60,32 +60,29 @@ if ($auth == "admin") {
                 });
 
                 //Edit
-                $('body').on('click', '.edit', function() {
-                    console.log('EDIT');
-                    // Delete id
-                    var editid = $(this).data('id');
-                    console.log('EDIT', editid);
-                    // AJAX Request
-                    $.ajax({
-                        url: 'edit.php',
-                        type: 'POST',
-                        data: {
-                            id: editid
-                        }
-                    }).done(function(response) {
-                        console.log(response);
-                        getData();
-                    });
+                $('body').on('click', '.edit', function(e) {
+                        console.log('EDIT');
+                        // Delete id
+                        var editid = $(this).data('id');
+                        console.log('EDIT', editid);
+                        // AJAX Request
+                        $.ajax({
+                            url: 'edit.php',
+                            type: 'POST',
+                            data: {
+                                id: editid
+                            }
+                        }).done(function(response) {
+                             $(e.target).closest().replaceWith('<input name type />')
+
+                        });
+
+                        //var intervalTiming = setInterval(getData, 1000); // Update table every second
+
+
+                });
                 });
 
-
-                var intervalTiming = setInterval(getData, 1000); // Update table every second
-
-
-                    //setInterval(getData, 1000);
-
-
-});
 </script>
 
 <?php

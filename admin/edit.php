@@ -1,7 +1,5 @@
-<?php 
-// Not currently in use
+<?php
 require_once("connect.php");
-
 //Set id to correct UID
 $id = 0;
 if(isset($_POST['id'])){
@@ -12,26 +10,23 @@ if($id > 0){
   $checkRecord = mysqli_query($db_connect,"SELECT * FROM `t_users` WHERE `t_users`.`UID`=".$id);
   $totalrows = mysqli_num_rows($checkRecord);
 
+    $query = "SELECT * FROM `t_users`";
+    $run = mysqli_query($db_connect,$query);
+    $result =  mysqli_fetch_assoc($run);
+    $fname = $result["Email"];
+    $lname = $result["Fname"];
+    $email = $result["Lname"];
 
-    $fname = $_POST["FNAME"];
-    echo $fname;
-    $lname = $_POST["LNAME"];
-    echo $lname;
-    $email = $_POST["EMAIL"];
-    echo $email;
-    //$password = $_POST["PASSWORD"];
-    //echo $password;
-
-  if($totalrows > 0){
+    if($totalrows > 0){
     // Delete record
-   $query="UPDATE `t_users` SET `UID` = '', `EMAIL` = '$email',"/*`PW` = '$password',  */. "`FNAME` = '$fname', `LNAME` = '$lname' WHERE `UID` = $id";
-    mysqli_query($db_connect,$query);
+    $sqlQuery="UPDATE `t_users` SET `UID` = 'UID', `email` = '$email',"/*`PW` = '$password', */. "`Fname` = '$fname', `Lname` = '$lname' WHERE `UID` = $id";
+    mysqli_query($db_connect,$sqlQuery);
     echo 1;
     exit;
-  }else{
+    }else{
     echo 0;
     exit;
-  }
+    }
 }
 
 echo 0;
