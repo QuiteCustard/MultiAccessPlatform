@@ -61,33 +61,33 @@ if ($auth == "admin") {
 
         //Edit
         $('body').on('click', '.edit', function(e) {
-            console.log('EDIT');
-            // Delete id
             var editid = $(this).data('id');
-            console.log('EDIT', editid);
+            console.log('EDITING', editid);
+            const fieldChange = $(e.target).closest('tr').find('.editable');
+            const currValue = fieldChange.html();
+            console.log(currValue);
+            fieldChange.html(`<input value="${currValue}" />`);
+            $(".edit").html('Save');
+            $(".edit").addClass('save');
+            $(".save").removeClass('bg-warning edit');
+            $(".save").addClass('bg-success');
+        });
+        //Save
+        $('body').on('click', '.save', function() {
+            // Save id
+            var saveid = $(this).data('id');
+            console.log('SAVING', saveid);
             // AJAX Request
             $.ajax({
                 url: 'edit.php',
                 type: 'POST',
                 data: {
-                    id: editid
+                    id: saveid
                 }
-            }).done(function(response) {
-                const emailField = $(e.target).closest('tr').find('.editable');
-                const currValue = emailField.html();
-                console.log(currValue);
-                emailField.html(`<input value="${currValue}" />`);
-                $(".edit").html('Save');
-                $(".edit").addClass('save');
-                $(".edit").removeClass('bg-warning');
-                $(".save").addClass('bg-success');
-                $(".save").removeClass('edit');
-            });
-
-
-            // Add save feature to edit
+            }).done(function(response) {});
             //var intervalTiming = setInterval(getData, 1000); // Update table every second
         });
+
     });
 
 </script>
