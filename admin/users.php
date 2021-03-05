@@ -29,16 +29,15 @@ if ($auth == "admin") {
 <script type="text/javascript">
     $(document).ready(function() {
         function getData() {
-            console.log('running data population...');
             $.ajax({
                 url: 'getUser.php',
                 type: 'GET',
             }).done(function(response) {
-                console.log('response', response);
                 $('.userTable').html(response);
             });
         }
         getData();
+        var intervalTiming = setInterval(getData, 60000); // Update table every 60 seconds
 
         // Delete
         $('body').on('click', '.delete', function() {
@@ -54,44 +53,87 @@ if ($auth == "admin") {
                     id: deleteid
                 }
             }).done(function(response) {
-                console.log(response);
                 getData();
             });
         });
 
         //Edit
         $('body').on('click', '.edit', function(e) {
+            //Console
             var editid = $(this).data('id');
             console.log('EDITING', editid);
-            const fieldChange = $(e.target).closest('tr').find('.editable');
-            const currValue = fieldChange.html();
-            console.log(currValue);
-            fieldChange.html(`<input value="${currValue}" />`);
-            $(".edit").html('Save');
-            $(".edit").addClass('save');
-            $(".save").removeClass('bg-warning edit');
-            $(".save").addClass('bg-success');
+            //Email
+            const emailFieldChange = $(e.target).closest('tr').find('.emailResult');
+            const emailCurrValue = emailFieldChange.html();
+            emailFieldChange.html(`<input value="${emailCurrValue}" />`);
+            //Fname
+            const fNameFieldChange = $(e.target).closest('tr').find('.fNameResult');
+            const fNameCurrValue = fNameFieldChange.html();
+            fNameFieldChange.html(`<input value="${fNameCurrValue}" />`);
+            //Lname
+            const lNameFieldChange = $(e.target).closest('tr').find('.lNameResult');
+            const lNameCurrValue = lNameFieldChange.html();
+            lNameFieldChange.html(`<input value="${lNameCurrValue}" />`);
+            //Console check to ensure right details are being edited
+            console.log(emailCurrValue, fNameCurrValue, lNameCurrValue)
+            // Class change to be able to run save function
+            if ($(".edit").data('id') == editid) {
+                $(".edit").html('Save');
+                $(".edit").addClass('save');
+                $(".save").removeClass('bg-warning edit');
+                $(".save").addClass('bg-success');
+            };
+
         });
+
         //Save
-        $('body').on('click', '.save', function() {
+        $('body').on('click', '.save', function(e) {
             // Save id
             var saveid = $(this).data('id');
+            var eMail = $('.emailResult').find('input').val();
+            var fName = $('.fNameResult').find('input').val();
+            var lName = $('.lNameResult').find('input').val();
             console.log('SAVING', saveid);
             // AJAX Request
             $.ajax({
                 url: 'edit.php',
                 type: 'POST',
                 data: {
-                    id: saveid
+                    id: saveid,
+                    email: eMail,
+                    fname: fName,
+                    lname: lName
                 }
-            }).done(function(response) {});
-            //var intervalTiming = setInterval(getData, 1000); // Update table every second
-        });
+            }).done(function(response) {
+                //Paste new values back into table so you don't need to refresh
+                //Email
+                const newEmailValue = eMail;
+                const emailField = $(e.target).closest('tr').find('.emailResult');
+                const emailValue = emailField.html();
+                emailField.html(newEmailValue);
+                //Fname
+                const newFnameValue = fName;
+                const fNameField = $(e.target).closest('tr').find('.fNameResult');
+                const FnameValue = fNameField.html();
+                fNameField.html(newFnameValue);
+                //Lname
+                const newLnameValue = lName;
+                const lNameField = $(e.target).closest('tr').find('.lNameResult');
+                const LnameValue = lNameField.html();
+                lNameField.html(newLnameValue);
 
+
+                if ($(".save").data('id') == saveid) {
+                    $(".save").html('Edit');
+                    $(".save").addClass('edit');
+                    $(".edit").removeClass('bg-success save');
+                    $(".edit").addClass('bg-warning');
+                };
+            });
+        });
     });
 
 </script>
-
 <?php
 }
 else {

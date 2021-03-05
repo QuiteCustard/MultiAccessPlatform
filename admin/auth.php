@@ -7,9 +7,9 @@ header("Location: ../index.php?e=1");
 }
 include_once("connect.php");
 //if values are found, proceed:
-$email = strval($_POST["Email"]);
+$email = $_POST["Email"];
 //convert plain password to a hash
-$password = strval(hash("sha256",$_POST["Password"]));
+$password = hash("SHA256",$_POST["Password"]);
 
 $currentAttempts = mysqli_fetch_assoc(mysqli_query($db_connect, "SELECT `Email`,`Attempts` FROM `t_users` WHERE `Email` = '$email'"))['Attempts'];
 
