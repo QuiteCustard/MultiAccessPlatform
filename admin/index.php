@@ -7,9 +7,9 @@
             include_once("../_include/head.php");
             ?>
 
-<body id="page-top">
+<body id="page-top" class="body">
     <!-- Page Wrapper -->
-    <div id="wrapper">
+    <div id="wrapper" >
         <?php
             include_once("../_include/sidebar.php");
             include_once("../_include/navbar.php");
@@ -30,7 +30,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer body">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <span>Copyright &copy; Your Website 2020</span>

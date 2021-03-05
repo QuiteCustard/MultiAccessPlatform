@@ -4,6 +4,7 @@
     --secondary: #355c7d;
     --tertiary: #f67280;
     --text-icon-colour: black;
+    --body: white;
 
 }
 
@@ -13,6 +14,7 @@
     --secondary: #474747;
     --tertiary: #2A2C2C;
     --text-icon-colour: white;
+    --body: #373737;
 
 }
 
@@ -22,6 +24,7 @@
     --secondary: #FF7A45;
     --tertiary: #BA68C8;
     --text--icon-colour: black;
+    --body: white;
 }
 
 [data-theme="forest"] {
@@ -29,7 +32,12 @@
     --secondary: #45C5FF;
     --tertiary: #008933;
     --text-icon-colour: black;
+    --body: white;
 
+}
+
+.body {
+    background: var(--body) !important;
 }
 
 .primary {
@@ -44,7 +52,6 @@
 }
 
 .secondary:hover {
-
     color: white;
 }
 
@@ -69,7 +76,6 @@ a:hover,
 .fas:hover {
     background-color: var(--secondary);
     color: white;
-
 }
 
 .dropdown-header {
@@ -85,9 +91,16 @@ a:hover,
     color: white;
 }
 
+.collapse-header, .collapse-item {
+    color: var(--text-icon-color)!important;
+}
+
+.fa-bars {color: var(--secondary) !important;}
+
 .theme {
     place-self: center;
-    margin-bottom:10px;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
 .theme button {
@@ -95,7 +108,7 @@ a:hover,
     border-radius: 50%;
     color: white;
     padding: 10px;
-    
+
 }
 
 .theme #light {

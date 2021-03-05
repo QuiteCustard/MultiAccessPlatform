@@ -11,10 +11,10 @@ if ($result) {
     ?>
 <tr>
     <td><?= $id ?></td>
-    <td class="editable emailResult"><?= $result["Email"] ?></td>
+    <td class="emailResult"><?= $result["Email"] ?></td>
     <!--<td>$result[Password]</td>-->
-    <td class="editable fNameResult"><?= $result["Fname"] ?></td>
-    <td class="editable lNameResult"><?= $result["Lname"] ?></td>
+    <td class="fNameResult"><?= $result["Fname"] ?></td>
+    <td class="lNameResult"><?= $result["Lname"] ?></td>
     <td><?= $result["Jobtitle"] ?></td>
     <td><?= $result["Access"] ?></td>
     <td><?= $result["Currentcourse"] ?></td>

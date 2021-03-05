@@ -9,18 +9,21 @@ if ($result) {
     //Display users in rows
     $id= $result["CID"];
     ?>
-    <tr>
-      <td><?= $id ?></td>
-      <td><?= $result["Title"] ?></td>
-      <td><?= $result["Date"] ?></td>
-      <td><?= $result["Duration"] ?></td>
-      <td><?= $result["Description"] ?></td>
-      <td><?= $result["Max_attendees"] ?></td>
-      <td><?= $result["Timestamp"] ?></td>
-      <td>
-        <button data-id='<?= $id ?>' class='delete'>Delete</button>
-      </td>
-    </tr>
-    <?php
+<tr>
+    <td><?= $id ?></td>
+    <td class="titleResult"><?= $result["Title"] ?></td>
+    <td class="dateResult"><?= $result["Date"] ?></td>
+    <td class="durationResult"><?= $result["Duration"] ?></td>
+    <td class="descriptionResult"><?= $result["Description"] ?></td>
+    <td class="attendeesResult"><?= $result["Max_attendees"] ?></td>
+    <td ><?= $result["Timestamp"] ?></td>
+    <td>
+        <button data-id="<?= $id ?>" class='btn bg-warning text-white edit'>Edit</button>
+    </td>
+     <td>
+        <button data-id='<?= $id ?>' class='btn bg-danger text-white delete'>Delete</button>
+    </td>
+</tr>
+<?php
   }
 }

@@ -35,7 +35,7 @@
             <span>Tools</span>
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
+            <div class="body py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Tools:</h6>
                 <a class="collapse-item" id="user" href="#">Users</a>
                 <a class="collapse-item" href="#" id="course">Courses</a>
@@ -112,7 +112,7 @@
     <hr class="sidebar-divider d-none d-md-block">
 
     <!-- buttons to select theme -->
-    <div class="theme">
+    <div class=" container-fluid justify-content-centre theme">
         <button id="light" value="light"></button>
         <button id="dark" value="dark"></button>
         <button id="purple" value="purple"></button>

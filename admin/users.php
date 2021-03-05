@@ -50,7 +50,7 @@ if ($auth == "admin") {
                 url: 'delete.php',
                 type: 'POST',
                 data: {
-                    id: deleteid
+                    id: deleteid,
                 }
             }).done(function(response) {
                 getData();
@@ -59,37 +59,42 @@ if ($auth == "admin") {
 
         //Edit
         $('body').on('click', '.edit', function(e) {
+            const editButton = $(e.target);
             //Console
-            var editid = $(this).data('id');
+            var editid = $(this).data('id').toString();
+            const deleteButton = $(`.delete[data-id=${editid}]`);
             console.log('EDITING', editid);
             //Email
-            const emailFieldChange = $(e.target).closest('tr').find('.emailResult');
+            const emailFieldChange = editButton.closest('tr').find('.emailResult');
             const emailCurrValue = emailFieldChange.html();
             emailFieldChange.html(`<input value="${emailCurrValue}" />`);
             //Fname
-            const fNameFieldChange = $(e.target).closest('tr').find('.fNameResult');
+            const fNameFieldChange = editButton.closest('tr').find('.fNameResult');
             const fNameCurrValue = fNameFieldChange.html();
             fNameFieldChange.html(`<input value="${fNameCurrValue}" />`);
             //Lname
-            const lNameFieldChange = $(e.target).closest('tr').find('.lNameResult');
+            const lNameFieldChange = editButton.closest('tr').find('.lNameResult');
             const lNameCurrValue = lNameFieldChange.html();
             lNameFieldChange.html(`<input value="${lNameCurrValue}" />`);
-            //Console check to ensure right details are being edited
-            console.log(emailCurrValue, fNameCurrValue, lNameCurrValue)
-            // Class change to be able to run save function
-            if ($(".edit").data('id') == editid) {
-                $(".edit").html('Save');
-                $(".edit").addClass('save');
-                $(".save").removeClass('bg-warning edit');
-                $(".save").addClass('bg-success');
-            };
-
+            // Class change to be able to run save/cancel functions
+            // Turn edit button into save button
+            editButton.html('Save');
+            editButton.addClass('save');
+            editButton.removeClass('bg-warning edit');
+            editButton.addClass('bg-success');
+            //Turn delete button into cancel button
+            deleteButton.html('Cancel');
+            deleteButton.addClass('cancel');
+            deleteButton.removeClass('bg-danger delete');
+            deleteButton.addClass('bg-primary');
         });
 
-        //Save
+        // Save
         $('body').on('click', '.save', function(e) {
+            const saveButton = $(e.target);
             // Save id
-            var saveid = $(this).data('id');
+            var saveid = $(this).data('id').toString();
+            const cancelButton = $(`.cancel[data-id=${saveid}]`);
             var eMail = $('.emailResult').find('input').val();
             var fName = $('.fNameResult').find('input').val();
             var lName = $('.lNameResult').find('input').val();
@@ -105,31 +110,69 @@ if ($auth == "admin") {
                     lname: lName
                 }
             }).done(function(response) {
-                //Paste new values back into table so you don't need to refresh
-                //Email
+                // Paste new values back into table so you don't need to refresh
+                // Email
                 const newEmailValue = eMail;
-                const emailField = $(e.target).closest('tr').find('.emailResult');
+                const emailField = saveButton.closest('tr').find('.emailResult');
                 const emailValue = emailField.html();
                 emailField.html(newEmailValue);
-                //Fname
+                // Fname
                 const newFnameValue = fName;
-                const fNameField = $(e.target).closest('tr').find('.fNameResult');
+                const fNameField = saveButton.closest('tr').find('.fNameResult');
                 const FnameValue = fNameField.html();
                 fNameField.html(newFnameValue);
-                //Lname
+                // Lname
                 const newLnameValue = lName;
-                const lNameField = $(e.target).closest('tr').find('.lNameResult');
+                const lNameField = saveButton.closest('tr').find('.lNameResult');
                 const LnameValue = lNameField.html();
                 lNameField.html(newLnameValue);
-
-
-                if ($(".save").data('id') == saveid) {
-                    $(".save").html('Edit');
-                    $(".save").addClass('edit');
-                    $(".edit").removeClass('bg-success save');
-                    $(".edit").addClass('bg-warning');
-                };
+                // Turn save button into edit button
+                saveButton.html('Edit');
+                saveButton.addClass('edit');
+                saveButton.removeClass('bg-success save');
+                saveButton.addClass('bg-warning');
+                // Turn cancel button into delete button
+                cancelButton.html('Delete');
+                cancelButton.addClass('delete');
+                cancelButton.removeClass('bg-primary cancel');
+                cancelButton.addClass('bg-danger');
             });
+        });
+
+        //Cancel
+        $('body').on('click', '.cancel', function(e) {
+            const cancelButton = $(e.target);
+            var saveid = $(this).data('id').toString();
+            const saveButton = $(`.save[data-id=${saveid}]`);
+            var eMail = $('.emailResult').find('input').val();
+            var fName = $('.fNameResult').find('input').val();
+            var lName = $('.lNameResult').find('input').val();
+            // Paste old values back into table so you don't need to refresh
+            // Email
+            const newEmailValue = eMail;
+            const emailField = cancelButton.closest('tr').find('.emailResult');
+            const emailValue = emailField.html();
+            emailField.html(newEmailValue);
+            // Fname
+            const newFnameValue = fName;
+            const fNameField = cancelButton.closest('tr').find('.fNameResult');
+            const FnameValue = fNameField.html();
+            fNameField.html(newFnameValue);
+            // Lname
+            const newLnameValue = lName;
+            const lNameField = cancelButton.closest('tr').find('.lNameResult');
+            const LnameValue = lNameField.html();
+            lNameField.html(newLnameValue);
+            // Turn cancel button into delete button
+            cancelButton.html('Delete');
+            cancelButton.addClass('delete');
+            cancelButton.removeClass('bg-primary cancel');
+            cancelButton.addClass('bg-danger');
+            cancelButton.html('Edit');
+            // Turn save button into edit button
+            saveButton.addClass('edit');
+            saveButton.removeClass('bg-success save');
+            saveButton.addClass('bg-warning');
         });
     });
 
