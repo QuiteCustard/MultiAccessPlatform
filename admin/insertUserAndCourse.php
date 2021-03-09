@@ -1,36 +1,76 @@
 <!-- Add user table -->
 <h2 class="">Insert User</h2>
+<main class="container-fluid">
+    <div class="row">
+        <div class="col-sm">
+            <form class="user insertForm">
+                <div class="form-group">
+                    <input type="email" class="form-control form-control-user emailInput" placeholder="Enter Email Address..." required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control form-control-user passwordInput" placeholder="Enter password..." required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user fnameInput" placeholder="Enter first name..." required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user lnameInput" placeholder="Enter last name..." required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user jobInput" placeholder="Enter job title..." required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user accessInput" placeholder="Enter access level..." required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user courseInput" placeholder="Enter course..." required>
+                </div>
 
-<form class="user insertForm">
-    <div class="form-group">
-        <input type="email" class="form-control form-control-user emailInput" placeholder="Enter Email Address..." required>
-    </div>
-    <div class="form-group">
-        <input type="password" class="form-control form-control-user passwordInput" placeholder="Enter password..." required>
-    </div>
-    <div class="form-group">
-        <input type="text" class="form-control form-control-user fnameInput" placeholder="Enter first name..." required>
-    </div>
-    <div class="form-group">
-        <input type="text" class="form-control form-control-user lnameInput" placeholder="Enter last name..." required>
-    </div>
-    <div class="form-group">
-        <input type="text" class="form-control form-control-user jobInput" placeholder="Enter job title..." required>
-    </div>
-    <div class="form-group">
-        <input type="text" class="form-control form-control-user accessInput" placeholder="Enter access level..." required>
-    </div>
-    <div class="form-group">
-        <input type="text" class="form-control form-control-user courseInput" placeholder="Enter course..." required>
-    </div>
+                <a href="#" class="btn btn-success btn-user btn-block save">
+                    Save
+                </a>
+                <a href="#" class="btn btn-danger btn-user btn-block clear">
+                    Clear
+                </a>
+            </form>
+        </div>
+        <div class="col-sm">
+            <form class="user insertForm">
+                <div class="form-group">
+                    <input type="email" class="form-control form-control-user emailInput" placeholder="Enter Email Address..." required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control form-control-user passwordInput" placeholder="Enter password..." required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user fnameInput" placeholder="Enter first name..." required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user lnameInput" placeholder="Enter last name..." required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user jobInput" placeholder="Enter job title..." required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user accessInput" placeholder="Enter access level..." required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user courseInput" placeholder="Enter course..." required>
+                </div>
 
-    <a href="#" class="btn btn-success btn-user btn-block save">
-        Save
-    </a>
-    <a href="#" class="btn btn-danger btn-user btn-block clear">
-        Clear
-    </a>
-</form>
+                <a href="#" class="btn btn-success btn-user btn-block save">
+                    Save
+                </a>
+                <a href="#" class="btn btn-danger btn-user btn-block clear">
+                    Clear
+                </a>
+            </form>
+        </div>
+    </div>
+</main>
+
+
+
 
 <!-- Jquery Ajax to post user data -->
 <script type="text/javascript">
