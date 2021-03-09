@@ -177,6 +177,8 @@ if ($auth == "admin") {
     });
 
 </script>
+<br>
+
 <?php
 }
 else {

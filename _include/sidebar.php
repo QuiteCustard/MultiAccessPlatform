@@ -39,6 +39,7 @@
                 <h6 class="collapse-header">Tools:</h6>
                 <a class="collapse-item" id="user" href="#">Users</a>
                 <a class="collapse-item" href="#" id="course">Courses</a>
+                <a class="collapse-item" href="#" id="insert">Insert Users/Courses</a>
                 <a class="collapse-item" href="/forgot-password.html">Forgot Password</a>
                 <div class="collapse-divider"></div>
                 <h6 class="collapse-header">Other Pages:</h6>
@@ -86,27 +87,26 @@
             })
         });
 
+        $(document).ready(function() {
+            $("#insert").click(function(str) {
+                // If content is already filled then remove it
+                if (str == "") {
+                    $("ajaxContent").html = "";
+                    return;
+                } else {
+                    $.ajax({ //create an ajax request to courses.php
+                        type: "GET",
+                        url: "insertUserAndCourse.php",
+                        dataType: "html", //expect html to be returned
+                        success: function(response) {
+                            $("#ajaxContent").html(response);
+                        }
+                    });
+                };
+            })
+        });
+
     </script>
-
-    <!-- <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Pages</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Login Screens:</h6>
-                <a class="collapse-item" href="/index.php">Login</a>
-                <a class="collapse-item" href="/register.html">Register</a>
-                <a class="collapse-item" href="/forgot-password.html">Forgot Password</a>
-                <div class="collapse-divider"></div>
-                <h6 class="collapse-header">Other Pages:</h6>
-                <a class="collapse-item" href="/404.html">404 Page</a>
-                <a class="collapse-item" href="/blank.php">Blank Page</a>
-            </div>
-        </div>
-    </li>-->
-
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

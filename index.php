@@ -31,13 +31,6 @@
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user" name="Password" id="inputPassword" placeholder="Password" required>
                                         </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
-                                        </div>
                                         <?php
                                             if(isset($_GET["e"])){
                                                  include_once("admin/logging.php");
