@@ -36,7 +36,7 @@ if(isset($email)) {
                     </head>
                     <body>
                     <h1>Reset your password </h1>
-                    <p>Reset your password by clicking the following link: <a href='https://ws269058wad.remote.ac/new_password.php?token=$token'>https://ws269058wad.remote.ac/new_password.php?token=$token</a></p>
+                    <p>Reset your password by clicking the following link: <a href='https://ws269058wad.remote.ac/newPassword.php?token=$token'>https://ws269058wad.remote.ac/newPassword.php?token=$token</a></p>
                     <p>Thanks</p>
                     <p><i>ATW Team</i></p>
                     </body>
