@@ -28,7 +28,7 @@ if ($auth == "admin") {
 <!-- Jquery Ajax to get user data and display in <tbody>-->
 <script type="text/javascript">
     $(document).ready(function() {
-        var intervalTiming = setInterval(getData(), 2000); // Update table every 60 seconds
+
         function getData() {
             $.ajax({
                 url: 'getUser.php',
@@ -38,8 +38,7 @@ if ($auth == "admin") {
             });
         }
         getData();
-
-
+        var intervalTiming = setInterval(getData(), 60000); // Update table every 60 seconds
         // Delete
         $('body').on('click', '.delete', function() {
             console.log('DELETE');
@@ -112,7 +111,7 @@ if ($auth == "admin") {
                     lname: lName
                 }
             }).done(function(response) {
-
+                intervalTiming = setInterval(getData(), 60000); //Restart timer
                 // Paste new values back into table so you don't need to refresh
                 // Email
                 const newEmailValue = eMail;

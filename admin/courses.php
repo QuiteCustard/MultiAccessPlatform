@@ -56,6 +56,7 @@ if ($auth == "admin") {
 
         // Edit
         $('body').on('click', '.edit', function(e) {
+            clearInterval(intervalTiming);
             const editButton = $(e.target);
             //Console
             var editid = $(this).data('id').toString();
@@ -119,6 +120,7 @@ if ($auth == "admin") {
                     attendees: attendees
                 }
             }).done(function(response) {
+                intervalTiming = setInterval(getData(), 60000); //Restart timer
                 // Paste new values back into table so you don't need to refresh
                 // Title
                 const newTitleValue = title;
