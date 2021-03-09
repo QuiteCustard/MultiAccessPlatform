@@ -76,7 +76,7 @@
                                         <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                                     </form>
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                        <a class="small" href="forgotPassword.php">Forgot Password?</a>
                                     </div>
                                     <div class="text-center">
                                         <a class="small" href="register.html">Create an Account!</a>
