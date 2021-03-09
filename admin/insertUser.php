@@ -13,7 +13,7 @@ if(isset($email)) {
     $access = $_POST['access'];
     $course = $_POST['course'];
 
-        // edit record
+        // Insert new record
 $sqlQuery="INSERT INTO `t_users` (`UID`, `Fname`, `Lname`, `Jobtitle`, `Email`, `Password`, `Access`, `Currentcourse`, `Attempts`, `Timestamp`, `Serial`) VALUES ('$id', '$fname', '$lname', '$job', '$email', '$password', '$access', '$course', '0', current_timestamp(), NULL);";
         mysqli_query($db_connect,$sqlQuery);
         echo "Record updated successfully";

@@ -68,15 +68,15 @@ if ($auth == "admin") {
             //Email
             const emailFieldChange = editButton.closest('tr').find('.emailResult');
             const emailCurrValue = emailFieldChange.html();
-            emailFieldChange.html(`<input value="${emailCurrValue}" />`);
+            emailFieldChange.html(`<input class="form-control form-control-user" value="${emailCurrValue}" />`);
             //Fname
             const fNameFieldChange = editButton.closest('tr').find('.fNameResult');
             const fNameCurrValue = fNameFieldChange.html();
-            fNameFieldChange.html(`<input value="${fNameCurrValue}" />`);
+            fNameFieldChange.html(`<input class="form-control form-control-user"value="${fNameCurrValue}" />`);
             //Lname
             const lNameFieldChange = editButton.closest('tr').find('.lNameResult');
             const lNameCurrValue = lNameFieldChange.html();
-            lNameFieldChange.html(`<input value="${lNameCurrValue}" />`);
+            lNameFieldChange.html(`<input class="form-control form-control-user" value="${lNameCurrValue}" />`);
             // Class change to be able to run save/cancel functions
             // Turn edit button into save button
             editButton.html('Save');

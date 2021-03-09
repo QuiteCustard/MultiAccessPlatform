@@ -65,23 +65,23 @@ if ($auth == "admin") {
             // Title
             const titleFieldChange = editButton.closest('tr').find('.titleResult');
             const titleCurrValue = titleFieldChange.html();
-            titleFieldChange.html(`<input value="${titleCurrValue}" />`);
-            // Date
+            titleFieldChange.html(`<input class="form-control form-control-user" value="${titleCurrValue}" />`);
+            // Date - change to date picker
             const dateFieldChange = editButton.closest('tr').find('.dateResult');
             const dateCurrValue = dateFieldChange.html();
-            dateFieldChange.html(`<input value="${dateCurrValue}" />`);
+            dateFieldChange.html(`<input class="form-control form-control-user" value="${dateCurrValue}" />`);
             // Duration
             const durationFieldChange = editButton.closest('tr').find('.durationResult');
             const durationCurrValue = durationFieldChange.html();
-            durationFieldChange.html(`<input value="${durationCurrValue}" />`);
+            durationFieldChange.html(`<input class="form-control form-control-user" value="${durationCurrValue}" />`);
             // Description
             const descriptionFieldChange = editButton.closest('tr').find('.descriptionResult');
             const descriptionCurrValue = descriptionFieldChange.html();
-            descriptionFieldChange.html(`<input value="${descriptionCurrValue}" />`);
+            descriptionFieldChange.html(`<input class="form-control form-control-user" value="${descriptionCurrValue}" />`);
             // Attendees
             const attendeesFieldChange = editButton.closest('tr').find('.attendeesResult');
             const attendeesCurrValue = attendeesFieldChange.html();
-            attendeesFieldChange.html(`<input value="${attendeesCurrValue}" />`);
+            attendeesFieldChange.html(`<input class="form-control form-control-user" value="${attendeesCurrValue}" />`);
             // Class change to be able to run save/cancel functions
             // Turn edit button into save button
             editButton.html('Save');
@@ -99,7 +99,7 @@ if ($auth == "admin") {
         $('body').on('click', '.save', function(e) {
             const saveButton = $(e.target);
             // Save id
-            var saveid = $(this).data('id').toString();
+            var saveid = $(this).data('id');
             const cancelButton = $(`.cancel[data-id=${saveid}]`);
             var title = $('.titleResult').find('input').val();
             var date = $('.dateResult').find('input').val();
