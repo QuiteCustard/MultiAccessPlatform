@@ -1,6 +1,6 @@
 <?php
 //Connect
-include_once("connect.php");
+include_once("admin/connect.php");
 
 
 if(isset($_GET["token"]))
