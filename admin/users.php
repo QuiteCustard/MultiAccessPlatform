@@ -28,6 +28,7 @@ if ($auth == "admin") {
 <!-- Jquery Ajax to get user data and display in <tbody>-->
 <script type="text/javascript">
     $(document).ready(function() {
+        var intervalTiming = setInterval(getData(), 2000); // Update table every 60 seconds
         function getData() {
             $.ajax({
                 url: 'getUser.php',
@@ -37,7 +38,7 @@ if ($auth == "admin") {
             });
         }
         getData();
-        var intervalTiming = setInterval(getData, 60000); // Update table every 60 seconds
+
 
         // Delete
         $('body').on('click', '.delete', function() {
@@ -59,6 +60,7 @@ if ($auth == "admin") {
 
         //Edit
         $('body').on('click', '.edit', function(e) {
+            clearInterval(intervalTiming); // Stop
             const editButton = $(e.target);
             //Console
             var editid = $(this).data('id').toString();
@@ -110,12 +112,13 @@ if ($auth == "admin") {
                     lname: lName
                 }
             }).done(function(response) {
+
                 // Paste new values back into table so you don't need to refresh
                 // Email
                 const newEmailValue = eMail;
                 const emailField = saveButton.closest('tr').find('.emailResult');
                 const emailValue = emailField.html();
-                emailField.html(newEmailValue);
+                emailField.html();
                 // Fname
                 const newFnameValue = fName;
                 const fNameField = saveButton.closest('tr').find('.fNameResult');
@@ -181,6 +184,7 @@ if ($auth == "admin") {
 
 <?php
 }
+
 else {
   header("Location:../index.php");
   echo "Please enter admin credentials";
