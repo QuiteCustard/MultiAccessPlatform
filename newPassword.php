@@ -24,7 +24,9 @@ if(isset($_GET["token"]))
 
     if ($count === 1)
     {
+        include_once("/include/head.php");
 ?>
+
 <form method="POST" action="#">
     <input name="newPassword" type="password" required placeholder="new password">
     <button class="btn btn-primary" type="submit">Update Password</button>
