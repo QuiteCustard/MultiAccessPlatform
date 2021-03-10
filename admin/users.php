@@ -47,7 +47,7 @@ if ($auth == "admin") {
             console.log('DELETE', deleteid);
             // AJAX Request
             $.ajax({
-                url: 'delete.php',
+                url: 'deleteUser.php',
                 type: 'POST',
                 data: {
                     id: deleteid,
@@ -68,15 +68,15 @@ if ($auth == "admin") {
             //Email
             const emailFieldChange = editButton.closest('tr').find('.emailResult');
             const emailCurrValue = emailFieldChange.html();
-            emailFieldChange.html(`<input class="form-control form-control-user" value="${emailCurrValue}" />`);
+            emailFieldChange.html(`<input class="form-control form-control-user primary" value="${emailCurrValue}" />`);
             //Fname
             const fNameFieldChange = editButton.closest('tr').find('.fNameResult');
             const fNameCurrValue = fNameFieldChange.html();
-            fNameFieldChange.html(`<input class="form-control form-control-user"value="${fNameCurrValue}" />`);
+            fNameFieldChange.html(`<input class="form-control form-control-user primary" value="${fNameCurrValue}" />`);
             //Lname
             const lNameFieldChange = editButton.closest('tr').find('.lNameResult');
             const lNameCurrValue = lNameFieldChange.html();
-            lNameFieldChange.html(`<input class="form-control form-control-user" value="${lNameCurrValue}" />`);
+            lNameFieldChange.html(`<input class="form-control form-control-user primary" value="${lNameCurrValue}" />`);
             // Class change to be able to run save/cancel functions
             // Turn edit button into save button
             editButton.html('Save');
@@ -102,7 +102,7 @@ if ($auth == "admin") {
             console.log('SAVING', saveid);
             // AJAX Request
             $.ajax({
-                url: 'edit.php',
+                url: 'editUser.php',
                 type: 'POST',
                 data: {
                     id: saveid,

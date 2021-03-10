@@ -65,23 +65,23 @@ if ($auth == "admin") {
             // Title
             const titleFieldChange = editButton.closest('tr').find('.titleResult');
             const titleCurrValue = titleFieldChange.html();
-            titleFieldChange.html(`<input class="form-control form-control-user" value="${titleCurrValue}" />`);
+            titleFieldChange.html(`<input class="form-control form-control-user primary" value="${titleCurrValue}" />`);
             // Date - change to date picker
             const dateFieldChange = editButton.closest('tr').find('.dateResult');
             const dateCurrValue = dateFieldChange.html();
-            dateFieldChange.html(`<input class="form-control form-control-user" value="${dateCurrValue}" />`);
+            dateFieldChange.html(`<input class="form-control form-control-user primary" value="${dateCurrValue}" />`);
             // Duration
             const durationFieldChange = editButton.closest('tr').find('.durationResult');
             const durationCurrValue = durationFieldChange.html();
-            durationFieldChange.html(`<input class="form-control form-control-user" value="${durationCurrValue}" />`);
+            durationFieldChange.html(`<input class="form-control form-control-user primary" value="${durationCurrValue}" />`);
             // Description
             const descriptionFieldChange = editButton.closest('tr').find('.descriptionResult');
             const descriptionCurrValue = descriptionFieldChange.html();
-            descriptionFieldChange.html(`<input class="form-control form-control-user" value="${descriptionCurrValue}" />`);
+            descriptionFieldChange.html(`<input class="form-control form-control-user primary" value="${descriptionCurrValue}" />`);
             // Attendees
             const attendeesFieldChange = editButton.closest('tr').find('.attendeesResult');
             const attendeesCurrValue = attendeesFieldChange.html();
-            attendeesFieldChange.html(`<input class="form-control form-control-user" value="${attendeesCurrValue}" />`);
+            attendeesFieldChange.html(`<input class="form-control form-control-user primary" value="${attendeesCurrValue}" />`);
             // Class change to be able to run save/cancel functions
             // Turn edit button into save button
             editButton.html('Save');

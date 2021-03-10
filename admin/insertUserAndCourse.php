@@ -6,31 +6,31 @@
             <form class="user insertUserForm">
                 <div class="form-group">
                     <label for="emailInput">Email:</label>
-                    <input type="email" class="form-control form-control-user" id="emailInput" placeholder="Enter Email Address..." required>
+                    <input type="email" class="form-control form-control-user primary" id="emailInput" placeholder="Enter Email Address..." required>
                 </div>
                 <div class="form-group">
                     <label for="passwordInput">Password:</label>
-                    <input type="password" class="form-control form-control-user" id="passwordInput" placeholder="Enter password..." required>
+                    <input type="password" class="form-control form-control-user primary" id="passwordInput" placeholder="Enter password..." required>
                 </div>
                 <div class="form-group">
                     <label for="fnameInput">First name:</label>
-                    <input type="text" class="form-control form-control-user" id="fnameInput" placeholder="Enter first name..." required>
+                    <input type="text" class="form-control form-control-user primary" id="fnameInput" placeholder="Enter first name..." required>
                 </div>
                 <div class="form-group">
                     <label for="lnameInput">Last name:</label>
-                    <input type="text" class="form-control form-control-user" id="lnameInput" placeholder="Enter last name..." required>
+                    <input type="text" class="form-control form-control-user primary" id="lnameInput" placeholder="Enter last name..." required>
                 </div>
                 <div class="form-group">
                     <label for="jobInput">Job title:</label>
-                    <input type="text" class="form-control form-control-user" id="jobInput" placeholder="Enter job title..." required>
+                    <input type="text" class="form-control form-control-user primary" id="jobInput" placeholder="Enter job title..." required>
                 </div>
                 <div class="form-group">
                     <label for="accessInput">Access level for application:</label>
-                    <input type="text" class="form-control form-control-user" id="accessInput" placeholder="Enter access level..." required>
+                    <input type="text" class="form-control form-control-user primary" id="accessInput" placeholder="Enter access level..." required>
                 </div>
                 <div class="form-group">
                     <label for="courseInput">Current course:</label>
-                    <input type="text" class="form-control form-control-user" id="courseInput" placeholder="Enter course..." required>
+                    <input type="text" class="form-control form-control-user primary" id="courseInput" placeholder="Enter course..." required>
                     <small id="courseHelp" class="form-text text-muted">If the user is not currently enrolled on a course, please input "none".</small>
                 </div>
 
@@ -48,23 +48,23 @@
             <form class="user insertCourseForm">
                 <div class="form-group">
                     <label for="titleInput">Course Title:</label>
-                    <input type="text" class="form-control form-control-user" id="titleInput" placeholder="Enter course title ..." required>
+                    <input type="text" class="form-control form-control-user primary" id="titleInput" placeholder="Enter course title ..." required>
                 </div>
                 <div class="form-group">
                     <label for="dateInput">Course start date:</label>
-                    <input type="text" class="form-control form-control-user" id="dateInput" placeholder="Enter date..." required>
+                    <input type="text" class="form-control form-control-user primary" id="dateInput" placeholder="Enter date..." required>
                 </div>
                 <div class="form-group">
                     <label for="durationInput">Course duration:</label>
-                    <input type="text" class="form-control form-control-user" id="durationInput" placeholder="Enter course duration..." required>
+                    <input type="text" class="form-control form-control-user primary" id="durationInput" placeholder="Enter course duration..." required>
                 </div>
                 <div class="form-group">
                     <label for="descriptionInput">Course description:</label>
-                    <input type="text" class="form-control form-control-user" id="descriptionInput" placeholder="Enter course description..." required>
+                    <input type="text" class="form-control form-control-user primary" id="descriptionInput" placeholder="Enter course description..." required>
                 </div>
                 <div class="form-group">
                     <label for="attendeesInput">Course max attendees:</label>
-                    <input type="text" class="form-control form-control-user" id="attendeesInput" placeholder="Enter max attendees..." required>
+                    <input type="text" class="form-control form-control-user primary" id="attendeesInput" placeholder="Enter max attendees..." required>
                 </div>
                 <div class="form-group">
                     <a href="#" class="btn btn-success btn-user btn-block saveCourse">
