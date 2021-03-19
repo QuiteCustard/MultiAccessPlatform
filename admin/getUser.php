@@ -20,10 +20,10 @@ if ($result) {
     <td><?= $result["Currentcourse"] ?></td>
     <td><?= $result["Timestamp"] ?></td>
     <td>
-        <button data-id="<?= $id ?>" class='btn bg-warning text-white edit'>Edit</button>
+        <button id="edit" data-id="<?= $id ?>" class='btn bg-warning text-white edit'>Edit</button>
     </td>
     <td>
-        <button data-id='<?= $id ?>' class='btn bg-danger text-white delete'>Delete</button>
+        <button id="delete" data-id='<?= $id ?>' class='btn bg-danger text-white delete'>Delete</button>
     </td>
 </tr>
 

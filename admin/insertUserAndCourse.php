@@ -86,7 +86,7 @@
         // Save user
         $('body').on('click', '.saveUser', function(e) {
             const saveButton = $(e.target);
-            var email = $('#EmailInput').val();
+            var email = $('#emailInput').val();
             var password = $('#passwordInput').val();
             var fname = $('#fnameInput').val();
             var lname = $('#lnameInput').val();
@@ -108,13 +108,14 @@
                     course: course
                 }
             }).done(function(response) {
-
+                $('.insertUserForm').trigger("reset");
             });
         });
         //Clear user form
         $('body').on('click', '.clearUser', function(e) {
             $('.insertUserForm').trigger("reset");
         });
+
         // Course
         // Save course
         $('body').on('click', '.saveCourse', function(e) {
@@ -138,7 +139,7 @@
                     attendees: attendees
                 }
             }).done(function(response) {
-
+                $('.insertCourseForm').trigger("reset");
             });
         });
 

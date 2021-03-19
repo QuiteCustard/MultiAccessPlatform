@@ -28,6 +28,14 @@ if ($auth == "admin") {
 <!-- Jquery Ajax to get user data and display in <tbody>-->
 <script type="text/javascript">
     $(document).ready(function() {
+        console.log("Hello");
+        var admin = $(`.delete`).data();
+        if (admin = 1) {
+            console.log("Admin account detected");
+        }
+        else{
+            console.log("No admin");
+        }
 
         function getData() {
             $.ajax({
@@ -45,16 +53,22 @@ if ($auth == "admin") {
             // Delete id
             var deleteid = $(this).data('id');
             console.log('DELETE', deleteid);
-            // AJAX Request
-            $.ajax({
-                url: 'deleteUser.php',
-                type: 'POST',
-                data: {
-                    id: deleteid,
-                }
-            }).done(function(response) {
-                getData();
-            });
+            c = confirm("Are you sure you want delete user this user?");
+            if (c == true) {
+                // AJAX Request
+                $.ajax({
+                    url: 'deleteUser.php',
+                    type: 'POST',
+                    data: {
+                        id: deleteid,
+                    }
+                }).done(function(response) {
+                    getData();
+                });
+            } else {
+                //Do nothing
+                console.log("user", deleteid, "not deleted");
+            }
         });
 
         //Edit
