@@ -17,8 +17,8 @@ if ($auth == "admin") {
                 <th scope='col'>Access Level</th>
                 <th scope='col'>Current Course</th>
                 <th scope='col'>Time</th>
-                <th scope='col' id='edit'>Edit</th>
-                <th scope='col' id='delete'>Delete</th>
+                <th scope='col' id='editHeader'>Edit</th>
+                <th scope='col' id='deleteHeader'>Delete</th>
             </tr>
         </thead>
         <!-- Table body that gets populated by GetUser.php -->
@@ -28,15 +28,6 @@ if ($auth == "admin") {
 <!-- Jquery Ajax to get user data and display in <tbody>-->
 <script type="text/javascript">
     $(document).ready(function() {
-        console.log("Hello");
-        var admin = $(`.delete`).data();
-        if (admin = 1) {
-            console.log("Admin account detected");
-        }
-        else{
-            console.log("No admin");
-        }
-
         function getData() {
             $.ajax({
                 url: 'getUser.php',
@@ -113,48 +104,55 @@ if ($auth == "admin") {
             var eMail = $('.emailResult').find('input').val();
             var fName = $('.fNameResult').find('input').val();
             var lName = $('.lNameResult').find('input').val();
+            c = confirm("Are you sure you want to save the inputted details for this user?");
             console.log('SAVING', saveid);
-            // AJAX Request
-            $.ajax({
-                url: 'editUser.php',
-                type: 'POST',
-                data: {
-                    id: saveid,
-                    email: eMail,
-                    fname: fName,
-                    lname: lName
-                }
-            }).done(function(response) {
-                intervalTiming = setInterval(getData(), 60000); //Restart timer
-                // Paste new values back into table so you don't need to refresh
-                // Email
-                const newEmailValue = eMail;
-                const emailField = saveButton.closest('tr').find('.emailResult');
-                const emailValue = emailField.html();
-                emailField.html();
-                // Fname
-                const newFnameValue = fName;
-                const fNameField = saveButton.closest('tr').find('.fNameResult');
-                const FnameValue = fNameField.html();
-                fNameField.html(newFnameValue);
-                // Lname
-                const newLnameValue = lName;
-                const lNameField = saveButton.closest('tr').find('.lNameResult');
-                const LnameValue = lNameField.html();
-                lNameField.html(newLnameValue);
-                // Turn save button into edit button
-                saveButton.html('Edit');
-                saveButton.addClass('edit');
-                saveButton.removeClass('bg-success save');
-                saveButton.addClass('bg-warning');
-                // Turn cancel button into delete button
-                cancelButton.html('Delete');
-                cancelButton.addClass('delete');
-                cancelButton.removeClass('bg-primary cancel');
-                cancelButton.addClass('bg-danger');
-            });
-        });
+            if (c == true) {
+                // AJAX Request
+                // AJAX Request
+                $.ajax({
+                    url: 'editUser.php',
+                    type: 'POST',
+                    data: {
+                        id: saveid,
+                        email: eMail,
+                        fname: fName,
+                        lname: lName
+                    }
+                }).done(function(response) {
+                    intervalTiming = setInterval(getData(), 60000); //Restart timer
+                    // Paste new values back into table so you don't need to refresh
+                    // Email
+                    const newEmailValue = eMail;
+                    const emailField = saveButton.closest('tr').find('.emailResult');
+                    const emailValue = emailField.html();
+                    emailField.html();
+                    // Fname
+                    const newFnameValue = fName;
+                    const fNameField = saveButton.closest('tr').find('.fNameResult');
+                    const FnameValue = fNameField.html();
+                    fNameField.html(newFnameValue);
+                    // Lname
+                    const newLnameValue = lName;
+                    const lNameField = saveButton.closest('tr').find('.lNameResult');
+                    const LnameValue = lNameField.html();
+                    lNameField.html(newLnameValue);
+                    // Turn save button into edit button
+                    saveButton.html('Edit');
+                    saveButton.addClass('edit');
+                    saveButton.removeClass('bg-success save');
+                    saveButton.addClass('bg-warning');
+                    // Turn cancel button into delete button
+                    cancelButton.html('Delete');
+                    cancelButton.addClass('delete');
+                    cancelButton.removeClass('bg-primary cancel');
+                    cancelButton.addClass('bg-danger');
+                });
+            } else {
+                //Do nothing
+                console.log("user", saveid, "not edited");
+            }
 
+        });
         //Cancel
         $('body').on('click', '.cancel', function(e) {
             const cancelButton = $(e.target);

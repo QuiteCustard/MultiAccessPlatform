@@ -137,3 +137,5 @@ a {
     background-color: var(--secondary);
     font-size: 0.9em;
 }
+
+.hide{display:none!important;}

@@ -42,18 +42,24 @@ if ($auth == "admin") {
             // Delete id
             var deleteid = $(this).data('id');
             console.log('DELETE', deleteid);
-            // AJAX Request
-            $.ajax({
-                url: 'deleteCourse.php',
-                type: 'POST',
-                data: {
-                    id: deleteid,
-                }
-            }).done(function(response) {
-                getData();
-            });
-        });
+            c = confirm("Are you sure you want delete this course?");
+            if (c == true) {
+                // AJAX Request
+                $.ajax({
+                    url: 'deleteCourse.php',
+                    type: 'POST',
+                    data: {
+                        id: deleteid,
+                    }
+                }).done(function(response) {
+                    getData();
+                });
 
+                    } else {
+                        //Do nothing
+                        console.log("course", deleteid, "not deleted");
+                    }
+                });
         // Edit
         $('body').on('click', '.edit', function(e) {
             clearInterval(intervalTiming);
@@ -108,56 +114,63 @@ if ($auth == "admin") {
             var attendees = $('.attendeesResult').find('input').val();
             console.log('SAVING', saveid);
             // AJAX Request
-            $.ajax({
-                url: 'editCourse.php',
-                type: 'POST',
-                data: {
-                    id: saveid,
-                    title: title,
-                    date: date,
-                    duration: duration,
-                    description: description,
-                    attendees: attendees
-                }
-            }).done(function(response) {
-                intervalTiming = setInterval(getData(), 60000); //Restart timer
-                // Paste new values back into table so you don't need to refresh
-                // Title
-                const newTitleValue = title;
-                const titleField = saveButton.closest('tr').find('.titleResult');
-                const titleValue = titleField.html();
-                titleField.html(newTitleValue);
-                // Date
-                const newDateValue = date;
-                const dateField = saveButton.closest('tr').find('.dateResult');
-                const dateValue = dateField.html();
-                dateField.html(newDateValue);
-                // Duration
-                const newDurationValue = duration;
-                const durationField = saveButton.closest('tr').find('.durationResult');
-                const durationValue = durationField.html();
-                durationField.html(newDurationValue);
-                // Description
-                const newDescriptionValue = description;
-                const descriptionField = saveButton.closest('tr').find('.descriptionResult');
-                const descriptionValue = descriptionField.html();
-                descriptionField.html(newDescriptionValue);
-                // Attendees
-                const newAttendeesValue = attendees;
-                const attendeesField = saveButton.closest('tr').find('.attendeesResult');
-                const attendeesValue = attendeesField.html();
-                attendeesField.html(newAttendeesValue);
-                // Turn save button int edit button
-                saveButton.html('Edit');
-                saveButton.addClass('edit');
-                saveButton.removeClass('bg-success save');
-                saveButton.addClass('bg-warning');
-                // Turn cancel button into delete Button
-                cancelButton.html('Delete');
-                cancelButton.addClass('delete');
-                cancelButton.removeClass('bg-primary cancel');
-                cancelButton.addClass('bg-danger');
-            });
+            c = confirm("Are you sure you want to save the inputted details for this course?");
+            if (c == true) {
+                $.ajax({
+                    url: 'editCourse.php',
+                    type: 'POST',
+                    data: {
+                        id: saveid,
+                        title: title,
+                        date: date,
+                        duration: duration,
+                        description: description,
+                        attendees: attendees
+                    }
+                }).done(function(response) {
+                    intervalTiming = setInterval(getData(), 60000); //Restart timer
+                    // Paste new values back into table so you don't need to refresh
+                    // Title
+                    const newTitleValue = title;
+                    const titleField = saveButton.closest('tr').find('.titleResult');
+                    const titleValue = titleField.html();
+                    titleField.html(newTitleValue);
+                    // Date
+                    const newDateValue = date;
+                    const dateField = saveButton.closest('tr').find('.dateResult');
+                    const dateValue = dateField.html();
+                    dateField.html(newDateValue);
+                    // Duration
+                    const newDurationValue = duration;
+                    const durationField = saveButton.closest('tr').find('.durationResult');
+                    const durationValue = durationField.html();
+                    durationField.html(newDurationValue);
+                    // Description
+                    const newDescriptionValue = description;
+                    const descriptionField = saveButton.closest('tr').find('.descriptionResult');
+                    const descriptionValue = descriptionField.html();
+                    descriptionField.html(newDescriptionValue);
+                    // Attendees
+                    const newAttendeesValue = attendees;
+                    const attendeesField = saveButton.closest('tr').find('.attendeesResult');
+                    const attendeesValue = attendeesField.html();
+                    attendeesField.html(newAttendeesValue);
+                    // Turn save button int edit button
+                    saveButton.html('Edit');
+                    saveButton.addClass('edit');
+                    saveButton.removeClass('bg-success save');
+                    saveButton.addClass('bg-warning');
+                    // Turn cancel button into delete Button
+                    cancelButton.html('Delete');
+                    cancelButton.addClass('delete');
+                    cancelButton.removeClass('bg-primary cancel');
+                    cancelButton.addClass('bg-danger');
+                });
+            } else {
+                //Do nothing
+                console.log("course", saveid, "not edited");
+            }
+
         });
 
         //Cancel

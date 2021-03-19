@@ -19,11 +19,11 @@ if ($result) {
     <td><?= $result["Access"] ?></td>
     <td><?= $result["Currentcourse"] ?></td>
     <td><?= $result["Timestamp"] ?></td>
-    <td>
-        <button id="edit" data-id="<?= $id ?>" class='btn bg-warning text-white edit'>Edit</button>
+    <td >
+        <button id="editBtn" data-id="<?= $id ?>" class='btn bg-warning text-white edit'>Edit</button>
     </td>
     <td>
-        <button id="delete" data-id='<?= $id ?>' class='btn bg-danger text-white delete'>Delete</button>
+        <button id="deleteBtn" data-id='<?= $id ?>' class='btn bg-danger text-white delete'>Delete</button>
     </td>
 </tr>
 
