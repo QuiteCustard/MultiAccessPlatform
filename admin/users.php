@@ -44,7 +44,7 @@ if ($auth == "admin") {
             // Delete id
             var deleteid = $(this).data('id');
             console.log('DELETE', deleteid);
-            c = confirm("Are you sure you want delete user this user?");
+            var c = confirm("Are you sure you want delete user this user?");
             if (c == true) {
                 // AJAX Request
                 $.ajax({
@@ -104,7 +104,7 @@ if ($auth == "admin") {
             var eMail = $('.emailResult').find('input').val();
             var fName = $('.fNameResult').find('input').val();
             var lName = $('.lNameResult').find('input').val();
-            c = confirm("Are you sure you want to save the inputted details for this user?");
+            var c = confirm("Are you sure you want to save the inputted details for this user?");
             console.log('SAVING', saveid);
             if (c == true) {
                 // AJAX Request

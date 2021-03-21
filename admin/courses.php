@@ -42,7 +42,7 @@ if ($auth == "admin") {
             // Delete id
             var deleteid = $(this).data('id');
             console.log('DELETE', deleteid);
-            c = confirm("Are you sure you want delete this course?");
+            var c = confirm("Are you sure you want delete this course?");
             if (c == true) {
                 // AJAX Request
                 $.ajax({
@@ -114,7 +114,7 @@ if ($auth == "admin") {
             var attendees = $('.attendeesResult').find('input').val();
             console.log('SAVING', saveid);
             // AJAX Request
-            c = confirm("Are you sure you want to save the inputted details for this course?");
+           var c = confirm("Are you sure you want to save the inputted details for this course?");
             if (c == true) {
                 $.ajax({
                     url: 'editCourse.php',
