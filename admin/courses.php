@@ -34,14 +34,14 @@ if ($auth == "admin") {
             });
         }
         getData();
-        var intervalTiming = setInterval(getData, 60000); // Update table every 60 seconds
-
+        // Update table every 60 seconds
+        var intervalTiming = setInterval(getData, 60000);
         // Delete
-       $('body').off('click', '.delete').on('click', '.delete', function() {
-            console.log('DELETE');
+        $('body').off('click', '.delete').on('click', '.delete', function() {
             // Delete id
             var deleteid = $(this).data('id');
             console.log('DELETE', deleteid);
+            // Check to confirm correct record
             var c = confirm("Are you sure you want delete this course?");
             if (c == true) {
                 // AJAX Request
@@ -55,38 +55,66 @@ if ($auth == "admin") {
                     getData();
                 });
 
-                    } else {
-                        //Do nothing
-                        console.log("course", deleteid, "not deleted");
-                    }
-                });
+            } else {
+                //Do nothing
+                console.log("course", deleteid, "not deleted");
+            }
+        });
         // Edit
         $('body').off('click', '.edit').on('click', '.edit', function(e) {
+            // Stop timer
             clearInterval(intervalTiming);
+            // Set edit button to variable
             const editButton = $(e.target);
             //Console
             var editid = $(this).data('id').toString();
+            // Set delete button to variable
             const deleteButton = $(`.delete[data-id=${editid}]`);
             console.log('EDITING', editid);
             // Title
+            // Find correct table data column
             const titleFieldChange = editButton.closest('tr').find('.titleResult');
+            // Set variable to value of td column
+            const titleFieldValue = titleFieldChange.html();
+            // Set variable to value to fill the input
             const titleCurrValue = titleFieldChange.html();
-            titleFieldChange.html(`<input class="form-control form-control-user primary" value="${titleCurrValue}" />`);
-            // Date - change to date picker
+            // Set result as input with data inside
+            titleFieldChange.html(`<input class="form-control form-control-user primary" value="${titleFieldValue}" />`);
+            // Date
+            // Find correct table data column
             const dateFieldChange = editButton.closest('tr').find('.dateResult');
+            // Set variable to value of td column
+            const dateFieldValue = dateFieldChange.html();
+            // Set variable to value to fill the input
             const dateCurrValue = dateFieldChange.html();
+            // Set result as input with data inside
             dateFieldChange.html(`<input class="form-control form-control-user primary" value="${dateCurrValue}" />`);
             // Duration
+            // Find correct table data column
             const durationFieldChange = editButton.closest('tr').find('.durationResult');
+            // Set variable to value of td column
+            const durationFieldValue = durationFieldChange.html();
+            // Set variable to value to fill the input
             const durationCurrValue = durationFieldChange.html();
+            // Set result as input with data inside
             durationFieldChange.html(`<input class="form-control form-control-user primary" value="${durationCurrValue}" />`);
-            // Description
+            // Find correct table data column
             const descriptionFieldChange = editButton.closest('tr').find('.descriptionResult');
+            // Set variable to value of td column
+            const descriptionFieldValue = descriptionFieldChange.html();
+            // Set variable to value to fill the input
             const descriptionCurrValue = descriptionFieldChange.html();
+            // Set result as input with data inside
+            // Description
             descriptionFieldChange.html(`<input class="form-control form-control-user primary" value="${descriptionCurrValue}" />`);
             // Attendees
+            // Find correct table data column
             const attendeesFieldChange = editButton.closest('tr').find('.attendeesResult');
+            // Set variable to value of td column
             const attendeesCurrValue = attendeesFieldChange.html();
+            // Set variable to value to fill the input
+            const attendeesCurrValue = attendeesFieldChange.html();
+            // Set result as input with data inside
             attendeesFieldChange.html(`<input class="form-control form-control-user primary" value="${attendeesCurrValue}" />`);
             // Class change to be able to run save/cancel functions
             // Turn edit button into save button
@@ -94,7 +122,7 @@ if ($auth == "admin") {
             editButton.addClass('save');
             editButton.removeClass('bg-warning edit');
             editButton.addClass('bg-success');
-            ///Turn delete button into cancel button
+            /// Turn delete button into cancel button
             deleteButton.html('Cancel');
             deleteButton.addClass('cancel');
             deleteButton.removeClass('bg-danger delete');
@@ -103,9 +131,10 @@ if ($auth == "admin") {
 
         // Save
         $('body').off('click', '.save').on('click', '.save', function(e) {
+            // Set save button to variable
             const saveButton = $(e.target);
-            // Save id
             var saveid = $(this).data('id');
+            // Set cancel button to variable
             const cancelButton = $(`.cancel[data-id=${saveid}]`);
             var title = $('.titleResult').find('input').val();
             var date = $('.dateResult').find('input').val();
@@ -114,7 +143,8 @@ if ($auth == "admin") {
             var attendees = $('.attendeesResult').find('input').val();
             console.log('SAVING', saveid);
             // AJAX Request
-           var c = confirm("Are you sure you want to save the inputted details for this course?");
+            // Check to confirm correct record
+            var c = confirm("Are you sure you want to save the inputted details for this course?");
             if (c == true) {
                 $.ajax({
                     url: 'editCourse.php',
@@ -128,7 +158,8 @@ if ($auth == "admin") {
                         attendees: attendees
                     }
                 }).done(function(response) {
-                    intervalTiming = setInterval(getData(), 60000); //Restart timer
+                    //Restart timer
+                    intervalTiming = setInterval(getData(), 60000);
                     // Paste new values back into table so you don't need to refresh
                     // Title
                     const newTitleValue = title;
@@ -175,8 +206,10 @@ if ($auth == "admin") {
 
         //Cancel
         $('body').off('click', '.cancel').on('click', '.cancel', function(e) {
+            // Set cancel button to variable
             const cancelButton = $(e.target);
             var saveid = $(this).data('id').toString();
+            // Set save button to variable
             const saveButton = $(`.save[data-id=${saveid}]`);
             var title = $('.titleResult').find('input').val();
             var date = $('.dateResult').find('input').val();
