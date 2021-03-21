@@ -39,12 +39,12 @@ if ($auth == "admin") {
         getData();
         var intervalTiming = setInterval(getData(), 60000); // Update table every 60 seconds
         // Delete
-        $('body').on('click', '.delete', function() {
+      $('body').off('click', '.delete').on('click', '.delete', function() {
             console.log('DELETE');
             // Delete id
             var deleteid = $(this).data('id');
             console.log('DELETE', deleteid);
-            var c = confirm("Are you sure you want delete user this user?");
+            var c = confirm("Are you sure you want delete this user?");
             if (c == true) {
                 // AJAX Request
                 $.ajax({
@@ -63,22 +63,26 @@ if ($auth == "admin") {
         });
 
         //Edit
-        $('body').on('click', '.edit', function(e) {
+        $('body').off('click', '.edit').on('click', '.edit', function(e) {
             clearInterval(intervalTiming); // Stop
             const editButton = $(e.target);
             //Console
             var editid = $(this).data('id').toString();
             const deleteButton = $(`.delete[data-id=${editid}]`);
             console.log('EDITING', editid);
-            //Email
+            // Email
+            // Find correct table data column
             const emailFieldChange = editButton.closest('tr').find('.emailResult');
+            // Set variable to value of td column
             const emailCurrValue = emailFieldChange.html();
+            console.log(emailCurrValue);
+            // Set result as input with data inside
             emailFieldChange.html(`<input class="form-control form-control-user primary" value="${emailCurrValue}" />`);
-            //Fname
+            // Fname
             const fNameFieldChange = editButton.closest('tr').find('.fNameResult');
             const fNameCurrValue = fNameFieldChange.html();
             fNameFieldChange.html(`<input class="form-control form-control-user primary" value="${fNameCurrValue}" />`);
-            //Lname
+            // Lname
             const lNameFieldChange = editButton.closest('tr').find('.lNameResult');
             const lNameCurrValue = lNameFieldChange.html();
             lNameFieldChange.html(`<input class="form-control form-control-user primary" value="${lNameCurrValue}" />`);
@@ -96,7 +100,7 @@ if ($auth == "admin") {
         });
 
         // Save
-        $('body').on('click', '.save', function(e) {
+        $('body').off('click', '.save').on('click', '.save', function(e) {
             const saveButton = $(e.target);
             // Save id
             var saveid = $(this).data('id').toString();
@@ -154,7 +158,7 @@ if ($auth == "admin") {
 
         });
         //Cancel
-        $('body').on('click', '.cancel', function(e) {
+        $('body').off('click', '.cancel').on('click', '.cancel', function(e) {
             const cancelButton = $(e.target);
             var saveid = $(this).data('id').toString();
             const saveButton = $(`.save[data-id=${saveid}]`);

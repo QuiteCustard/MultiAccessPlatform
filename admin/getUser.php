@@ -19,7 +19,7 @@ if ($result) {
     <td><?= $result["Access"] ?></td>
     <td><?= $result["Currentcourse"] ?></td>
     <td><?= $result["Timestamp"] ?></td>
-    <td >
+    <td>
         <button id="editBtn" data-id="<?= $id ?>" class='btn bg-warning text-white edit'>Edit</button>
     </td>
     <td>

@@ -37,7 +37,7 @@ if ($auth == "admin") {
         var intervalTiming = setInterval(getData, 60000); // Update table every 60 seconds
 
         // Delete
-        $('body').on('click', '.delete', function() {
+       $('body').off('click', '.delete').on('click', '.delete', function() {
             console.log('DELETE');
             // Delete id
             var deleteid = $(this).data('id');
@@ -61,7 +61,7 @@ if ($auth == "admin") {
                     }
                 });
         // Edit
-        $('body').on('click', '.edit', function(e) {
+        $('body').off('click', '.edit').on('click', '.edit', function(e) {
             clearInterval(intervalTiming);
             const editButton = $(e.target);
             //Console
@@ -102,7 +102,7 @@ if ($auth == "admin") {
         });
 
         // Save
-        $('body').on('click', '.save', function(e) {
+        $('body').off('click', '.save').on('click', '.save', function(e) {
             const saveButton = $(e.target);
             // Save id
             var saveid = $(this).data('id');
@@ -174,7 +174,7 @@ if ($auth == "admin") {
         });
 
         //Cancel
-        $('body').on('click', '.cancel', function(e) {
+        $('body').off('click', '.cancel').on('click', '.cancel', function(e) {
             const cancelButton = $(e.target);
             var saveid = $(this).data('id').toString();
             const saveButton = $(`.save[data-id=${saveid}]`);
