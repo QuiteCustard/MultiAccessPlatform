@@ -88,7 +88,10 @@ if ($auth == "admin") {
             // Set variable to value to fill the input
             const dateCurrValue = dateFieldChange.html();
             // Set result as input with data inside
-            dateFieldChange.html(`<input class="form-control form-control-user primary" value="${dateCurrValue}" />`);
+            dateFieldChange.html(`<input type="text" id="datepicker" class="form-control form-control-user primary" value="${dateCurrValue}" />`);
+            var picker = new Pikaday({
+                field: $('#datepicker')[0],
+            });
             // Duration
             // Find correct table data column
             const durationFieldChange = editButton.closest('tr').find('.durationResult');
@@ -111,7 +114,7 @@ if ($auth == "admin") {
             // Find correct table data column
             const attendeesFieldChange = editButton.closest('tr').find('.attendeesResult');
             // Set variable to value of td column
-            const attendeesCurrValue = attendeesFieldChange.html();
+            const attendeesFieldValue = attendeesFieldChange.html();
             // Set variable to value to fill the input
             const attendeesCurrValue = attendeesFieldChange.html();
             // Set result as input with data inside
@@ -259,71 +262,40 @@ if ($auth == "admin") {
 <?php
 }
     // If not admin then display
-    elseif($auth == "user")
+    elseif($auth == "admin")
 {
         ?>
-<h1>Currently displays user table as have not sorted user courses</h1>
 <div class='table-responsive'>
     <table class='table table-hover'>
         <thead>
             <tr>
-                <th scope='col'>UID</th>
-                <th scope='col'>Email</th>
-                <!--<th scope='col'>Password</th>-->
-                <th scope='col'>Fname</th>
-                <th scope='col'>Lname</th>
-                <th scope='col'>Job title</th>
-                <th scope='col'>Access Level</th>
-                <th scope='col'>Current Course</th>
-                <th scope='col'>Time</th>
-                <th scope='col' id='delete'>Delete</th>
+                <th scope='col'>Title</th>
+                <th scope='col'>Date</th>
+                <th scope='col'>Duration</th>
+                <th scope='col'>Description</th>
+                <th scope='col' id='enrol'>Enrol</th>
             </tr>
         </thead>
-        <tbody class="userTable"></tbody>
+        <tbody class="courseTable"></tbody>
     </table>
 </div>
-
 
 <script type="text/javascript">
     $(document).ready(function() {
         function getData() {
-            console.log('running data...');
             $.ajax({
-                url: 'getUser.php',
+                url: 'getEnrolCourse.php',
                 type: 'GET',
             }).done(function(response) {
-                console.log('response', response);
-                $('.userTable').html(response);
+                $('.courseTable').html(response);
             });
         }
-
         getData();
+        // Update table every 60 seconds
+        var intervalTiming = setInterval(getData, 60000);
 
-        // Delete
-        $('body').on('click', '.delete', function() {
-            console.log('DELETE');
-            // Delete id
-            var deleteid = $(this).data('id');
-            console.log('DELETE', deleteid);
-            // AJAX Request
-            $.ajax({
-                url: 'delete.php',
-                type: 'POST',
-                data: {
-                    id: deleteid
-                }
-            }).done(function(response) {
-                console.log(response);
-                getData();
-            });
-        });
-
-        setInterval(getData, 1000);
     });
-
-</script>
-
-<?php
+    <?php
         }
 else {
 header("Location:../index.php");

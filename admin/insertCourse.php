@@ -10,7 +10,7 @@ if(isset($title)) {
     $description = $_POST['description'];
     $date = $_POST['date'];
     $attendees = $_POST['attendees'];
-
+echo $date;
         // Insert new record
     $sqlQuery="INSERT INTO `t_courses` (`CID`, `Title`, `Date`, `Duration`, `Description`, `Timestamp`, `Max_attendees`) VALUES ('$id', '$title', '$date', '$duration', '$description', current_timestamp(), '$attendees');";
     mysqli_query($db_connect,$sqlQuery);

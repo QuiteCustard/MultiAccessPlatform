@@ -19,7 +19,7 @@ mysqli_query($db_connect, "UPDATE `t_users` SET `Attempts` = '$newAttempts' WHER
 if($currentAttempts > 4)
 {
 
-                                        //Recapta
+    //Recapta
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recaptcha_response'])) {
 
     // Build POST request:
@@ -38,8 +38,6 @@ if($currentAttempts > 4)
         // Not verified - show form error
     }
 }
-
-
 }
 
 //run query
@@ -55,17 +53,22 @@ $count = mysqli_num_rows($run);
 if ($count === 1){
     // Check access level
     $access = $result["Access"];
-  //let us log in
+  // let us log in
     session_start();
     $_SESSION["auth"] = $access;
-    //Remember name
+    // Reset login attempts
+    $resetAttempts = 0;
+    $sqlQuery="INSERT INTO `t_users` (`Attempts`) VALUES ('$resetAttempts');";
+    mysqli_query($db_connect,$sqlQuery);
+    echo "Record updated successfully";
+    // Remember name
     $_SESSION["name"] = $result["Fname"] . " " . $result["Lname"];
   header("Location: index.php");
     die();
 }
 else 
 {
-//if 1 is not returned, redirect to login page with e=2
+// if 1 is not returned, redirect to login page with e=2
    header("Location: ../index.php?e=2");
     die("Wrong information");
 }
