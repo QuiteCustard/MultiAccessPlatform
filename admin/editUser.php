@@ -11,9 +11,12 @@ if(isset($id)) {
     $email = $_POST['email'];
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
+    $job = $_POST['job'];
+    $access = $_POST['access'];
+    $course = $_POST['course'];
     if($totalrows > 0){
         // edit record
-        $sqlQuery="UPDATE `t_users` SET `email` = '$email', `Fname` = '$fname', `Lname` = '$lname' WHERE `UID` = $id;";
+        $sqlQuery="UPDATE `t_users` SET `Fname` = '$fname', `Lname` = '$lname', `Jobtitle` = '$job', `Email` = '$email', `Access` = '$access', `Currentcourse` = '$course' WHERE `t_users`.`UID` = $id;";
         mysqli_query($db_connect,$sqlQuery);
         echo "Record updated successfully";
     }
@@ -24,4 +27,3 @@ if(isset($id)) {
     echo "Failed to update record: No ID!";
 }
 exit;
-

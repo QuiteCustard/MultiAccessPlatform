@@ -5,7 +5,7 @@ if(isset($_POST['title'])){
 }
 if(isset($title)) {
     // Check record exists
-    $id = rand();
+    $id = rand(10,99999);
     $duration = $_POST['duration'];
     $description = $_POST['description'];
     $date = $_POST['date'];

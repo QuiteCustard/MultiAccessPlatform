@@ -40,11 +40,7 @@
                 <a class="collapse-item" id="user" href="#">Users</a>
                 <a class="collapse-item" href="#" id="course">Courses</a>
                 <a class="collapse-item" href="#" id="insert">Insert Users/Courses</a>
-                <a class="collapse-item" href="/forgot-password.html">Forgot Password</a>
                 <div class="collapse-divider"></div>
-                <h6 class="collapse-header">Other Pages:</h6>
-                <a class="collapse-item" href="/404.html">404 Page</a>
-                <a class="collapse-item" href="/blank.php">Blank Page</a>
             </div>
         </div>
     </li>
@@ -119,14 +115,6 @@
         <button id="forest" value="forest"></button>
 
     </div>
-
-
-    <!--<script>
-        Tooltips
-    $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip();
-    });
-    </script>-->
     <!-- Select theme depending on which button clicked -->
     <script>
         const themeBtns = document.querySelectorAll('.theme > button')

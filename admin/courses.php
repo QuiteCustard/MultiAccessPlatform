@@ -75,38 +75,30 @@ if ($auth == "admin") {
             // Find correct table data column
             const titleFieldChange = editButton.closest('tr').find('.titleResult');
             // Set variable to value of td column
-            const titleFieldValue = titleFieldChange.html();
-            // Set variable to value to fill the input
-            const titleCurrValue = titleFieldChange.html();
+            const titleCurrValue = titleFieldChange.text();
             // Set result as input with data inside
-            titleFieldChange.html(`<input class="form-control form-control-user primary" value="${titleFieldValue}" />`);
+            titleFieldChange.html(`<input class="form-control form-control-user primary" value="${titleCurrValue}" />`);
             // Date
             // Find correct table data column
             const dateFieldChange = editButton.closest('tr').find('.dateResult');
             // Set variable to value of td column
-            const dateFieldValue = dateFieldChange.html();
-            // Set variable to value to fill the input
-            const dateCurrValue = dateFieldChange.html();
+            const dateCurrValue = dateFieldChange.text();
             // Set result as input with data inside
             dateFieldChange.html(`<input type="text" id="datepicker" class="form-control form-control-user primary" value="${dateCurrValue}" />`);
             var picker = new Pikaday({
-                field: $('#datepicker')[0],
+                field: $('#datepicker')[0]
             });
             // Duration
             // Find correct table data column
             const durationFieldChange = editButton.closest('tr').find('.durationResult');
             // Set variable to value of td column
-            const durationFieldValue = durationFieldChange.html();
-            // Set variable to value to fill the input
-            const durationCurrValue = durationFieldChange.html();
+            const durationCurrValue = durationFieldChange.text();
             // Set result as input with data inside
             durationFieldChange.html(`<input class="form-control form-control-user primary" value="${durationCurrValue}" />`);
             // Find correct table data column
             const descriptionFieldChange = editButton.closest('tr').find('.descriptionResult');
             // Set variable to value of td column
-            const descriptionFieldValue = descriptionFieldChange.html();
-            // Set variable to value to fill the input
-            const descriptionCurrValue = descriptionFieldChange.html();
+            const descriptionCurrValue = descriptionFieldChange.text();
             // Set result as input with data inside
             // Description
             descriptionFieldChange.html(`<input class="form-control form-control-user primary" value="${descriptionCurrValue}" />`);
@@ -114,9 +106,7 @@ if ($auth == "admin") {
             // Find correct table data column
             const attendeesFieldChange = editButton.closest('tr').find('.attendeesResult');
             // Set variable to value of td column
-            const attendeesFieldValue = attendeesFieldChange.html();
-            // Set variable to value to fill the input
-            const attendeesCurrValue = attendeesFieldChange.html();
+            const attendeesCurrValue = attendeesFieldChange.text();
             // Set result as input with data inside
             attendeesFieldChange.html(`<input class="form-control form-control-user primary" value="${attendeesCurrValue}" />`);
             // Class change to be able to run save/cancel functions

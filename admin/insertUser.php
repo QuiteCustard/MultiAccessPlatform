@@ -5,7 +5,7 @@ if(isset($_POST['email'])){
 }
 if(isset($email)) {
     // Check record exists
-    $id = rand();
+    $id = rand(10,99999);
     $password = $_POST['password'];
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];

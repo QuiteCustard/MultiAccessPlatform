@@ -15,9 +15,9 @@ if ($result) {
     <!--<td>$result[Password]</td>-->
     <td class="fNameResult"><?= $result["Fname"] ?></td>
     <td class="lNameResult"><?= $result["Lname"] ?></td>
-    <td><?= $result["Jobtitle"] ?></td>
-    <td><?= $result["Access"] ?></td>
-    <td><?= $result["Currentcourse"] ?></td>
+    <td class="jobResult"><?= $result["Jobtitle"] ?></td>
+    <td class="accessResult"><?= $result["Access"] ?></td>
+    <td class="courseResult"><?= $result["Currentcourse"] ?></td>
     <td><?= $result["Timestamp"] ?></td>
     <td>
         <button id="editBtn" data-id="<?= $id ?>" class='btn bg-warning text-white edit'>Edit</button>

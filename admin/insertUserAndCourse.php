@@ -48,23 +48,25 @@
             <form class="user insertCourseForm">
                 <div class="form-group">
                     <label for="titleInput">Course Title:</label>
-                    <input type="text" class="form-control form-control-user primary" id="titleInput" placeholder="Enter course title ..." required>
+                    <input type="text" class="form-control form-control-user primary" id="titleInput" placeholder="Enter course title ..." required />
                 </div>
                 <div class="form-group">
                     <label for="dateInput">Course start date:</label>
-                    <input type="text" class="form-control form-control-user primary" id="dateInput" placeholder="Enter date..." required>
+                    <input type="text" id="datepicker" class="form-control form-control-user primary" placeholder="Enter start date..." />
+
+
                 </div>
                 <div class="form-group">
                     <label for="durationInput">Course duration:</label>
-                    <input type="text" class="form-control form-control-user primary" id="durationInput" placeholder="Enter course duration..." required>
+                    <input type="text" class="form-control form-control-user primary" id="durationInput" placeholder="Enter course duration..." required />
                 </div>
                 <div class="form-group">
                     <label for="descriptionInput">Course description:</label>
-                    <input type="text" class="form-control form-control-user primary" id="descriptionInput" placeholder="Enter course description..." required>
+                    <input type="text" class="form-control form-control-user primary" id="descriptionInput" placeholder="Enter course description..." required />
                 </div>
                 <div class="form-group">
                     <label for="attendeesInput">Course max attendees:</label>
-                    <input type="text" class="form-control form-control-user primary" id="attendeesInput" placeholder="Enter max attendees..." required>
+                    <input type="text" class="form-control form-control-user primary" id="attendeesInput" placeholder="Enter max attendees..." required />
                 </div>
                 <div class="form-group">
                     <a href="#" class="btn btn-success btn-user btn-block saveCourse">
@@ -82,6 +84,9 @@
 <!-- Jquery Ajax to post user data -->
 <script type="text/javascript">
     $(document).ready(function() {
+        var picker = new Pikaday({
+            field: $('#datepicker')[0]
+        });
         // User
         // Save user
         $('body').on('click', '.saveUser', function(e) {
@@ -95,21 +100,24 @@
             var course = $('#CourseInput').val();
             // Log user being created
             console.log('SAVING NEW USER ', email);
-            // AJAX Request
-            $.ajax({
-                url: 'insertUser.php',
-                type: 'POST',
-                data: {
-                    email: email,
-                    fname: fname,
-                    lname: lname,
-                    job: job,
-                    access: access,
-                    course: course
-                }
-            }).done(function(response) {
-                $('.insertUserForm').trigger("reset");
-            });
+            var c = confirm("Are you sure you want create this user with the specified details?");
+            if (c == true) {
+                // AJAX Request
+                $.ajax({
+                    url: 'insertUser.php',
+                    type: 'POST',
+                    data: {
+                        email: email,
+                        fname: fname,
+                        lname: lname,
+                        job: job,
+                        access: access,
+                        course: course
+                    }
+                }).done(function(response) {
+                    $('.insertUserForm').trigger("reset");
+                });
+            }
         });
         //Clear user form
         $('body').on('click', '.clearUser', function(e) {
@@ -127,20 +135,23 @@
             var attendees = $('#attendeesInput').val();
             // Log course being created
             console.log('SAVING NEW Course ', title);
-            // AJAX Request
-            $.ajax({
-                url: 'insertCourse.php',
-                type: 'POST',
-                data: {
-                    title: title,
-                    date: date,
-                    duration: duration,
-                    description: description,
-                    attendees: attendees
-                }
-            }).done(function(response) {
-                $('.insertCourseForm').trigger("reset");
-            });
+            var c = confirm("Are you sure you want create this course with the specified details?");
+            if (c == true) {
+                // AJAX Request
+                $.ajax({
+                    url: 'insertCourse.php',
+                    type: 'POST',
+                    data: {
+                        title: title,
+                        date: date,
+                        duration: duration,
+                        description: description,
+                        attendees: attendees
+                    }
+                }).done(function(response) {
+                    $('.insertCourseForm').trigger("reset");
+                });
+            }
         });
 
         //Clear course form
