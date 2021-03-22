@@ -153,7 +153,7 @@ if ($auth == "admin") {
             var course = $('.courseResult').find('input').val();
             // Check to confirm correct record
             var c = confirm("Are you sure you want to save the inputted details for this user?");
-            console.log('SAVING', saveid, email, fname, lname, job, access, course);
+            console.log('SAVING', saveid);
             if (c == true) {
                 // AJAX Request
                 $.ajax({
