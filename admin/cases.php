@@ -5,7 +5,8 @@ if (isset($_GET['case']))
     $case = $_GET['case'];
     switch ($case)
     {
-        // Get user data
+            // Get user data
+
         case "getUserData":
             $query = "SELECT * FROM `t_users`";
             $run = mysqli_query($db_connect, $query);
@@ -39,7 +40,8 @@ if (isset($_GET['case']))
                 }
             }
             break;
-        // Get course data
+            // Get course data
+
         case "getCourseData":
             $query = "SELECT * FROM `t_courses`";
             $run = mysqli_query($db_connect, $query);
@@ -72,26 +74,27 @@ if (isset($_GET['case']))
         case "getEnrolCourse":
             // Select all courses from database
             $query = "SELECT * FROM `t_courses`";
-            $run = mysqli_query($db_connect,$query);
-            $result =  mysqli_fetch_assoc($run);
-            if ($result) {
-              while ($result = mysqli_fetch_assoc($run)) {
-                //Display users in rows
-                $id= $result["CID"];
+            $run = mysqli_query($db_connect, $query);
+            $result = mysqli_fetch_assoc($run);
+            if ($result)
+            {
+                while ($result = mysqli_fetch_assoc($run))
+                {
+                    //Display users in rows
+                    $id = $result["CID"];
 ?>
 <tr>
-    <td class="titleResult"><?= $result["Title"] ?></td>
-    <td class="dateResult"><?= $result["Date"] ?></td>
-    <td class="durationResult"><?= $result["Duration"] ?></td>
-    <td class="descriptionResult"><?= $result["Description"] ?></td>
+    <td class="titleResult"><?=$result["Title"] ?></td>
+    <td class="dateResult"><?=$result["Date"] ?></td>
+    <td class="durationResult"><?=$result["Duration"] ?></td>
+    <td class="descriptionResult"><?=$result["Description"] ?></td>
     <td>
-        <button data-id='<?= $id ?>' class='btn bg-success text-white'>Enrol</button>
+        <button data-id='<?=$id ?>' class='btn bg-success text-white'>Enrol</button>
     </td>
 </tr>
 <?php
-  }
-}
-
+                }
+            }
 
         }
     }
@@ -100,7 +103,8 @@ if (isset($_GET['case']))
         $case = $_POST['case'];
         switch ($case)
         {
-            // delete user data
+                // delete user data
+
             case "deleteUser":
                 $id = 0;
                 if (isset($_POST['id']))
@@ -129,7 +133,8 @@ if (isset($_GET['case']))
                 echo 0;
                 exit;
             break;
-            // Get course data
+                // Get course data
+
             case "deleteCourse":
                 //Set id to correct UID
                 $id = 0;
@@ -162,7 +167,8 @@ if (isset($_GET['case']))
                 exit;
 
             break;
-            // save user data
+                // save user data
+
             case "saveUser":
                 //Set id to correct UID
                 if (isset($_POST['id']))
@@ -198,7 +204,8 @@ if (isset($_GET['case']))
                 }
                 exit;
             break;
-            // save course data
+                // save course data
+
             case "saveCourse":
                 //Set id to correct UID
                 if (isset($_POST['id']))
@@ -234,52 +241,60 @@ if (isset($_GET['case']))
                 exit;
             break;
             case "insertUser":
-                if(isset($_POST['email'])){
-    $email = mysqli_real_escape_string($db_connect,$_POST['email']);
-}
-if(isset($email)) {
-    // Check record exists
-    $id = rand(10,99999);
-    $password = $_POST['password'];
-    $fname = $_POST['fname'];
-    $lname = $_POST['lname'];
-    $job = $_POST['job'];
-    $access = $_POST['access'];
-    $course = $_POST['course'];
+                if (isset($_POST['email']))
+                {
+                    $email = mysqli_real_escape_string($db_connect, $_POST['email']);
+                }
+                if (isset($email))
+                {
+                    // Check record exists
+                    $id = rand(10, 99999);
+                    $password = $_POST['password'];
+                    $fname = $_POST['fname'];
+                    $lname = $_POST['lname'];
+                    $job = $_POST['job'];
+                    $access = $_POST['access'];
+                    $course = $_POST['course'];
 
-        // Insert new record
-$sqlQuery="INSERT INTO `t_users` (`UID`, `Fname`, `Lname`, `Jobtitle`, `Email`, `Password`, `Access`, `Currentcourse`, `Attempts`, `Timestamp`, `Serial`) VALUES ('$id', '$fname', '$lname', '$job', '$email', '$password', '$access', '$course', '0', current_timestamp(), NULL);";
-        mysqli_query($db_connect,$sqlQuery);
-        echo "Record updated successfully";
+                    // Insert new record
+                    $sqlQuery = "INSERT INTO `t_users` (`UID`, `Fname`, `Lname`, `Jobtitle`, `Email`, `Password`, `Access`, `Currentcourse`, `Attempts`, `Timestamp`, `Serial`) VALUES ('$id', '$fname', '$lname', '$job', '$email', '$password', '$access', '$course', '0', current_timestamp(), NULL);";
+                    mysqli_query($db_connect, $sqlQuery);
+                    echo "Record updated successfully";
 
-} else {
-    echo "Failed to update record: No ID!";
-}
-exit;
-                break;
+                }
+                else
+                {
+                    echo "Failed to update record: No ID!";
+                }
+                exit;
+            break;
             case "insertCourse":
-                if(isset($_POST['title'])){
-    $title = mysqli_real_escape_string($db_connect,$_POST['title']);
-}
-if(isset($title)) {
-    // Check record exists
-    $id = rand(10,99999);
-    $duration = $_POST['duration'];
-    $description = $_POST['description'];
-    $date = $_POST['date'];
-    $attendees = $_POST['attendees'];
-echo $date;
-        // Insert new record
-    $sqlQuery="INSERT INTO `t_courses` (`CID`, `Title`, `Date`, `Duration`, `Description`, `Timestamp`, `Max_attendees`) VALUES ('$id', '$title', '$date', '$duration', '$description', current_timestamp(), '$attendees');";
-    mysqli_query($db_connect,$sqlQuery);
-    echo "Record updated successfully";
+                if (isset($_POST['title']))
+                {
+                    $title = mysqli_real_escape_string($db_connect, $_POST['title']);
+                }
+                if (isset($title))
+                {
+                    // Check record exists
+                    $id = rand(10, 99999);
+                    $duration = $_POST['duration'];
+                    $description = $_POST['description'];
+                    $date = $_POST['date'];
+                    $attendees = $_POST['attendees'];
+                    echo $date;
+                    // Insert new record
+                    $sqlQuery = "INSERT INTO `t_courses` (`CID`, `Title`, `Date`, `Duration`, `Description`, `Timestamp`, `Max_attendees`) VALUES ('$id', '$title', '$date', '$duration', '$description', current_timestamp(), '$attendees');";
+                    mysqli_query($db_connect, $sqlQuery);
+                    echo "Record updated successfully";
 
-} else {
-    echo "Failed to update record: No ID!";
-}
-exit;
+                }
+                else
+                {
+                    echo "Failed to update record: No ID!";
+                }
+                exit;
 
-                break;
+            break;
 
         }
 
@@ -289,3 +304,4 @@ exit;
         echo "No case set";
         die();
     }
+
