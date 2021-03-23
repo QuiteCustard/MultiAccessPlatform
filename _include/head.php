@@ -15,6 +15,7 @@
     <link href="/css/custom.css" rel="stylesheet">
     <script src="/js/themeSwitcher.js" defer="defer"></script>
     <script src="/vendor/jquery/jquery.min.js"></script>
+<!--<script src="/js/custom.js"></script>-->
     <script src="https://www.google.com/recaptcha/api.js?render=6Le7Tm4aAAAAAOnwdIrgEorh4MnL8giOGo2N-z8-"></script>
     <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
