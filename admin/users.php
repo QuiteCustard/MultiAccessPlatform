@@ -28,19 +28,12 @@ if ($auth == "admin") {
 <!-- Jquery Ajax to get user data and display in <tbody>-->
 <script type="text/javascript">
     $(document).ready(function() {
-        var oldEmail = $('.emailResult').text();
-        var oldFname = $('.fNameResult').text();
-        var oldLname = $('.lNameResult').text();
-        var oldJob = $('.jobResult').text();
-        var oldAccess = $('.accessResult').text();
-        var oldCourse = $('.courseResult').text();
-
         function getData() {
             const getUserData = "getUserData";
             $.ajax({
                 url: 'cases.php',
                 type: 'GET',
-                data:{
+                data: {
                     case: getUserData
                 }
             }).done(function(response) {
@@ -228,6 +221,12 @@ if ($auth == "admin") {
             // Set cancel button to variable
             const cancelButton = $(e.target);
             var saveid = $(this).data('id').toString();
+            var oldEmail = $('.emailResult').text();
+            var oldFname = $('.fNameResult').text();
+            var oldLname = $('.lNameResult').text();
+            var oldJob = $('.jobResult').text();
+            var oldAccess = $('.accessResult').text();
+            var oldCourse = $('.courseResult').text();
             // Set save button to variable
             const saveButton = $(`.save[data-id=${saveid}]`);
             // Paste old values back into table so you don't need to refresh
