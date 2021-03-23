@@ -26,9 +26,14 @@ if ($auth == "admin") {
 <script type="text/javascript">
     $(document).ready(function() {
         function getData() {
+            const getCourseData = "getCourseData";
             $.ajax({
-                url: 'getCourse.php',
+                url: 'cases.php',
                 type: 'GET',
+                data: {
+                    case: getCourseData
+                }
+
             }).done(function(response) {
                 $('.courseTable').html(response);
             });
@@ -40,16 +45,18 @@ if ($auth == "admin") {
         $('body').off('click', '.delete').on('click', '.delete', function() {
             // Delete id
             var deleteid = $(this).data('id');
+            const deleteCase = "deleteCourse";
             console.log('DELETE', deleteid);
             // Check to confirm correct record
             var c = confirm("Are you sure you want delete this course?");
             if (c == true) {
                 // AJAX Request
                 $.ajax({
-                    url: 'deleteCourse.php',
+                    url: 'cases.php',
                     type: 'POST',
                     data: {
                         id: deleteid,
+                        case: deleteCase
                     }
                 }).done(function(response) {
                     getData();
@@ -127,6 +134,7 @@ if ($auth == "admin") {
             // Set save button to variable
             const saveButton = $(e.target);
             var saveid = $(this).data('id');
+            const saveCase = "saveCourse";
             // Set cancel button to variable
             const cancelButton = $(`.cancel[data-id=${saveid}]`);
             var title = $('.titleResult').find('input').val();
@@ -140,7 +148,7 @@ if ($auth == "admin") {
             var c = confirm("Are you sure you want to save the inputted details for this course?");
             if (c == true) {
                 $.ajax({
-                    url: 'editCourse.php',
+                    url: 'cases.php',
                     type: 'POST',
                     data: {
                         id: saveid,
@@ -148,7 +156,8 @@ if ($auth == "admin") {
                         date: date,
                         duration: duration,
                         description: description,
-                        attendees: attendees
+                        attendees: attendees,
+                        case:saveCase
                     }
                 }).done(function(response) {
                     //Restart timer
@@ -252,7 +261,7 @@ if ($auth == "admin") {
 <?php
 }
     // If not admin then display
-    elseif($auth == "admin")
+    elseif($auth == "user")
 {
         ?>
 <div class='table-responsive'>

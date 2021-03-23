@@ -36,9 +36,13 @@ if ($auth == "admin") {
         var oldCourse = $('.courseResult').text();
 
         function getData() {
+            const getUserData = "getUserData";
             $.ajax({
-                url: 'getUser.php',
+                url: 'cases.php',
                 type: 'GET',
+                data:{
+                    case: getUserData
+                }
             }).done(function(response) {
                 $('.userTable').html(response);
             });
@@ -49,16 +53,18 @@ if ($auth == "admin") {
         // Delete function
         $('body').off('click', '.delete').on('click', '.delete', function() {
             var deleteid = $(this).data('id');
+            const deleteCase = "deleteUser";
             console.log('DELETE', deleteid);
             // Check to confirm correct record
             var c = confirm("Are you sure you want delete this user?");
             if (c == true) {
                 // AJAX Request
                 $.ajax({
-                    url: 'deleteUser.php',
+                    url: 'cases.php',
                     type: 'POST',
                     data: {
                         id: deleteid,
+                        case: deleteCase
                     }
                 }).done(function(response) {
                     getData();
@@ -113,11 +119,7 @@ if ($auth == "admin") {
             // Set variable to value of td column
             const accessCurrValue = accessFieldChange.text();
             // Set result as input with data inside
-            accessFieldChange.html(`<select class="form-control form-control-user primary" id="access" name="access">
-    <option value="pending">Pending</option>
-    <option value="user" selected>User</option>
-    <option value="admin">Admin</option>
-  </select>`);
+            accessFieldChange.html(`<select class="form-control form-control-user primary" id="access" name="access"><option value="pending">Pending</option><option value="user" selected>User</option><option value="admin">Admin</option></select>`);
             // Current course
             // Find correct table data column
             const courseFieldChange = editButton.closest('tr').find('.courseResult');
@@ -143,6 +145,7 @@ if ($auth == "admin") {
             // Set save button to variable
             const saveButton = $(e.target);
             var saveid = $(this).data('id').toString();
+            const saveCase = "saveUser";
             // Set cancel button to variable
             const cancelButton = $(`.cancel[data-id=${saveid}]`);
             var email = $('.emailResult').find('input').val();
@@ -157,7 +160,7 @@ if ($auth == "admin") {
             if (c == true) {
                 // AJAX Request
                 $.ajax({
-                    url: 'editUser.php',
+                    url: 'cases.php',
                     type: 'POST',
                     data: {
                         id: saveid,
@@ -166,7 +169,8 @@ if ($auth == "admin") {
                         lname: lname,
                         job: job,
                         access: access,
-                        course: course
+                        course: course,
+                        case: saveCase
                     }
                 }).done(function(response) {
                     // Restart timer
