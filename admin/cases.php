@@ -69,6 +69,30 @@ if (isset($_GET['case']))
                 }
             }
             break;
+        case "getEnrolCourse":
+            // Select all courses from database
+            $query = "SELECT * FROM `t_courses`";
+            $run = mysqli_query($db_connect,$query);
+            $result =  mysqli_fetch_assoc($run);
+            if ($result) {
+              while ($result = mysqli_fetch_assoc($run)) {
+                //Display users in rows
+                $id= $result["CID"];
+?>
+<tr>
+    <td class="titleResult"><?= $result["Title"] ?></td>
+    <td class="dateResult"><?= $result["Date"] ?></td>
+    <td class="durationResult"><?= $result["Duration"] ?></td>
+    <td class="descriptionResult"><?= $result["Description"] ?></td>
+    <td>
+        <button data-id='<?= $id ?>' class='btn bg-success text-white'>Enrol</button>
+    </td>
+</tr>
+<?php
+  }
+}
+
+
         }
     }
     else if (isset($_POST['case']))
@@ -208,8 +232,55 @@ if (isset($_GET['case']))
                     echo "Failed to update record: No ID!";
                 }
                 exit;
-
             break;
+            case "insertUser":
+                if(isset($_POST['email'])){
+    $email = mysqli_real_escape_string($db_connect,$_POST['email']);
+}
+if(isset($email)) {
+    // Check record exists
+    $id = rand(10,99999);
+    $password = $_POST['password'];
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
+    $job = $_POST['job'];
+    $access = $_POST['access'];
+    $course = $_POST['course'];
+
+        // Insert new record
+$sqlQuery="INSERT INTO `t_users` (`UID`, `Fname`, `Lname`, `Jobtitle`, `Email`, `Password`, `Access`, `Currentcourse`, `Attempts`, `Timestamp`, `Serial`) VALUES ('$id', '$fname', '$lname', '$job', '$email', '$password', '$access', '$course', '0', current_timestamp(), NULL);";
+        mysqli_query($db_connect,$sqlQuery);
+        echo "Record updated successfully";
+
+} else {
+    echo "Failed to update record: No ID!";
+}
+exit;
+                break;
+            case "insertCourse":
+                if(isset($_POST['title'])){
+    $title = mysqli_real_escape_string($db_connect,$_POST['title']);
+}
+if(isset($title)) {
+    // Check record exists
+    $id = rand(10,99999);
+    $duration = $_POST['duration'];
+    $description = $_POST['description'];
+    $date = $_POST['date'];
+    $attendees = $_POST['attendees'];
+echo $date;
+        // Insert new record
+    $sqlQuery="INSERT INTO `t_courses` (`CID`, `Title`, `Date`, `Duration`, `Description`, `Timestamp`, `Max_attendees`) VALUES ('$id', '$title', '$date', '$duration', '$description', current_timestamp(), '$attendees');";
+    mysqli_query($db_connect,$sqlQuery);
+    echo "Record updated successfully";
+
+} else {
+    echo "Failed to update record: No ID!";
+}
+exit;
+
+                break;
+
         }
 
     }
@@ -218,4 +289,3 @@ if (isset($_GET['case']))
         echo "No case set";
         die();
     }
-

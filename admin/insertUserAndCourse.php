@@ -91,6 +91,7 @@
         // Save user
         $('body').on('click', '.saveUser', function(e) {
             const saveButton = $(e.target);
+            const insertUser = "insertUser";
             var email = $('#emailInput').val();
             var password = $('#passwordInput').val();
             var fname = $('#fnameInput').val();
@@ -104,7 +105,7 @@
             if (c == true) {
                 // AJAX Request
                 $.ajax({
-                    url: 'insertUser.php',
+                    url: 'cases.php',
                     type: 'POST',
                     data: {
                         email: email,
@@ -112,7 +113,8 @@
                         lname: lname,
                         job: job,
                         access: access,
-                        course: course
+                        course: course,
+                        case: insertUser
                     }
                 }).done(function(response) {
                     $('.insertUserForm').trigger("reset");
@@ -128,6 +130,7 @@
         // Save course
         $('body').on('click', '.saveCourse', function(e) {
             const saveButton = $(e.target);
+            const insertCourse = "insertCourse";
             var title = $('#titleInput').val();
             var date = $('#dateInput').val();
             var duration = $('#durationInput').val();
@@ -139,14 +142,15 @@
             if (c == true) {
                 // AJAX Request
                 $.ajax({
-                    url: 'insertCourse.php',
+                    url: 'cases.php',
                     type: 'POST',
                     data: {
                         title: title,
                         date: date,
                         duration: duration,
                         description: description,
-                        attendees: attendees
+                        attendees: attendees,
+                        case: insertCourse
                     }
                 }).done(function(response) {
                     $('.insertCourseForm').trigger("reset");
