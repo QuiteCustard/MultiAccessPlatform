@@ -22,6 +22,19 @@ if ($auth == "admin") {
         <tbody class="courseTable"></tbody>
     </table>
 </div>
+<div class='table-responsive'>
+    <table class='table table-hover'>
+        <thead>
+            <tr>
+                <th scope='col'>CID</th>
+                <th scope='col'>Title</th>
+                <th scope='col' id='enrol'>Enrol</th>
+
+            </tr>
+        </thead>
+        <tbody class="courseEnrolTable"></tbody>
+    </table>
+</div>
 <!-- Jquery Ajax to get user data and display in <tbody>-->
 <script type="text/javascript">
     $(document).ready(function() {
@@ -39,6 +52,22 @@ if ($auth == "admin") {
             });
         }
         getData();
+
+        function getCourseData() {
+            const getEnrolCourse = "getEnrolCourse";
+            $.ajax({
+                url: 'cases.php',
+                type: 'GET',
+                data: {
+                    case: getEnrolCourse
+                }
+
+            }).done(function(response) {
+                $('.courseEnrolTable').html(response);
+            });
+        }
+
+        getCourseData();
         // Update table every 60 seconds
         var intervalTiming = setInterval(getData, 60000);
         // Delete
@@ -157,7 +186,7 @@ if ($auth == "admin") {
                         duration: duration,
                         description: description,
                         attendees: attendees,
-                        case:saveCase
+                        case: saveCase
                     }
                 }).done(function(response) {
                     //Restart timer
@@ -255,7 +284,31 @@ if ($auth == "admin") {
             saveButton.removeClass('bg-success save');
             saveButton.addClass('bg-warning');
         });
-    });
+
+
+        $('body').off('click', '.enrol').on('click', '.enrol', function(e) {
+            const enrolButton = $(e.target);
+            const insertUserToCourse = "insertUserToCourse";
+            var userToCourseid = $(this).data('id');
+            // Log course being created
+            console.log('SAVING User to Course ', userToCourseid);
+            var c = confirm("Are you sure you want to enrol on this course?");
+            if (c == true) {
+                // AJAX Request
+                $.ajax({
+                    url: 'cases.php',
+                    type: 'POST',
+                    data: {
+                        id:userToCourseid,
+                        case: insertUserToCourse
+                    }
+                }).done(function(response) {
+                    console.log(response);
+                });
+            }
+        });
+        });
+
 
 </script>
 <?php

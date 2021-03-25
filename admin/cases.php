@@ -1,5 +1,6 @@
 <?php
 require_once ("connect.php");
+session_start();
 if (isset($_GET['case']))
 {
     $case = $_GET['case'];
@@ -84,12 +85,10 @@ if (isset($_GET['case']))
                     $id = $result["CID"];
 ?>
 <tr>
+    <td><?=$id ?></td>
     <td class="titleResult"><?=$result["Title"] ?></td>
-    <td class="dateResult"><?=$result["Date"] ?></td>
-    <td class="durationResult"><?=$result["Duration"] ?></td>
-    <td class="descriptionResult"><?=$result["Description"] ?></td>
     <td>
-        <button data-id='<?=$id ?>' class='btn bg-success text-white'>Enrol</button>
+        <button data-id='<?=$id ?>' class='btn bg-success text-white enrol'>Enrol</button>
     </td>
 </tr>
 <?php
@@ -295,7 +294,28 @@ if (isset($_GET['case']))
                 exit;
 
             break;
+            case "insertUserToCourse":
+               // die("die at case");
+                if (isset($_POST['id']))
+                {
+                    $id = mysqli_real_escape_string($db_connect, $_POST['id']);
+                }
+                if (isset($id))
+                {
 
+                   $courses_sql = "INSERT INTO t_enrolment (UID, CID) VALUES (" . $_SESSION['userid']  ." , $id);";
+
+                   // $sqlQuery = "UPDATE `t_users` SET `Currentcourse` = '$course' WHERE `t_users`.`UID` = $id;";
+                    mysqli_query($db_connect, $courses_sql);
+                    echo "Record updated successfully";
+
+                }
+                else
+                {
+                    echo "Failed to update record: No ID!";
+                }
+                exit;
+            break;
         }
 
     }
@@ -304,4 +324,3 @@ if (isset($_GET['case']))
         echo "No case set";
         die();
     }
-

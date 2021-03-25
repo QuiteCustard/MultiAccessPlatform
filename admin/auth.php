@@ -53,6 +53,7 @@ $count = mysqli_num_rows($run);
 if ($count === 1){
     // Check access level
     $access = $result["Access"];
+    $userid = $result["UID"];
   // let us log in
     session_start();
     $_SESSION["auth"] = $access;
@@ -63,6 +64,7 @@ if ($count === 1){
     echo "Record updated successfully";
     // Remember name
     $_SESSION["name"] = $result["Fname"] . " " . $result["Lname"];
+    $_SESSION["userid"] = $userid;
   header("Location: index.php");
     die();
 }

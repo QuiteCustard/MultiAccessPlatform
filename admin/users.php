@@ -119,7 +119,7 @@ if ($auth == "admin") {
             // Set variable to value of td column
             const courseCurrValue = courseFieldChange.text();
             // Set result as input with data inside
-            courseFieldChange.html(`<input class="form-control form-control-user primary" value="${courseCurrValue}" />`);
+            courseFieldChange.html(`<select class="form-control form-control-user primary" id="access" name="access"><option value="">OPTIONS HERE</option></select>`);
             // Class change to be able to run save & cancel functions
             // Turn edit button into save button
             editButton.html('Save');
