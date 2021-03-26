@@ -9,91 +9,83 @@ if (isset($_GET['case']))
             // Get user data
 
         case "getUserData":
-            $query = "SELECT * FROM `t_users`";
-            $run = mysqli_query($db_connect, $query);
-            $result = mysqli_fetch_assoc($run);
-            if ($result)
-            {
-                while ($result = mysqli_fetch_assoc($run))
-                {
-                    //Display users in rows
-                    $id = $result["UID"];
-?>
-<tr>
-    <td><?=$id?></td>
-    <td class="emailResult"><?=$result["Email"] ?></td>
-    <!--<td>$result[Password]</td>-->
-    <td class="fNameResult"><?=$result["Fname"] ?></td>
-    <td class="lNameResult"><?=$result["Lname"] ?></td>
-    <td class="jobResult"><?=$result["Jobtitle"] ?></td>
-    <td class="accessResult"><?=$result["Access"] ?></td>
-    <td class="courseResult"><?=$result["Currentcourse"] ?></td>
-    <td><?=$result["Timestamp"] ?></td>
-    <td>
-        <button id="editBtn" data-id="<?=$id ?>" class='btn bg-warning text-white edit'>Edit</button>
-    </td>
-    <td>
-        <button id="deleteBtn" data-id='<?=$id ?>' class='btn bg-danger text-white delete'>Delete</button>
-    </td>
-</tr>
+$query = "SELECT * FROM `t_users`";
+$result = mysqli_query($db_connect, $query);
 
-<?php
-                }
-            }
+if (mysqli_num_rows($result) > 0) {
+    // output data of each row
+
+    while($row = mysqli_fetch_assoc($result)) {
+
+        echo "<tr>";
+        echo "<td class='idResult'>".$row['UID']."</td>";
+        echo "<td class='emailResult'>".$row['Email']."</td>";
+        echo "<td class='fNameResult'>".$row['Fname']."</td>";
+        echo "<td class='lNameResult'>".$row['Lname']."</td>";
+        echo "<td class='jobResult'>".$row['Jobtitle']."</td>";
+        echo "<td class='accessResult'>".$row['Access']."</td>";
+        echo "<td class='courseResult'>".$row['Currentcourse']."</td>";
+        echo "<td>".$row['Timestamp']."</td>";
+        echo "<td><button data-id='".$row['UID']."'class='btn bg-warning text-white edit'>Edit</button></td>";
+        echo "<td><button data-id='".$row['UID']."'class='btn bg-danger text-white delete'>Delete</button></td>";
+        echo"</tr>";
+    }
+
+}
+            else {
+    echo "0 results";
+}
+
             break;
             // Get course data
 
         case "getCourseData":
+
             $query = "SELECT * FROM `t_courses`";
-            $run = mysqli_query($db_connect, $query);
-            $result = mysqli_fetch_assoc($run);
-            if ($result)
-            {
-                while ($result = mysqli_fetch_assoc($run))
-                {
-                    //Display users in rows
-                    $id = $result["CID"]; ?>
-<tr>
-    <td><?=$id?></td>
-    <td class="titleResult"><?=$result["Title"] ?></td>
-    <td class="dateResult"><?=$result["Date"] ?></td>
-    <td class="durationResult"><?=$result["Duration"] ?></td>
-    <td class="descriptionResult"><?=$result["Description"] ?></td>
-    <td class="attendeesResult"><?=$result["Max_attendees"] ?></td>
-    <td><?=$result["Timestamp"] ?></td>
-    <td>
-        <button data-id="<?=$id ?>" class='btn bg-warning text-white edit'>Edit</button>
-    </td>
-    <td>
-        <button data-id='<?=$id ?>' class='btn bg-danger text-white delete'>Delete</button>
-    </td>
-</tr>
-<?php
-                }
+$result = mysqli_query($db_connect, $query);
+
+if (mysqli_num_rows($result) > 0) {
+    // output data of each row
+    while($row = mysqli_fetch_assoc($result)) {
+
+        echo "<tr>";
+        echo "<td class='idResult'>".$row['CID']."</td>";
+        echo "<td class='titleResult'>".$row['Title']."</td>";
+        echo "<td class='dateResult'>".$row['Date']."</td>";
+        echo "<td class='durationResult'>".$row['Duration']."</td>";
+        echo "<td class='descriptionResult'>".$row['Description']."</td>";
+        echo "<td class='attendeesResult'>".$row['Max_attendees']."</td>";
+        echo "<td>".$row['Timestamp']."</td>";
+        echo "<td><button data-id='".$row['CID']."'class='btn bg-warning text-white edit'>Edit</button></td>";
+        echo "<td><button data-id='".$row['CID']."'class='btn bg-danger text-white delete'>Delete</button></td>";
+        echo"</tr>";
+    }
+
+}
+            else {
+                echo "0 results";
             }
+
             break;
         case "getEnrolCourse":
             // Select all courses from database
             $query = "SELECT * FROM `t_courses`";
-            $run = mysqli_query($db_connect, $query);
-            $result = mysqli_fetch_assoc($run);
-            if ($result)
-            {
-                while ($result = mysqli_fetch_assoc($run))
-                {
-                    //Display users in rows
-                    $id = $result["CID"];
-?>
-<tr>
-    <td><?=$id ?></td>
-    <td class="titleResult"><?=$result["Title"] ?></td>
-    <td>
-        <button data-id='<?=$id ?>' class='btn bg-success text-white enrol'>Enrol</button>
-    </td>
-</tr>
-<?php
+            $result = mysqli_query($db_connect, $query);
+
+            if (mysqli_num_rows($result) > 0) {
+                // output data of each row
+                while($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>";
+                    echo "<td class='idResult'>".$row['CID']."</td>";
+                    echo "<td class='titleResult'>".$row['Title']."</td>";
+                    echo "<td><button data-id='".$row['CID']."'class='btn bg-success text-white enrol'>Enrol</button></td>";
+                    echo"</tr>";
                 }
             }
+            else {
+                echo "0 results";
+            }
+
 
         }
     }
@@ -110,7 +102,11 @@ if (isset($_GET['case']))
                 {
                     $id = mysqli_real_escape_string($db_connect, $_POST['id']);
                 }
-                if ($id > 0)
+                if ($id==1)
+                {
+                    die("You cannot delete this account");
+                }
+               elseif ($id > 0)
                 {
                     // Check record exists
                     $checkRecord = mysqli_query($db_connect, "SELECT * FROM `t_users` WHERE `t_users`.`UID`=" . $id);
@@ -167,7 +163,19 @@ if (isset($_GET['case']))
 
             break;
                 // save user data
-
+            case "editUser":
+            $query = "SELECT `Title` FROM `t_courses`";
+            $run = mysqli_query($db_connect, $query);
+            $result = mysqli_fetch_assoc($run);
+            $course_options ="";
+            while ($result = mysqli_fetch_assoc($run))
+            {
+                 //Display users in rows
+                $title = $result["Title"];
+                $course_options .= "<option value='$title'>$title</option>";
+            }
+            echo $course_option = '<select class="form-control form-control-user primary" id="course" name="course_option">'.$course_options.'</select>';
+                break;
             case "saveUser":
                 //Set id to correct UID
                 if (isset($_POST['id']))
@@ -298,11 +306,10 @@ if (isset($_GET['case']))
                // die("die at case");
                 if (isset($_POST['id']))
                 {
-                    $id = mysqli_real_escape_string($db_connect, $_POST['id']);
+                    $id = json_decode($userid);
                 }
                 if (isset($id))
                 {
-
                    $courses_sql = "INSERT INTO t_enrolment (UID, CID) VALUES (" . $_SESSION['userid']  ." , $id);";
 
                    // $sqlQuery = "UPDATE `t_users` SET `Currentcourse` = '$course' WHERE `t_users`.`UID` = $id;";

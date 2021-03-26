@@ -53,7 +53,7 @@ if ($auth == "admin") {
         }
         getData();
 
-        function getCourseData() {
+        function getEnrolCourseData() {
             const getEnrolCourse = "getEnrolCourse";
             $.ajax({
                 url: 'cases.php',
@@ -67,7 +67,7 @@ if ($auth == "admin") {
             });
         }
 
-        getCourseData();
+        getEnrolCourseData();
         // Update table every 60 seconds
         var intervalTiming = setInterval(getData, 60000);
         // Delete
@@ -242,37 +242,8 @@ if ($auth == "admin") {
             var saveid = $(this).data('id').toString();
             // Set save button to variable
             const saveButton = $(`.save[data-id=${saveid}]`);
-            var title = $('.titleResult').find('input').val();
-            var date = $('.dateResult').find('input').val();
-            var duration = $('.durationResult').find('input').val();
-            var description = $('.descriptionResult').find('input').val();
-            var attendees = $('.attendeesResult').find('input').val();
             // Paste old values back into table so you don't need to refresh
-            // Title
-            const newTitleValue = title;
-            const titleField = cancelButton.closest('tr').find('.titleResult');
-            const titleValue = titleField.html();
-            titleField.html(newTitleValue);
-            // Date
-            const newDateValue = date;
-            const dateField = cancelButton.closest('tr').find('.dateResult');
-            const dateValue = dateField.html();
-            dateField.html(newDateValue);
-            // Duration
-            const newDurationValue = duration;
-            const durationField = cancelButton.closest('tr').find('.durationResult');
-            const durationValue = durationField.html();
-            durationField.html(newDurationValue);
-            // Description
-            const newDescriptionValue = description;
-            const descriptionField = cancelButton.closest('tr').find('.descriptionResult');
-            const descriptionValue = descriptionField.html();
-            descriptionField.html(newDescriptionValue);
-            // Attendees
-            const newAttendeesValue = attendees;
-            const attendeesField = cancelButton.closest('tr').find('.attendeesResult');
-            const attendeesValue = attendeesField.html();
-            attendeesField.html(newAttendeesValue);
+            getData();
             // Turn cancel button into delete button
             cancelButton.html('Delete');
             cancelButton.addClass('delete');
@@ -289,9 +260,8 @@ if ($auth == "admin") {
         $('body').off('click', '.enrol').on('click', '.enrol', function(e) {
             const enrolButton = $(e.target);
             const insertUserToCourse = "insertUserToCourse";
-            var userToCourseid = $(this).data('id');
             // Log course being created
-            console.log('SAVING User to Course ', userToCourseid);
+            console.log('ENROLING on course');
             var c = confirm("Are you sure you want to enrol on this course?");
             if (c == true) {
                 // AJAX Request
@@ -299,7 +269,6 @@ if ($auth == "admin") {
                     url: 'cases.php',
                     type: 'POST',
                     data: {
-                        id:userToCourseid,
                         case: insertUserToCourse
                     }
                 }).done(function(response) {

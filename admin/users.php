@@ -58,6 +58,8 @@ if ($auth == "admin") {
                     data: {
                         id: deleteid,
                         case: deleteCase
+                    },success: function(data){
+                        console.log(data);
                     }
                 }).done(function(response) {
                     getData();
@@ -118,8 +120,17 @@ if ($auth == "admin") {
             const courseFieldChange = editButton.closest('tr').find('.courseResult');
             // Set variable to value of td column
             const courseCurrValue = courseFieldChange.text();
-            // Set result as input with data inside
-            courseFieldChange.html(`<select class="form-control form-control-user primary" id="access" name="access"><option value="">OPTIONS HERE</option></select>`);
+            const editCase = "editUser";
+            $.ajax({
+                    url: 'cases.php',
+                    type: 'POST',
+                    data: {
+                        case: editCase
+                    }
+                }).done(function(response) {
+                    // Set result as input with data inside
+                   courseFieldChange.html(response);
+                });
             // Class change to be able to run save & cancel functions
             // Turn edit button into save button
             editButton.html('Save');
@@ -146,7 +157,7 @@ if ($auth == "admin") {
             var lname = $('.lNameResult').find('input').val();
             var job = $('.jobResult').find('input').val();
             var access = $('.accessResult').find('select').val();
-            var course = $('.courseResult').find('input').val();
+            var course = $('.courseResult').find('select').val();
             // Check to confirm correct record
             var c = confirm("Are you sure you want to save the inputted details for this user?");
             console.log('SAVING', saveid);
@@ -220,40 +231,11 @@ if ($auth == "admin") {
         $('body').off('click', '.cancel').on('click', '.cancel', function(e) {
             // Set cancel button to variable
             const cancelButton = $(e.target);
-            var saveid = $(this).data('id').toString();
-            var oldEmail = $('.emailResult').text();
-            var oldFname = $('.fNameResult').text();
-            var oldLname = $('.lNameResult').text();
-            var oldJob = $('.jobResult').text();
-            var oldAccess = $('.accessResult').text();
-            var oldCourse = $('.courseResult').text();
             // Set save button to variable
+            var saveid = $(this).data('id').toString();
             const saveButton = $(`.save[data-id=${saveid}]`);
             // Paste old values back into table so you don't need to refresh
-            // Email
-            const oldEmailValue = oldEmail;
-            const emailField = cancelButton.closest('tr').find('.emailResult');
-            emailField.html(oldEmailValue);
-            // Fname
-            const oldFnameValue = oldFname;
-            const fNameField = cancelButton.closest('tr').find('.fNameResult');
-            fNameField.html(oldFnameValue);
-            // Lname
-            const oldLnameValue = oldLname;
-            const lNameField = cancelButton.closest('tr').find('.lNameResult');
-            lNameField.html(oldLnameValue);
-            // Job
-            const oldJobValue = oldJob;
-            const jobField = saveButton.closest('tr').find('.jobResult');
-            jobField.html(oldJobValue);
-            // Access
-            const oldAccessValue = oldAccess;
-            const accessField = saveButton.closest('tr').find('.accessResult');
-            accessField.html(oldAccessValue);
-            // Course
-            const oldCourseValue = oldCourse;
-            const courseField = saveButton.closest('tr').find('.courseResult');
-            courseField.html(oldCourseValue);
+            getData();
             // Turn cancel button into delete button
             cancelButton.html('Delete');
             cancelButton.addClass('delete');

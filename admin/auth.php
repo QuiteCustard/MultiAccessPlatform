@@ -65,7 +65,8 @@ if ($count === 1){
     // Remember name
     $_SESSION["name"] = $result["Fname"] . " " . $result["Lname"];
     $_SESSION["userid"] = $userid;
-  header("Location: index.php");
+    echo json_encode($userid);
+    header("Location: index.php");
     die();
 }
 else 
