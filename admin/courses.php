@@ -66,7 +66,6 @@ if ($auth == "admin") {
                 $('.courseEnrolTable').html(response);
             });
         }
-
         getEnrolCourseData();
         // Update table every 60 seconds
         var intervalTiming = setInterval(getData, 60000);
@@ -256,10 +255,11 @@ if ($auth == "admin") {
             saveButton.addClass('bg-warning');
         });
 
-
+        //Enrol
         $('body').off('click', '.enrol').on('click', '.enrol', function(e) {
             const enrolButton = $(e.target);
             const insertUserToCourse = "insertUserToCourse";
+            var enrolid = $(this).data('id');
             // Log course being created
             console.log('ENROLING on course');
             var c = confirm("Are you sure you want to enrol on this course?");
@@ -269,6 +269,7 @@ if ($auth == "admin") {
                     url: 'cases.php',
                     type: 'POST',
                     data: {
+                        id: enrolid,
                         case: insertUserToCourse
                     }
                 }).done(function(response) {

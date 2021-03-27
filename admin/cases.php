@@ -9,8 +9,8 @@ if (isset($_GET['case']))
             // Get user data
 
         case "getUserData":
-$query = "SELECT * FROM `t_users`";
-$result = mysqli_query($db_connect, $query);
+        $query = "SELECT * FROM `t_users`";
+        $result = mysqli_query($db_connect, $query);
 
 if (mysqli_num_rows($result) > 0) {
     // output data of each row
@@ -164,18 +164,47 @@ if (mysqli_num_rows($result) > 0) {
             break;
                 // save user data
             case "editUser":
-            $query = "SELECT `Title` FROM `t_courses`";
-            $run = mysqli_query($db_connect, $query);
-            $result = mysqli_fetch_assoc($run);
-            $course_options ="";
-            while ($result = mysqli_fetch_assoc($run))
-            {
-                 //Display users in rows
-                $title = $result["Title"];
-                $course_options .= "<option value='$title'>$title</option>";
+            function courseValF($db_connect){
+                $query = "SELECT `Title` FROM `t_courses`";
+                $run = mysqli_query($db_connect, $query);
+                $result = mysqli_fetch_assoc($run);
+                // Get Course current value
+                $course = $_POST["courseVal"];
+                $course_options ="";
+                while ($result = mysqli_fetch_assoc($run))
+                {
+                    //Display course titles as options
+                    $title = $result["Title"];
+                    $course_options .= "<option value='$title'";
+                    if ($title == $course) {
+                      $course_options .= "selected='selected'";
+                    }
+                    $course_options .= ">$title</option>";
+                }
+                echo $course_option = '<select class="form-control form-control-user primary" id="course" name="course_option">'.$course_options.'</select>';
             }
-            echo $course_option = '<select class="form-control form-control-user primary" id="course" name="course_option">'.$course_options.'</select>';
-                break;
+            courseValF($db_connect);
+            function accessValF($db_connect){
+                $query = "SELECT `Access` FROM `t_users`";
+                $run = mysqli_query($db_connect, $query);
+                $result = mysqli_fetch_assoc($run);
+                // Get Access current value
+                $access = $_POST["accessVal"];
+                $access_options ="";
+                while ($result = mysqli_fetch_assoc($run))
+                {
+                    //Display course titles as options
+                    $accessVal = $result["Access"];
+                    $access_options .= "<option value='$accessVal'";
+                    if ($accessVal == $access) {
+                      $access_options .= "selected='selected'";
+                    }
+                    $access_options .= ">$accessVal</option>";
+                }
+                echo $access_option = '<select class="form-control form-control-user primary" id="access" name="access_option">'.$access_options.'</select>';
+                }
+            accessValF($db_connect);
+            break;
             case "saveUser":
                 //Set id to correct UID
                 if (isset($_POST['id']))
@@ -306,13 +335,11 @@ if (mysqli_num_rows($result) > 0) {
                // die("die at case");
                 if (isset($_POST['id']))
                 {
-                    $id = json_decode($userid);
+                    $id = $_POST['id'];
                 }
                 if (isset($id))
                 {
                    $courses_sql = "INSERT INTO t_enrolment (UID, CID) VALUES (" . $_SESSION['userid']  ." , $id);";
-
-                   // $sqlQuery = "UPDATE `t_users` SET `Currentcourse` = '$course' WHERE `t_users`.`UID` = $id;";
                     mysqli_query($db_connect, $courses_sql);
                     echo "Record updated successfully";
 

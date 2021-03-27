@@ -113,8 +113,6 @@ if ($auth == "admin") {
             const accessFieldChange = editButton.closest('tr').find('.accessResult');
             // Set variable to value of td column
             const accessCurrValue = accessFieldChange.text();
-            // Set result as input with data inside
-            accessFieldChange.html(`<select class="form-control form-control-user primary" id="access" name="access"><option value="pending">Pending</option><option value="user" selected>User</option><option value="admin">Admin</option></select>`);
             // Current course
             // Find correct table data column
             const courseFieldChange = editButton.closest('tr').find('.courseResult');
@@ -125,11 +123,14 @@ if ($auth == "admin") {
                     url: 'cases.php',
                     type: 'POST',
                     data: {
-                        case: editCase
+                        case: editCase,
+                        courseVal: courseCurrValue,
+                        accessVal: accessCurrValue
                     }
                 }).done(function(response) {
                     // Set result as input with data inside
-                   courseFieldChange.html(response);
+                    courseFieldChange.html(response);
+                    accessFieldChange.html(response);
                 });
             // Class change to be able to run save & cancel functions
             // Turn edit button into save button
