@@ -128,9 +128,10 @@ if ($auth == "admin") {
                         accessVal: accessCurrValue
                     }
                 }).done(function(response) {
-                    // Set result as input with data inside
-                    courseFieldChange.html(response);
-                    accessFieldChange.html(response);
+                // Set result as input with data inside
+                alert(this.responseText);
+               // courseFieldChange.html(selectAccess);
+               // accessFieldChange.html(selectCourse);
                 });
             // Class change to be able to run save & cancel functions
             // Turn edit button into save button

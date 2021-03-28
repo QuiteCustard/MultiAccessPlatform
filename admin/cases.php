@@ -181,7 +181,8 @@ if (mysqli_num_rows($result) > 0) {
                     }
                     $course_options .= ">$title</option>";
                 }
-                echo $course_option = '<select class="form-control form-control-user primary" id="course" name="course_option">'.$course_options.'</select>';
+                 $selectCourse = '<select class="form-control form-control-user primary" id="course" name="course_option">'.$course_options.'</select>';
+                echo $selectCourse;
             }
             courseValF($db_connect);
             function accessValF($db_connect){
@@ -201,7 +202,9 @@ if (mysqli_num_rows($result) > 0) {
                     }
                     $access_options .= ">$accessVal</option>";
                 }
-                echo $access_option = '<select class="form-control form-control-user primary" id="access" name="access_option">'.$access_options.'</select>';
+                $selectAccess = "<select class='form-control form-control-user primary' id='access' name='access_option'>'.$access_options.'</select>";
+
+                echo $jsonSelect = json_encode($selectAccess);
                 }
             accessValF($db_connect);
             break;
