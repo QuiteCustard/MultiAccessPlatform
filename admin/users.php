@@ -118,20 +118,29 @@ if ($auth == "admin") {
             const courseFieldChange = editButton.closest('tr').find('.courseResult');
             // Set variable to value of td column
             const courseCurrValue = courseFieldChange.text();
-            const editCase = "editUser";
+            const editCourse = "editCourse";
             $.ajax({
                     url: 'cases.php',
                     type: 'POST',
                     data: {
-                        case: editCase,
-                        courseVal: courseCurrValue,
+                        case: editCourse,
+                        courseVal: courseCurrValue
+                    }
+                }).done(function(response) {
+                    // Set result as input with data inside
+                    courseFieldChange.html(response);
+                });
+            const editAccess = "editAccess";
+            $.ajax({
+                    url: 'cases.php',
+                    type: 'POST',
+                    data: {
+                        case: editAccess,
                         accessVal: accessCurrValue
                     }
                 }).done(function(response) {
-                // Set result as input with data inside
-                alert(this.responseText);
-               // courseFieldChange.html(selectAccess);
-               // accessFieldChange.html(selectCourse);
+                    // Set result as input with data inside
+                    accessFieldChange.html(response);
                 });
             // Class change to be able to run save & cancel functions
             // Turn edit button into save button
@@ -183,35 +192,24 @@ if ($auth == "admin") {
                     intervalTiming = setInterval(getData(), 60000);
                     // Paste new values back into table so you don't need to refresh
                     // Email
-                    const newEmailValue = email;
                     const emailField = saveButton.closest('tr').find('.emailResult');
-                    const emailValue = emailField.html();
-                    emailField.html(newEmailValue);
+                    // const emailValue = emailField.html();
+                    emailField.html(email);
                     // Fname
-                    const newFnameValue = fname;
                     const fNameField = saveButton.closest('tr').find('.fNameResult');
-                    const FnameValue = fNameField.html();
-                    fNameField.html(newFnameValue);
+                    fNameField.html(fname);
                     // Lname
-                    const newLnameValue = lname;
                     const lNameField = saveButton.closest('tr').find('.lNameResult');
-                    const LnameValue = lNameField.html();
-                    lNameField.html(newLnameValue);
+                    lNameField.html(lname);
                     // Job
-                    const newJobValue = job;
                     const jobField = saveButton.closest('tr').find('.jobResult');
-                    const jobValue = jobField.html();
-                    jobField.html(newJobValue);
+                    jobField.html(job);
                     // Access
-                    const newAccessValue = access;
                     const accessField = saveButton.closest('tr').find('.accessResult');
-                    const accessValue = accessField.html();
-                    accessField.html(newAccessValue);
+                    accessField.html(access);
                     // Course
-                    const newCourseValue = course;
                     const courseField = saveButton.closest('tr').find('.courseResult');
-                    const courseValue = courseField.html();
-                    courseField.html(newCourseValue);
+                    courseField.html(course);
                     // Turn save button into edit button
                     saveButton.html('Edit');
                     saveButton.addClass('edit');

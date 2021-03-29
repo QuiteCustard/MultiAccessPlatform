@@ -163,51 +163,54 @@ if (mysqli_num_rows($result) > 0) {
 
             break;
                 // save user data
-            case "editUser":
-            function courseValF($db_connect){
-                $query = "SELECT `Title` FROM `t_courses`";
-                $run = mysqli_query($db_connect, $query);
-                $result = mysqli_fetch_assoc($run);
-                // Get Course current value
-                $course = $_POST["courseVal"];
-                $course_options ="";
-                while ($result = mysqli_fetch_assoc($run))
-                {
-                    //Display course titles as options
-                    $title = $result["Title"];
-                    $course_options .= "<option value='$title'";
-                    if ($title == $course) {
-                      $course_options .= "selected='selected'";
+            case "editCourse":
+                function courseValF($db_connect){
+                    $query = "SELECT `Title` FROM `t_courses`;";
+                    $run = mysqli_query($db_connect, $query);
+                    if (mysqli_num_rows($run) > 0) {
+                        // Get Course current value
+                        $course = $_POST["courseVal"];
+                        $course_options ="";
+                        // output data of each row
+                        while($row = mysqli_fetch_assoc($run)) {
+                            //Display course titles as options
+                            $title = $row["Title"];
+                            $course_options .= "<option value='$title'";
+                            if ($title == $course) {
+                              $course_options .= "selected='selected'";
+                            }
+                            $course_options .= ">$title</option>";
+                        }
+                        $selectCourse = '<select class="form-control form-control-user primary" id="course" name="course_option">'.$course_options.'</select>';
+                        echo $selectCourse;
                     }
-                    $course_options .= ">$title</option>";
                 }
-                 $selectCourse = '<select class="form-control form-control-user primary" id="course" name="course_option">'.$course_options.'</select>';
-                echo $selectCourse;
-            }
-            courseValF($db_connect);
-            function accessValF($db_connect){
-                $query = "SELECT `Access` FROM `t_users`";
-                $run = mysqli_query($db_connect, $query);
-                $result = mysqli_fetch_assoc($run);
-                // Get Access current value
-                $access = $_POST["accessVal"];
-                $access_options ="";
-                while ($result = mysqli_fetch_assoc($run))
-                {
-                    //Display course titles as options
-                    $accessVal = $result["Access"];
-                    $access_options .= "<option value='$accessVal'";
-                    if ($accessVal == $access) {
-                      $access_options .= "selected='selected'";
+                courseValF($db_connect);
+                break;
+            case "editAccess":
+                function accessValF($db_connect){
+                    $query = "SELECT DISTINCT `Access` FROM `t_users`;";
+                    $run = mysqli_query($db_connect, $query);
+                    if (mysqli_num_rows($run) > 0) {
+                    // Get Course current value
+                    $access = $_POST["accessVal"];
+                    $course_options ="";
+                    while ($result = mysqli_fetch_assoc($run))
+                    {
+                        //Display course titles as options
+                        $title = $result["Access"];
+                        $course_options .= "<option value='$title'";
+                        if ($title == $access) {
+                          $course_options .= "selected='selected'";
+                        }
+                        $course_options .= ">$title</option>";
                     }
-                    $access_options .= ">$accessVal</option>";
+                    $selectCourse = '<select class="form-control form-control-user primary" id="course" name="course_option">'.$course_options.'</select>';
+                    echo $selectCourse;
+                    }
                 }
-                $selectAccess = "<select class='form-control form-control-user primary' id='access' name='access_option'>'.$access_options.'</select>";
-
-                echo $jsonSelect = json_encode($selectAccess);
-                }
-            accessValF($db_connect);
-            break;
+                accessValF($db_connect);
+                break;
             case "saveUser":
                 //Set id to correct UID
                 if (isset($_POST['id']))
