@@ -33,8 +33,11 @@ if (mysqli_num_rows($result) > 0) {
         echo "<td class='courseResult'>".$row['Currentcourse']."</td>";
         echo "<td>".$row['Timestamp']."</td>";
         echo "<td><button data-id='".$row['UID']."'class='btn bg-warning text-white edit'>Edit</button></td>";
-        echo "<td><button data-id='".$row['UID']."'class='btn bg-danger text-white delete'>Delete</button></td>";
-        echo"</tr>";
+        // Prevent user from deleting their own account
+        if ($auth == "admin"){
+            echo "<td><button data-id='".$row['UID']."'class='btn bg-danger text-white delete'>Delete</button></td>";
+   }
+echo"</tr>";
     }
 
 }

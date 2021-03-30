@@ -18,7 +18,13 @@ if ($auth == "admin" || $auth == "user"){
                 <th scope='col'>Current Course</th>
                 <th scope='col'>Time</th>
                 <th scope='col' id='editHeader'>Edit</th>
-                <th scope='col' id='deleteHeader'>Delete</th>
+<?php
+   if ($auth == "admin"){
+?>
+<th scope='col' id='deleteHeader'>Delete</th>
+<?php
+   }
+     ?>
             </tr>
         </thead>
         <!-- Table body that gets populated by GetUser.php -->
@@ -47,9 +53,9 @@ if ($auth == "admin" || $auth == "user"){
         $('body').off('click', '.delete').on('click', '.delete', function() {
             var deleteid = $(this).data('id');
             // First line of defence against deleting
-            if (deleteid == 1){
-                alert("You cannot delete this account!");}
-            else{
+            if (deleteid == 1) {
+                alert("You cannot delete this account!");
+            } else {
                 const deleteCase = "deleteUser";
                 console.log('DELETE', deleteid);
                 // Check to confirm correct record
@@ -62,7 +68,8 @@ if ($auth == "admin" || $auth == "user"){
                         data: {
                             id: deleteid,
                             case: deleteCase
-                        },success: function(data){
+                        },
+                        success: function(data) {
                             console.log(data);
                         }
                     }).done(function(response) {
@@ -83,9 +90,9 @@ if ($auth == "admin" || $auth == "user"){
             const editButton = $(e.target);
             var editid = $(this).data('id').toString();
             // First line of defence against editing
-            if (editid == 1){
-                alert("You cannot edit this account.");}
-            else{
+            if (editid == 1) {
+                alert("You cannot edit this account.");
+            } else {
                 // Set delete button to variable
                 const deleteButton = $(`.delete[data-id=${editid}]`);
                 console.log('EDITING', editid);
@@ -129,28 +136,28 @@ if ($auth == "admin" || $auth == "user"){
                 const courseCurrValue = courseFieldChange.text();
                 const editCourse = "editCourse";
                 $.ajax({
-                        url: 'cases.php',
-                        type: 'POST',
-                        data: {
-                            case: editCourse,
-                            courseVal: courseCurrValue
-                        }
-                    }).done(function(response) {
-                        // Set result as input with data inside
-                        courseFieldChange.html(response);
-                    });
+                    url: 'cases.php',
+                    type: 'POST',
+                    data: {
+                        case: editCourse,
+                        courseVal: courseCurrValue
+                    }
+                }).done(function(response) {
+                    // Set result as input with data inside
+                    courseFieldChange.html(response);
+                });
                 const editAccess = "editAccess";
                 $.ajax({
-                        url: 'cases.php',
-                        type: 'POST',
-                        data: {
-                            case: editAccess,
-                            accessVal: accessCurrValue
-                        }
-                    }).done(function(response) {
-                        // Set result as input with data inside
-                        accessFieldChange.html(response);
-                    });
+                    url: 'cases.php',
+                    type: 'POST',
+                    data: {
+                        case: editAccess,
+                        accessVal: accessCurrValue
+                    }
+                }).done(function(response) {
+                    // Set result as input with data inside
+                    accessFieldChange.html(response);
+                });
                 // Class change to be able to run save & cancel functions
                 // Turn edit button into save button
                 editButton.html('Save');
