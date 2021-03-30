@@ -22,6 +22,10 @@ if ($auth == "admin") {
         <tbody class="courseTable"></tbody>
     </table>
 </div>
+<?php
+}
+   if ($auth == "admin" || $auth == "user") {
+    ?>
 <div class='table-responsive'>
     <table class='table table-hover'>
         <thead>
@@ -283,42 +287,8 @@ if ($auth == "admin") {
 </script>
 <?php
 }
-    // If not admin then display
-    elseif($auth == "user")
-{
-        ?>
-<div class='table-responsive'>
-    <table class='table table-hover'>
-        <thead>
-            <tr>
-                <th scope='col'>Title</th>
-                <th scope='col'>Date</th>
-                <th scope='col'>Duration</th>
-                <th scope='col'>Description</th>
-                <th scope='col' id='enrol'>Enrol</th>
-            </tr>
-        </thead>
-        <tbody class="courseTable"></tbody>
-    </table>
-</div>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        function getData() {
-            $.ajax({
-                url: 'getEnrolCourse.php',
-                type: 'GET',
-            }).done(function(response) {
-                $('.courseTable').html(response);
-            });
-        }
-        getData();
-        // Update table every 60 seconds
-        var intervalTiming = setInterval(getData, 60000);
 
-    });
-    <?php
-        }
 else {
 header("Location:../index.php");
 echo "Please enter admin credentials";

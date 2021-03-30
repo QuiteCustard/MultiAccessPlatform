@@ -1,6 +1,6 @@
 <?php
 require_once ("connect.php");
-session_start();
+include_once("_logincheck.php");
 if (isset($_GET['case']))
 {
     $case = $_GET['case'];
@@ -9,7 +9,13 @@ if (isset($_GET['case']))
             // Get user data
 
         case "getUserData":
-        $query = "SELECT * FROM `t_users`";
+            if ($auth == "admin"){
+                    $query = "SELECT * FROM `t_users`";
+            }
+            else
+            {
+                  $query = "SELECT * FROM `t_users` WHERE `UID` =" . $_SESSION['userid'] . ";";
+            }
         $result = mysqli_query($db_connect, $query);
 
 if (mysqli_num_rows($result) > 0) {
@@ -40,11 +46,10 @@ if (mysqli_num_rows($result) > 0) {
             // Get course data
 
         case "getCourseData":
-
-            $query = "SELECT * FROM `t_courses`";
-$result = mysqli_query($db_connect, $query);
-
-if (mysqli_num_rows($result) > 0) {
+            if ($auth == "admin"){
+                    $query = "SELECT * FROM `t_courses`";
+                    $result = mysqli_query($db_connect, $query);
+                if (mysqli_num_rows($result) > 0) {
     // output data of each row
     while($row = mysqli_fetch_assoc($result)) {
 
@@ -65,6 +70,14 @@ if (mysqli_num_rows($result) > 0) {
             else {
                 echo "0 results";
             }
+
+            }
+            else
+            {
+                // Don't sshow course table
+            }
+
+
 
             break;
         case "getEnrolCourse":
@@ -102,6 +115,7 @@ if (mysqli_num_rows($result) > 0) {
                 {
                     $id = mysqli_real_escape_string($db_connect, $_POST['id']);
                 }
+                // Preventation of deleting owner account
                 if ($id==1)
                 {
                     die("You cannot delete this account");
@@ -217,33 +231,41 @@ if (mysqli_num_rows($result) > 0) {
                 {
                     $id = mysqli_real_escape_string($db_connect, $_POST['id']);
                 }
-                if (isset($id))
+                // Preventation of editing owner account
+                if ($id==1)
                 {
-                    // Check record exists
-                    $checkRecord = mysqli_query($db_connect, "SELECT * FROM `t_users` WHERE `t_users`.`UID`=" . $id);
-                    $totalrows = mysqli_num_rows($checkRecord);
-                    $email = $_POST['email'];
-                    $fname = $_POST['fname'];
-                    $lname = $_POST['lname'];
-                    $job = $_POST['job'];
-                    $access = $_POST['access'];
-                    $course = $_POST['course'];
-                    if ($totalrows > 0)
+                    die("You cannot edit this account");
+                }
+                elseif ($id > 0)
+                {
+                    if (isset($id))
                     {
-                        // edit record
-                        $sqlQuery = "UPDATE `t_users` SET `Fname` = '$fname', `Lname` = '$lname', `Jobtitle` = '$job', `Email` = '$email', `Access` = '$access', `Currentcourse` = '$course' WHERE `t_users`.`UID` = $id;";
-                        mysqli_query($db_connect, $sqlQuery);
-                        echo "Record updated successfully";
+                        // Check record exists
+                        $checkRecord = mysqli_query($db_connect, "SELECT * FROM `t_users` WHERE `t_users`.`UID`=" . $id);
+                        $totalrows = mysqli_num_rows($checkRecord);
+                        $email = $_POST['email'];
+                        $fname = $_POST['fname'];
+                        $lname = $_POST['lname'];
+                        $job = $_POST['job'];
+                        $access = $_POST['access'];
+                        $course = $_POST['course'];
+                        if ($totalrows > 0)
+                        {
+                            // edit record
+                            $sqlQuery = "UPDATE `t_users` SET `Fname` = '$fname', `Lname` = '$lname', `Jobtitle` = '$job', `Email` = '$email', `Access` = '$access', `Currentcourse` = '$course' WHERE `t_users`.`UID` = $id;";
+                            mysqli_query($db_connect, $sqlQuery);
+                            echo "Record updated successfully";
+                        }
+                        else
+                        {
+                            echo "Update failed, no records found.";
+                        }
                     }
                     else
                     {
-                        echo "Update failed, no records found.";
+                        echo "Failed to update record: No ID!";
                     }
-                }
-                else
-                {
-                    echo "Failed to update record: No ID!";
-                }
+               }
                 exit;
             break;
                 // save course data
@@ -338,21 +360,29 @@ if (mysqli_num_rows($result) > 0) {
 
             break;
             case "insertUserToCourse":
-               // die("die at case");
                 if (isset($_POST['id']))
                 {
                     $id = $_POST['id'];
                 }
                 if (isset($id))
                 {
-                   $courses_sql = "INSERT INTO t_enrolment (UID, CID) VALUES (" . $_SESSION['userid']  ." , $id);";
-                    mysqli_query($db_connect, $courses_sql);
-                    echo "Record updated successfully";
-
+                    // Function to insert a new record to enrollment table
+                    function enrolmentTable($db_connect, $id){
+                    $sql = "INSERT INTO t_enrolment (UID, CID) VALUES (" . $_SESSION['userid']  .", $id);";
+                    mysqli_query($db_connect, $sql);
+                    }
+                    enrolmentTable($db_connect, $id);
+                    // Function to change current course to one just clicked
+                    function userCourse($db_connect, $id){
+                    $sql = "UPDATE `t_users` SET `Currentcourse` = (SELECT `Title` FROM `t_courses` WHERE `CID` = $id) WHERE `UID` = " . $_SESSION['userid'] . ";";
+                    mysqli_query($db_connect, $sql);
+                    }
+                    userCourse($db_connect, $id);
+                    echo "Records updated successfully";
                 }
                 else
                 {
-                    echo "Failed to update record: No ID!";
+                    echo "Failed to update record!";
                 }
                 exit;
             break;
