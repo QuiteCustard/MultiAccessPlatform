@@ -35,13 +35,17 @@
     --body: white;
 
 }
-
+* {
+    transition: all 1s;
+}
 .body {
     background: var(--body) !important;
+
 }
 
 .primary {
     background: var(--primary) !important;
+
 }
 
 .secondary {
