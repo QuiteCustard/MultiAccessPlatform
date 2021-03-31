@@ -250,8 +250,14 @@ if (isset($_GET['case']))
                             mysqli_query($db_connect, $sqlQuery);
                             // Function to insert a new record to enrolment table
                             function updateEnrolmentTable($db_connect, $id, $cid){
-                            $sql = "UPDATE `t_enrolment` SET `CID` = '$cid' WHERE `t_enrolment`.`UID` = '$id';";
-                            mysqli_query($db_connect, $sql);
+                                if (isset($cid)){
+                                    $sql = "UPDATE `t_enrolment` SET `CID` = '$cid' WHERE `t_enrolment`.`UID` = '$id';";
+                                    mysqli_query($db_connect, $sql);
+                                }
+                           else if($course == ""){
+                               $sql = "DELETE FROM `t_enrolment` WHERE `t_enrolment`.`UID` = $id;";
+                                    mysqli_query($db_connect, $sql);
+                           }
                             }
                             updateEnrolmentTable($db_connect, $id, $cid);
                             echo "Record updated successfully";
