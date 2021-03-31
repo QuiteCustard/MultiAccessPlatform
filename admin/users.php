@@ -18,11 +18,11 @@ if ($auth == "admin" || $auth == "user"){
                 <th scope='col'>Current Course</th>
                 <th scope='col'>Time</th>
                 <th scope='col' id='editHeader'>Edit</th>
-<?php
+                <?php
    if ($auth == "admin"){
 ?>
-<th scope='col' id='deleteHeader'>Delete</th>
-<?php
+                <th scope='col' id='deleteHeader'>Delete</th>
+                <?php
    }
      ?>
             </tr>
@@ -134,24 +134,24 @@ if ($auth == "admin" || $auth == "user"){
                 const courseFieldChange = editButton.closest('tr').find('.courseResult');
                 // Set variable to value of td column
                 const courseCurrValue = courseFieldChange.text();
-                const editCourse = "editCourse";
+                const courseSelector = "courseSelector";
                 $.ajax({
                     url: 'cases.php',
                     type: 'POST',
                     data: {
-                        case: editCourse,
+                        case: courseSelector,
                         courseVal: courseCurrValue
                     }
                 }).done(function(response) {
                     // Set result as input with data inside
                     courseFieldChange.html(response);
                 });
-                const editAccess = "editAccess";
+                const accessSelector = "accessSelector";
                 $.ajax({
                     url: 'cases.php',
                     type: 'POST',
                     data: {
-                        case: editAccess,
+                        case: accessSelector,
                         accessVal: accessCurrValue
                     }
                 }).done(function(response) {
@@ -172,11 +172,18 @@ if ($auth == "admin" || $auth == "user"){
             }
         });
 
+        $(document).on("change", "select", function() {
+            $("option[value=" + this.value + "]", this)
+                .attr("selected", true).siblings()
+                .removeAttr("selected")
+        });
         // Save
         $('body').off('click', '.save').on('click', '.save', function(e) {
             // Set save button to variable
             const saveButton = $(e.target);
             var saveid = $(this).data('id').toString();
+            //
+            var cid = $('.courseResult').find(":selected").data('cid');
             const saveCase = "saveUser";
             // Set cancel button to variable
             const cancelButton = $(`.cancel[data-id=${saveid}]`);
@@ -189,6 +196,7 @@ if ($auth == "admin" || $auth == "user"){
             // Check to confirm correct record
             var c = confirm("Are you sure you want to save the inputted details for this user?");
             console.log('SAVING', saveid);
+
             if (c == true) {
                 // AJAX Request
                 $.ajax({
@@ -202,7 +210,8 @@ if ($auth == "admin" || $auth == "user"){
                         job: job,
                         access: access,
                         course: course,
-                        case: saveCase
+                        case: saveCase,
+                        cid: cid
                     }
                 }).done(function(response) {
                     // Restart timer

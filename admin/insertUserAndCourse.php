@@ -30,8 +30,7 @@
                 </div>
                 <div class="form-group">
                     <label for="courseInput">Current course:</label>
-                    <input type="text" class="form-control form-control-user primary" id="courseInput" placeholder="Enter course..." required>
-                    <small id="courseHelp" class="form-text text-muted">If the user is not currently enrolled on a course, please input "none".</small>
+                    <div id="courseSelector"></div>
                 </div>
 
                 <a href="#" class="btn btn-success btn-user btn-block saveUser">
@@ -88,6 +87,30 @@
             field: $('#datepicker')[0]
         });
         // User
+        function courseSelector() {
+            const courseSelector = $('#courseSelector');
+            const newCourseSelector = "courseSelector";
+            const courseVal = "maths";
+            $.ajax({
+                url: 'cases.php',
+                type: 'POST',
+                data: {
+                    courseVal: courseVal,
+                    case: newCourseSelector
+                }
+            }).done(function(response) {
+                // Set result as input with data inside
+                courseSelector.html(response);
+            });
+
+        }
+        courseSelector();
+
+        $(document).on("change", "select", function() {
+            $("option[value=" + this.value + "]", this)
+                .attr("selected", true).siblings()
+                .removeAttr("selected")
+        });
         // Save user
         $('body').on('click', '.saveUser', function(e) {
             const saveButton = $(e.target);
@@ -99,6 +122,7 @@
             var job = $('#jobInput').val();
             var access = $('#accessInput').val();
             var course = $('#CourseInput').val();
+            var newUserCid = $('#courseSelect').find(":selected").data('cid');
             // Log user being created
             console.log('SAVING NEW USER ', email);
             var c = confirm("Are you sure you want create this user with the specified details?");
@@ -114,7 +138,8 @@
                         job: job,
                         access: access,
                         course: course,
-                        case: insertUser
+                        case: insertUser,
+                        newUserCid: newUserCid
                     }
                 }).done(function(response) {
                     $('.insertUserForm').trigger("reset");

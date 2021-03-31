@@ -12,76 +12,60 @@ if (isset($_GET['case']))
             if ($auth == "admin"){
                     $query = "SELECT * FROM `t_users`";
             }
-            else
-            {
-                  $query = "SELECT * FROM `t_users` WHERE `UID` =" . $_SESSION['userid'] . ";";
+            else{
+                $query = "SELECT * FROM `t_users` WHERE `UID` =" . $_SESSION['userid'] . ";";
             }
-        $result = mysqli_query($db_connect, $query);
+            $result = mysqli_query($db_connect, $query);
+            if (mysqli_num_rows($result) > 0) {
+                // output data of each row
+                while($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>";
+                    echo "<td class='idResult'>".$row['UID']."</td>";
+                    echo "<td class='emailResult'>".$row['Email']."</td>";
+                    echo "<td class='fNameResult'>".$row['Fname']."</td>";
+                    echo "<td class='lNameResult'>".$row['Lname']."</td>";
+                    echo "<td class='jobResult'>".$row['Jobtitle']."</td>";
+                    echo "<td class='accessResult'>".$row['Access']."</td>";
+                    echo "<td class='courseResult'>".$row['Currentcourse']."</td>";
+                    echo "<td>".$row['Timestamp']."</td>";
+                    echo "<td><button data-id='".$row['UID']."'class='btn bg-warning text-white edit'>Edit</button></td>";
+                    // Prevent user from deleting their own account
+                    if ($auth == "admin"){
+                        echo "<td><button data-id='".$row['UID']."'class='btn bg-danger text-white delete'>Delete</button></td>";
+                    }
+                    echo"</tr>";
+                }
 
-if (mysqli_num_rows($result) > 0) {
-    // output data of each row
-
-    while($row = mysqli_fetch_assoc($result)) {
-
-        echo "<tr>";
-        echo "<td class='idResult'>".$row['UID']."</td>";
-        echo "<td class='emailResult'>".$row['Email']."</td>";
-        echo "<td class='fNameResult'>".$row['Fname']."</td>";
-        echo "<td class='lNameResult'>".$row['Lname']."</td>";
-        echo "<td class='jobResult'>".$row['Jobtitle']."</td>";
-        echo "<td class='accessResult'>".$row['Access']."</td>";
-        echo "<td class='courseResult'>".$row['Currentcourse']."</td>";
-        echo "<td>".$row['Timestamp']."</td>";
-        echo "<td><button data-id='".$row['UID']."'class='btn bg-warning text-white edit'>Edit</button></td>";
-        // Prevent user from deleting their own account
-        if ($auth == "admin"){
-            echo "<td><button data-id='".$row['UID']."'class='btn bg-danger text-white delete'>Delete</button></td>";
-   }
-echo"</tr>";
-    }
-
-}
-            else {
-    echo "0 results";
-}
-
-            break;
-            // Get course data
-
-        case "getCourseData":
-            if ($auth == "admin"){
-                    $query = "SELECT * FROM `t_courses`";
-                    $result = mysqli_query($db_connect, $query);
-                if (mysqli_num_rows($result) > 0) {
-    // output data of each row
-    while($row = mysqli_fetch_assoc($result)) {
-
-        echo "<tr>";
-        echo "<td class='idResult'>".$row['CID']."</td>";
-        echo "<td class='titleResult'>".$row['Title']."</td>";
-        echo "<td class='dateResult'>".$row['Date']."</td>";
-        echo "<td class='durationResult'>".$row['Duration']."</td>";
-        echo "<td class='descriptionResult'>".$row['Description']."</td>";
-        echo "<td class='attendeesResult'>".$row['Max_attendees']."</td>";
-        echo "<td>".$row['Timestamp']."</td>";
-        echo "<td><button data-id='".$row['CID']."'class='btn bg-warning text-white edit'>Edit</button></td>";
-        echo "<td><button data-id='".$row['CID']."'class='btn bg-danger text-white delete'>Delete</button></td>";
-        echo"</tr>";
-    }
-
-}
+            }
             else {
                 echo "0 results";
             }
-
+            break;
+        // Get course data
+        case "getCourseData":
+            $query = "SELECT * FROM `t_courses`";
+            $result = mysqli_query($db_connect, $query);
+            if (mysqli_num_rows($result) > 0) {
+                // output data of each row
+                while($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>";
+                    echo "<td class='idResult'>".$row['CID']."</td>";
+                    echo "<td class='titleResult'>".$row['Title']."</td>";
+                    echo "<td class='dateResult'>".$row['Date']."</td>";
+                    echo "<td class='durationResult'>".$row['Duration']."</td>";
+                    echo "<td class='descriptionResult'>".$row['Description']."</td>";
+                    echo "<td class='attendeesResult'>".$row['Max_attendees']."</td>";
+                    echo "<td>".$row['Timestamp']."</td>";
+                    if ($auth == "admin"){
+                        echo "<td><button data-id='".$row['CID']."'class='btn bg-warning text-white edit'>Edit</button></td>";
+                        echo "<td><button data-id='".$row['CID']."'class='btn bg-danger text-white delete'>Delete</button></td>";
+                    }
+                    echo "</tr>";
+                }
             }
-            else
-            {
-                // Don't sshow course table
+            else {
+                echo "0 results";
             }
-
-
-
             break;
         case "getEnrolCourse":
             // Select all courses from database
@@ -180,9 +164,9 @@ echo"</tr>";
 
             break;
                 // save user data
-            case "editCourse":
+            case "courseSelector":
                 function courseValF($db_connect){
-                    $query = "SELECT `Title` FROM `t_courses`;";
+                    $query = "SELECT `CID`,`Title` FROM `t_courses`;";
                     $run = mysqli_query($db_connect, $query);
                     if (mysqli_num_rows($run) > 0) {
                         // Get Course current value
@@ -192,19 +176,20 @@ echo"</tr>";
                         while($row = mysqli_fetch_assoc($run)) {
                             //Display course titles as options
                             $title = $row["Title"];
-                            $course_options .= "<option value='$title'";
+                            $cid = $row["CID"];
+                            $course_options .= "<option data-cid='$cid' value='$title'";
                             if ($title == $course) {
                               $course_options .= "selected='selected'";
                             }
                             $course_options .= ">$title</option>";
                         }
-                        $selectCourse = '<select class="form-control form-control-user primary" id="course" name="course_option">'.$course_options.'</select>';
+                        $selectCourse = '<select class="form-control primary" id="courseSelect" name="course_option">'.$course_options.'</select>';
                         echo $selectCourse;
                     }
                 }
                 courseValF($db_connect);
                 break;
-            case "editAccess":
+            case "accessSelector":
                 function accessValF($db_connect){
                     $query = "SELECT DISTINCT `Access` FROM `t_users`;";
                     $run = mysqli_query($db_connect, $query);
@@ -222,7 +207,7 @@ echo"</tr>";
                         }
                         $course_options .= ">$title</option>";
                     }
-                    $selectCourse = '<select class="form-control form-control-user primary" id="course" name="course_option">'.$course_options.'</select>';
+                    $selectCourse = '<select class="form-control form-control-user primary" id="course" name="course_option">' .$course_options.'</select>';
                     echo $selectCourse;
                     }
                 }
@@ -252,11 +237,18 @@ echo"</tr>";
                         $job = $_POST['job'];
                         $access = $_POST['access'];
                         $course = $_POST['course'];
+                        $cid = $_POST['cid'];
                         if ($totalrows > 0)
                         {
                             // edit record
                             $sqlQuery = "UPDATE `t_users` SET `Fname` = '$fname', `Lname` = '$lname', `Jobtitle` = '$job', `Email` = '$email', `Access` = '$access', `Currentcourse` = '$course' WHERE `t_users`.`UID` = $id;";
                             mysqli_query($db_connect, $sqlQuery);
+                            // Function to insert a new record to enrolment table
+                            function updateEnrolmentTable($db_connect, $id, $cid){
+                            $sql = "UPDATE `t_enrolment` SET `CID` = '$cid' WHERE `t_enrolment`.`UID` = '$id';";
+                            mysqli_query($db_connect, $sql);
+                            }
+                            updateEnrolmentTable($db_connect, $id, $cid);
                             echo "Record updated successfully";
                         }
                         else
@@ -282,7 +274,7 @@ echo"</tr>";
                 if (isset($id))
                 {
                     // Check record exists
-                    $checkRecord = mysqli_query($db_connect, "SELECT * FROM `t_courses` WHERE `t_courses`.`CID`=" . $id);
+                    $checkRecord = mysqli_query($db_connect, "SELECT * FROM `t_courses` WHERE `t_courses`.`CID`= $id;");
                     $totalrows = mysqli_num_rows($checkRecord);
                     $title = $_POST['title'];
                     $date = $_POST['date'];
@@ -292,7 +284,7 @@ echo"</tr>";
                     if ($totalrows > 0)
                     {
                         // edit record
-                        $sqlQuery = "UPDATE `t_courses` SET `Title` = '$title', `Date` = '$date', `Duration` = '$duration', `Max_Attendees` = '$attendees' WHERE `CID` = $id;";
+                        $sqlQuery = "UPDATE `t_courses` SET `Title` = '$title', `Date` = '$date', `Duration` = '$duration', `Description` = '$description', `Max_Attendees` = '$attendees' WHERE `CID` = $id;";
                         mysqli_query($db_connect, $sqlQuery);
                         echo "Record updated successfully";
                     }
@@ -322,11 +314,18 @@ echo"</tr>";
                     $job = $_POST['job'];
                     $access = $_POST['access'];
                     $course = $_POST['course'];
+                    $cid = $_POST['newUserCid'];
 
                     // Insert new record
                     $sqlQuery = "INSERT INTO `t_users` (`UID`, `Fname`, `Lname`, `Jobtitle`, `Email`, `Password`, `Access`, `Currentcourse`, `Attempts`, `Timestamp`, `Serial`) VALUES ('$id', '$fname', '$lname', '$job', '$email', '$password', '$access', '$course', '0', current_timestamp(), NULL);";
                     mysqli_query($db_connect, $sqlQuery);
                     echo "Record updated successfully";
+                    // Function to insert a new record to enrolment table
+                    function insertEnrolmentTable($db_connect, $id, $cid){
+                        $sql = "INSERT INTO t_enrolment (UID, CID) VALUES ($id, $cid);";
+                        mysqli_query($db_connect, $sql);
+                    }
+                    insertEnrolmentTable($db_connect, $id, $cid);
 
                 }
                 else
@@ -361,7 +360,7 @@ echo"</tr>";
                 }
                 exit;
 
-            break;
+                break;
             case "insertUserToCourse":
                 if (isset($_POST['id']))
                 {
@@ -369,7 +368,7 @@ echo"</tr>";
                 }
                 if (isset($id))
                 {
-                    // Function to insert a new record to enrollment table
+                    // Function to insert a new record to enrolment table
                     function enrolmentTable($db_connect, $id){
                     $sql = "INSERT INTO t_enrolment (UID, CID) VALUES (" . $_SESSION['userid']  .", $id);";
                     mysqli_query($db_connect, $sql);
@@ -388,7 +387,9 @@ echo"</tr>";
                     echo "Failed to update record!";
                 }
                 exit;
-            break;
+                break;
+            case "userCourseOptions":
+                break;
         }
 
     }

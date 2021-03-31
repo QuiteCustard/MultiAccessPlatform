@@ -35,9 +35,7 @@
     --body: white;
 
 }
-* {
-    transition: all 1s;
-}
+
 .body {
     background: var(--body) !important;
 
@@ -143,3 +141,10 @@ a {
 }
 
 .hide{display:none!important;}
+
+#courseSelect{
+    padding:0!important;
+    padding-left:0.5vw!important;
+
+    border-radius: 10rem;
+}

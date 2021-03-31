@@ -1,7 +1,7 @@
 <?php 
 include_once("_logincheck.php");
-// Check to ensure only admin accounts can access
-if ($auth == "admin") {
+
+if ($auth == "admin" || $auth == "user") {
   // Table headers
   ?>
 <div class='table-responsive'>
@@ -15,28 +15,19 @@ if ($auth == "admin") {
                 <th scope='col'>Description</th>
                 <th scope='col'>Max Attendees</th>
                 <th scope='col'>Time</th>
+<?php
+    if ($auth == "admin") {
+        // Check to ensure only admin accounts can access
+  ?>
+
                 <th scope='col' id='edit'>Edit</th>
                 <th scope='col' id='delete'>Delete</th>
+                <?php
+    }
+    ?>
             </tr>
         </thead>
         <tbody class="courseTable"></tbody>
-    </table>
-</div>
-<?php
-}
-   if ($auth == "admin" || $auth == "user") {
-    ?>
-<div class='table-responsive'>
-    <table class='table table-hover'>
-        <thead>
-            <tr>
-                <th scope='col'>CID</th>
-                <th scope='col'>Title</th>
-                <th scope='col' id='enrol'>Enrol</th>
-
-            </tr>
-        </thead>
-        <tbody class="courseEnrolTable"></tbody>
     </table>
 </div>
 <!-- Jquery Ajax to get user data and display in <tbody>-->
@@ -57,20 +48,6 @@ if ($auth == "admin") {
         }
         getData();
 
-        function getEnrolCourseData() {
-            const getEnrolCourse = "getEnrolCourse";
-            $.ajax({
-                url: 'cases.php',
-                type: 'GET',
-                data: {
-                    case: getEnrolCourse
-                }
-
-            }).done(function(response) {
-                $('.courseEnrolTable').html(response);
-            });
-        }
-        getEnrolCourseData();
         // Update table every 60 seconds
         var intervalTiming = setInterval(getData, 60000);
         // Delete
@@ -259,31 +236,7 @@ if ($auth == "admin") {
             saveButton.addClass('bg-warning');
         });
 
-        //Enrol
-        $('body').off('click', '.enrol').on('click', '.enrol', function(e) {
-            const enrolButton = $(e.target);
-            const insertUserToCourse = "insertUserToCourse";
-            var enrolid = $(this).data('id');
-            // Log course being created
-            console.log('ENROLING on course');
-            var c = confirm("Are you sure you want to enrol on this course?");
-            if (c == true) {
-                // AJAX Request
-                $.ajax({
-                    url: 'cases.php',
-                    type: 'POST',
-                    data: {
-                        id: enrolid,
-                        case: insertUserToCourse
-                    }
-                }).done(function(response) {
-                    console.log(response);
-                });
-            }
         });
-        });
-
-
 </script>
 <?php
 }

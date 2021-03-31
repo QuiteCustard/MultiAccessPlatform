@@ -39,7 +39,14 @@
                 <h6 class="collapse-header">Tools:</h6>
                 <a class="collapse-item" id="user" href="#">Users</a>
                 <a class="collapse-item" href="#" id="course">Courses</a>
+                <a class="collapse-item" href="#" id="enrolCourse">Enrol on Course</a>
+<?php
+                if ($auth == "admin") {
+?>
                 <a class="collapse-item" href="#" id="insert">Insert Users/Courses</a>
+                <?php
+                }
+                ?>
                 <div class="collapse-divider"></div>
             </div>
         </div>
@@ -93,6 +100,25 @@
                     $.ajax({ //create an ajax request to courses.php
                         type: "GET",
                         url: "insertUserAndCourse.php",
+                        dataType: "html", //expect html to be returned
+                        success: function(response) {
+                            $("#ajaxContent").html(response);
+                        }
+                    });
+                };
+            })
+        });
+
+        $(document).ready(function() {
+            $("#enrolCourse").click(function(str) {
+                // If content is already filled then remove it
+                if (str == "") {
+                    $("ajaxContent").html = "";
+                    return;
+                } else {
+                    $.ajax({ //create an ajax request to courses.php
+                        type: "GET",
+                        url: "enrolCourse.php",
                         dataType: "html", //expect html to be returned
                         success: function(response) {
                             $("#ajaxContent").html(response);
