@@ -26,7 +26,12 @@ if (isset($_GET['case']))
                     echo "<td class='lNameResult'>".$row['Lname']."</td>";
                     echo "<td class='jobResult'>".$row['Jobtitle']."</td>";
                     echo "<td class='accessResult'>".$row['Access']."</td>";
-                    echo "<td class='courseResult'>".$row['Currentcourse']."</td>";
+                    if ($row['Currentcourse'] == ""){
+                        echo "<td class='courseResult'>None</td>";
+                    }
+                    else{
+                        echo "<td class='courseResult'>".$row['Currentcourse']."</td>";
+                    }
                     echo "<td>".$row['Timestamp']."</td>";
                     echo "<td><button data-id='".$row['UID']."'class='btn bg-warning text-white edit'>Edit</button></td>";
                     // Prevent user from deleting their own account
@@ -183,7 +188,7 @@ if (isset($_GET['case']))
                             }
                             $course_options .= ">$title</option>";
                         }
-                        $selectCourse = '<select class="form-control primary" id="courseSelect" name="course_option">'.$course_options.'</select>';
+                        $selectCourse = '<select class="form-control primary selectors" id="courseSelect" name="course_option"><option value="None">None</option>'.$course_options.'</select>';
                         echo $selectCourse;
                     }
                 }
@@ -207,7 +212,7 @@ if (isset($_GET['case']))
                         }
                         $course_options .= ">$title</option>";
                     }
-                    $selectCourse = '<select class="form-control form-control-user primary" id="course" name="course_option">' .$course_options.'</select>';
+                    $selectCourse = '<select class="form-control form-control-user primary selectors" id="course" name="course_option">' .$course_options.'</select>';
                     echo $selectCourse;
                     }
                 }

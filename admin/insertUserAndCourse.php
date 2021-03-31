@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-group">
                     <label for="accessInput">Access level for application:</label>
-                    <input type="text" class="form-control form-control-user primary" id="accessInput" placeholder="Enter access level..." required>
+                    <div id="accessSelector"></div>
                 </div>
                 <div class="form-group">
                     <label for="courseInput">Current course:</label>
@@ -90,7 +90,7 @@
         function courseSelector() {
             const courseSelector = $('#courseSelector');
             const newCourseSelector = "courseSelector";
-            const courseVal = "maths";
+            const courseVal = "None";
             $.ajax({
                 url: 'cases.php',
                 type: 'POST',
@@ -102,10 +102,26 @@
                 // Set result as input with data inside
                 courseSelector.html(response);
             });
-
         }
         courseSelector();
 
+        function accessSelector() {
+            const accessSelector = $('#accessSelector');
+            const newAccessSelector = "accessSelector";
+            const accessVal = "None";
+            $.ajax({
+                url: 'cases.php',
+                type: 'POST',
+                data: {
+                    accessVal: accessVal,
+                    case: newAccessSelector
+                }
+            }).done(function(response) {
+                // Set result as input with data inside
+                accessSelector.html(response);
+            });
+        }
+        accessSelector();
         $(document).on("change", "select", function() {
             $("option[value=" + this.value + "]", this)
                 .attr("selected", true).siblings()

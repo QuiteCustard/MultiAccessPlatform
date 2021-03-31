@@ -142,9 +142,9 @@ a {
 
 .hide{display:none!important;}
 
-#courseSelect{
+.selectors{
     padding:0!important;
     padding-left:0.5vw!important;
-
+    font-size: 1rem !important;
     border-radius: 10rem;
 }
