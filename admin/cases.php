@@ -89,22 +89,39 @@ if (isset($_GET['case']))
             }
             break;
         case "getUserOnCourse":
-            // Select all courses from database
-            $query = "SELECT * FROM `t_courses`";
-            $result = mysqli_query($db_connect, $query);
+            // Show users on courses
+
+            $sql = "SELECT * FROM `t_users` WHERE `Currentcourse` = `Currentcourse` ORDER BY `Currentcourse`;";
+            $result = mysqli_query($db_connect, $sql);
             if (mysqli_num_rows($result) > 0) {
                 // output data of each row
                 while($row = mysqli_fetch_assoc($result)) {
-                    echo "<tr>";
-                    echo "<td class='idResult'>".$row['CID']."</td>";
-                    echo "<td class='titleResult'>".$row['Title']."</td>";
-                    echo "<td><button data-id='".$row['CID']."'class='btn bg-success text-white enrol'>Enrol</button></td>";
-                    echo"</tr>";
+                    $course = $row['Currentcourse'];
+                    echo "<h2>$course</h2>";
+                    echo "<table class='table table-hover'>
+                            <thead>
+                                <tr>
+                                    <th scope='col'>UID</th>
+                                    <th scope='col'>First name</th>
+                                    <th scope='col'>Last name</th>
+                                    <th scope='col'>Job</th>
+                                    <th scope='col' id='remove'>Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody class='usersOnCourseTable'>
+                                <tr>
+                                    <td class=''>".$row['UID']."</td>
+                                    <td class=''>".$row['Fname']."</td>
+                                    <td class=''>".$row['Lname']."</td>
+                                    <td class=''>".$row['Jobtitle']."</td>
+                                    <td><button data-id='".$row['UID']."'class='btn bg-danger text-white remove'>Remove from course</button></td>
+                                </tr>
+                            </tbody>
+                        </table>";
+
                 }
             }
-            else {
-                echo "0 results";
-            }
+
             break;
         }
     }
@@ -357,6 +374,7 @@ if (isset($_GET['case']))
                 }
                 break;
             case "userCourseOptions":
+               // function(){}
                 break;
         }
 

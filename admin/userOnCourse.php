@@ -2,32 +2,7 @@
 include_once("_logincheck.php");
     if ($auth == "admin") {
 ?>
-<div class='table-responsive'>
-    <table class='table table-hover'>
-        <thead>
-            <tr>
-                <th scope='col'>CID</th>
-                <th scope='col'>Title</th>
-                <th scope='col'>Date</th>
-                <th scope='col'>Duration</th>
-                <th scope='col'>Description</th>
-                <th scope='col'>Max Attendees</th>
-                <th scope='col'>Time</th>
-                <?php
-    if ($auth == "admin") {
-        // Check to ensure only admin accounts can access
-  ?>
-
-                <th scope='col' id='edit'>Edit</th>
-                <th scope='col' id='delete'>Delete</th>
-                <?php
-    }
-    ?>
-            </tr>
-        </thead>
-        <tbody class="usersOnCourseTable"></tbody>
-    </table>
-</div>
+<div class='table-responsive tUserCourse'></div>
 <script type="text/javascript">
         function getEnrolCourseData() {
             const getUserOnCourse = "getUserOnCourse";
@@ -39,7 +14,7 @@ include_once("_logincheck.php");
                 }
 
             }).done(function(response) {
-                $('.usersOnCourseTable').html(response);
+                $('.tUserCourse').html(response);
             });
         }
         getEnrolCourseData();
