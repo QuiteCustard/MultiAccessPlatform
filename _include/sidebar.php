@@ -37,13 +37,14 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="body py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Tools:</h6>
-                <a class="collapse-item" id="user" href="#">Users</a>
-                <a class="collapse-item" href="#" id="course">Courses</a>
+                <a class="collapse-item" id="user" href="#">View Users</a>
+                <a class="collapse-item" href="#" id="course">View All Courses</a>
                 <a class="collapse-item" href="#" id="enrolCourse">Enrol on Course</a>
-<?php
+                <?php
                 if ($auth == "admin") {
 ?>
                 <a class="collapse-item" href="#" id="insert">Insert Users/Courses</a>
+                <a class="collapse-item" href="#" id="userOnCourse">Users on courses</a>
                 <?php
                 }
                 ?>
@@ -69,9 +70,7 @@
                     });
                 };
             })
-        });
 
-        $(document).ready(function() {
             $("#course").click(function(str) {
                 // If content is already filled then remove it
                 if (str == "") {
@@ -88,9 +87,7 @@
                     });
                 };
             })
-        });
 
-        $(document).ready(function() {
             $("#insert").click(function(str) {
                 // If content is already filled then remove it
                 if (str == "") {
@@ -106,10 +103,8 @@
                         }
                     });
                 };
-            })
-        });
+            });
 
-        $(document).ready(function() {
             $("#enrolCourse").click(function(str) {
                 // If content is already filled then remove it
                 if (str == "") {
@@ -125,7 +120,24 @@
                         }
                     });
                 };
-            })
+            });
+
+            $("#userOnCourse").click(function(str) {
+                // If content is already filled then remove it
+                if (str == "") {
+                    $("ajaxContent").html = "";
+                    return;
+                } else {
+                    $.ajax({ //create an ajax request to courses.php
+                        type: "GET",
+                        url: "userOnCourse.php",
+                        dataType: "html", //expect html to be returned
+                        success: function(response) {
+                            $("#ajaxContent").html(response);
+                        }
+                    });
+                };
+            });
         });
 
     </script>

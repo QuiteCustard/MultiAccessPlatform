@@ -1,6 +1,5 @@
 <?php 
 include_once("_logincheck.php");
-
 if ($auth == "admin" || $auth == "user") {
   // Table headers
   ?>
@@ -15,7 +14,7 @@ if ($auth == "admin" || $auth == "user") {
                 <th scope='col'>Description</th>
                 <th scope='col'>Max Attendees</th>
                 <th scope='col'>Time</th>
-<?php
+                <?php
     if ($auth == "admin") {
         // Check to ensure only admin accounts can access
   ?>
@@ -236,7 +235,8 @@ if ($auth == "admin" || $auth == "user") {
             saveButton.addClass('bg-warning');
         });
 
-        });
+    });
+
 </script>
 <?php
 }

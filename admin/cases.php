@@ -90,8 +90,25 @@ if (isset($_GET['case']))
             else {
                 echo "0 results";
             }
-
-
+            break;
+        case "getUserOnCourse":
+            // Select all courses from database
+            $query = "SELECT * FROM `t_courses`";
+            $result = mysqli_query($db_connect, $query);
+            if (mysqli_num_rows($result) > 0) {
+                // output data of each row
+                while($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>";
+                    echo "<td class='idResult'>".$row['CID']."</td>";
+                    echo "<td class='titleResult'>".$row['Title']."</td>";
+                    echo "<td><button data-id='".$row['CID']."'class='btn bg-success text-white enrol'>Enrol</button></td>";
+                    echo"</tr>";
+                }
+            }
+            else {
+                echo "0 results";
+            }
+            break;
         }
     }
     else if (isset($_POST['case']))
@@ -225,7 +242,7 @@ if (isset($_GET['case']))
                     $id = mysqli_real_escape_string($db_connect, $_POST['id']);
                 }
                 // Preventation of editing owner account
-                if ($id==1)
+                if ($id == 1)
                 {
                     die("You cannot edit this account");
                 }
@@ -234,7 +251,7 @@ if (isset($_GET['case']))
                     if (isset($id))
                     {
                         // Check record exists
-                        $checkRecord = mysqli_query($db_connect, "SELECT * FROM `t_users` WHERE `t_users`.`UID`=" . $id);
+                        $checkRecord = mysqli_query($db_connect, "SELECT * FROM `t_users` WHERE `t_users`.`UID`='$id';");
                         $totalrows = mysqli_num_rows($checkRecord);
                         $email = $_POST['email'];
                         $fname = $_POST['fname'];
@@ -246,18 +263,21 @@ if (isset($_GET['case']))
                         if ($totalrows > 0)
                         {
                             // edit record
-                            $sqlQuery = "UPDATE `t_users` SET `Fname` = '$fname', `Lname` = '$lname', `Jobtitle` = '$job', `Email` = '$email', `Access` = '$access', `Currentcourse` = '$course' WHERE `t_users`.`UID` = $id;";
+                            $sqlQuery = "UPDATE `t_users` SET `Fname` = '$fname', `Lname` = '$lname', `Jobtitle` = '$job', `Email` = '$email', `Access` = '$access', `Currentcourse` = '$course' WHERE `t_users`.`UID` = '$id';";
                             mysqli_query($db_connect, $sqlQuery);
                             // Function to insert a new record to enrolment table
                             function updateEnrolmentTable($db_connect, $id, $cid){
                                 if (isset($cid)){
-                                    $sql = "UPDATE `t_enrolment` SET `CID` = '$cid' WHERE `t_enrolment`.`UID` = '$id';";
+                                    $sql = "REPLACE INTO `t_enrolment`(`EID`, `UID`, `CID`) VALUES (`EID`, '$id', '$cid');";
                                     mysqli_query($db_connect, $sql);
                                 }
-                           else if($course == ""){
-                               $sql = "DELETE FROM `t_enrolment` WHERE `t_enrolment`.`UID` = $id;";
+                           else if($course == "" || $course == "None"){
+                               $sql = "DELETE FROM `t_enrolment` WHERE `t_enrolment`.`UID` = '$id';";
                                     mysqli_query($db_connect, $sql);
                            }
+                                else{
+                                    die("Can't update" . $sql);
+                                }
                             }
                             updateEnrolmentTable($db_connect, $id, $cid);
                             echo "Record updated successfully";
@@ -326,7 +346,6 @@ if (isset($_GET['case']))
                     $access = $_POST['access'];
                     $course = $_POST['course'];
                     $cid = $_POST['newUserCid'];
-
                     // Insert new record
                     $sqlQuery = "INSERT INTO `t_users` (`UID`, `Fname`, `Lname`, `Jobtitle`, `Email`, `Password`, `Access`, `Currentcourse`, `Attempts`, `Timestamp`, `Serial`) VALUES ('$id', '$fname', '$lname', '$job', '$email', '$password', '$access', '$course', '0', current_timestamp(), NULL);";
                     mysqli_query($db_connect, $sqlQuery);
@@ -373,9 +392,9 @@ if (isset($_GET['case']))
 
                 break;
             case "insertUserToCourse":
-                if (isset($_POST['id']))
+                if (isset($_POST['newUserCid']))
                 {
-                    $id = $_POST['id'];
+                    $id = $_POST['newUserCid'];
                 }
                 if (isset($id))
                 {

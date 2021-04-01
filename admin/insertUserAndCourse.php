@@ -137,7 +137,7 @@
             var lname = $('#lnameInput').val();
             var job = $('#jobInput').val();
             var access = $('#accessInput').val();
-            var course = $('#CourseInput').val();
+            var course = $('#courseSelect').val();
             var newUserCid = $('#courseSelect').find(":selected").data('cid');
             // Log user being created
             console.log('SAVING NEW USER ', email);
