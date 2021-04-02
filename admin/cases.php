@@ -75,7 +75,7 @@ if (isset($_GET['case']))
             break;
         case "getEnrolCourse":
             // Select all courses from database
-            $query = "SELECT * FROM `t_courses`";
+            $query = "SELECT * FROM `t_courses`;";
             $result = mysqli_query($db_connect, $query);
             if (mysqli_num_rows($result) > 0) {
                 // output data of each row
@@ -91,42 +91,45 @@ if (isset($_GET['case']))
                 echo "0 results";
             }
             break;
-        case "getUserOnCourse":
-            // Show users on courses
-            $sql = "SELECT * FROM `t_users` WHERE `Currentcourse` != 'None' ORDER BY `Currentcourse`;";
-            $course = Null;
-            $result = mysqli_query($db_connect, $sql);
-            if (!$result) {
-                die(mysqli_error($db_connect));
-            }
-            while ($row = mysqli_fetch_assoc($result)) {
-            // Loop of info here
-
-                if ($row["Currentcourse"] != $course){
-                    $course = $row["Currentcourse"];
-                    echo "<table class='table table-hover'>";
-                    echo "<h2>$course</h2>";
-                    echo "<thead>";
-                    echo "<tr>";
-                    echo "<th scope='col'>UID</th>";
-                    echo "<th scope='col'>First name</th>";
-                    echo "<th scope='col'>Last name</th>";
-                    echo "<th scope='col'>Job</th>";
-                    echo "<th scope='col' id='remove'>Remove</th>";
-                    echo "</tr>";
-                    echo "</thead>";
-                    echo "<tbody>";
+        case "getUsersOnCourse":
+            function userNumOnCourse($db_connect){
+                // Show users on courses
+                $sql = "SELECT * FROM `t_users` LEFT JOIN `t_courses` ON `t_users`.`Currentcourse` = `t_courses`.`Title` WHERE `Currentcourse` != 'None' ORDER BY `Currentcourse`;";
+                $course = Null;
+                $result = mysqli_query($db_connect, $sql);
+                if (!$result) {
+                    die(mysqli_error($db_connect));
                 }
-                    echo "<tr>";
-                    echo "<td>".$row['UID']."</td>";
-                    echo "<td>".$row['Fname']."</td>";
-                    echo "<td>".$row['Lname']."</td>";
-                    echo "<td>".$row['Jobtitle']."</td>";
-                    echo "<td><button data-id='".$row['UID']."'class='btn bg-danger text-white remove'>Remove from course</button></td>";
-                    echo "</tr>";
-            }
+                while ($row = mysqli_fetch_assoc($result)) {
+                    // Loop of info here
+                    if ($row["Currentcourse"] != $course){
+                        $course = $row["Currentcourse"];
+                        $attendee = $row["Max_attendees"];
+                        echo "<table class='table table-hover'>";
+                        echo "<div class='row'><div class='col-md-12 d-flex'><h3>$course:</h3><p class='ml-auto'>Max attendees:$attendee attendee(s)</p></div></div>";
+                        echo "<thead>";
+                        echo "<tr>";
+                        echo "<th scope='col'>UID</th>";
+                        echo "<th scope='col'>First name</th>";
+                        echo "<th scope='col'>Last name</th>";
+                        echo "<th scope='col'>Job</th>";
+                        echo "<th scope='col' id='remove'>Remove</th>";
+                        echo "</tr>";
+                        echo "</thead>";
+                        echo "<tbody>";
+                    }
+                        echo "<tr>";
+                        echo "<td>".$row['UID']."</td>";
+                        echo "<td>".$row['Fname']."</td>";
+                        echo "<td>".$row['Lname']."</td>";
+                        echo "<td>".$row['Jobtitle']."</td>";
+                        echo "<td><button data-id='".$row['UID']."'class='btn bg-danger text-white remove'>Remove from course</button></td>";
+                        echo "</tr>";
+                }
             echo "</tbody>";
             echo "</table>";
+            }
+            userNumOnCourse($db_connect);
             break;
         }
     }
@@ -414,4 +417,3 @@ if (isset($_GET['case']))
     }else{
         die("No case set");
     }
-
