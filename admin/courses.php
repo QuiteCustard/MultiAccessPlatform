@@ -16,7 +16,7 @@ if ($auth == "admin" || $auth == "user") {
                 <th scope='col'>Time</th>
                 <?php
     if ($auth == "admin") {
-        // Check to ensure only admin accounts can access
+       // Check to ensure only admin accounts can access
   ?>
 
                 <th scope='col' id='edit'>Edit</th>

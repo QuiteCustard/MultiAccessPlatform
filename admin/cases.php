@@ -9,7 +9,7 @@ if (isset($_GET['case']))
         // Get user data
         case "getUserData":
             if ($auth == "admin"){
-                $query = "SELECT * FROM `t_users`";
+                $query = "SELECT * FROM `t_users`;";
             }
             else{
                 $query = "SELECT * FROM `t_users` WHERE `UID` =" . $_SESSION['userid'] . ";";
@@ -46,29 +46,32 @@ if (isset($_GET['case']))
             break;
         // Get course data
         case "getCourseData":
-            $query = "SELECT * FROM `t_courses`";
-            $result = mysqli_query($db_connect, $query);
-            if (mysqli_num_rows($result) > 0) {
-                // output data of each row
-                while($row = mysqli_fetch_assoc($result)) {
-                    echo "<tr>";
-                    echo "<td class='idResult'>".$row['CID']."</td>";
-                    echo "<td class='titleResult'>".$row['Title']."</td>";
-                    echo "<td class='dateResult'>".$row['Date']."</td>";
-                    echo "<td class='durationResult'>".$row['Duration']."</td>";
-                    echo "<td class='descriptionResult'>".$row['Description']."</td>";
-                    echo "<td class='attendeesResult'>".$row['Max_attendees']."</td>";
-                    echo "<td>".$row['Timestamp']."</td>";
-                    if ($auth == "admin"){
-                        echo "<td><button data-id='".$row['CID']."'class='btn bg-warning text-white edit'>Edit</button></td>";
-                        echo "<td><button data-id='".$row['CID']."'class='btn bg-danger text-white delete'>Delete</button></td>";
+            function getCourseData($db_connect, $auth){
+                $query = "SELECT * FROM `t_courses`";
+                $result = mysqli_query($db_connect, $query);
+                if (mysqli_num_rows($result) > 0) {
+                    // output data of each row
+                    while($row = mysqli_fetch_assoc($result)) {
+                        echo "<tr>";
+                        echo "<td class='idResult'>".$row['CID']."</td>";
+                        echo "<td class='titleResult'>".$row['Title']."</td>";
+                        echo "<td class='dateResult'>".$row['Date']."</td>";
+                        echo "<td class='durationResult'>".$row['Duration']."</td>";
+                        echo "<td class='descriptionResult'>".$row['Description']."</td>";
+                        echo "<td class='attendeesResult'>".$row['Max_attendees']."</td>";
+                        echo "<td>".$row['Timestamp']."</td>";
+                        if ($auth == "admin"){
+                            echo "<td><button data-id='".$row['CID']."'class='btn bg-warning text-white edit'>Edit</button></td>";
+                            echo "<td><button data-id='".$row['CID']."'class='btn bg-danger text-white delete'>Delete</button></td>";
+                        }
+                        echo "</tr>";
                     }
-                    echo "</tr>";
+                }
+                else {
+                    echo "0 results";
                 }
             }
-            else {
-                echo "0 results";
-            }
+            getCourseData($db_connect, $auth);
             break;
         case "getEnrolCourse":
             // Select all courses from database
@@ -90,38 +93,40 @@ if (isset($_GET['case']))
             break;
         case "getUserOnCourse":
             // Show users on courses
-
-            $sql = "SELECT * FROM `t_users` WHERE `Currentcourse` = `Currentcourse` ORDER BY `Currentcourse`;";
+            $sql = "SELECT * FROM `t_users` WHERE `Currentcourse` != 'None' ORDER BY `Currentcourse`;";
+            $course = Null;
             $result = mysqli_query($db_connect, $sql);
-            if (mysqli_num_rows($result) > 0) {
-                // output data of each row
-                while($row = mysqli_fetch_assoc($result)) {
-                    $course = $row['Currentcourse'];
-                    echo "<h2>$course</h2>";
-                    echo "<table class='table table-hover'>
-                            <thead>
-                                <tr>
-                                    <th scope='col'>UID</th>
-                                    <th scope='col'>First name</th>
-                                    <th scope='col'>Last name</th>
-                                    <th scope='col'>Job</th>
-                                    <th scope='col' id='remove'>Remove</th>
-                                </tr>
-                            </thead>
-                            <tbody class='usersOnCourseTable'>
-                                <tr>
-                                    <td class=''>".$row['UID']."</td>
-                                    <td class=''>".$row['Fname']."</td>
-                                    <td class=''>".$row['Lname']."</td>
-                                    <td class=''>".$row['Jobtitle']."</td>
-                                    <td><button data-id='".$row['UID']."'class='btn bg-danger text-white remove'>Remove from course</button></td>
-                                </tr>
-                            </tbody>
-                        </table>";
-
-                }
+            if (!$result) {
+                die(mysqli_error($db_connect));
             }
+            while ($row = mysqli_fetch_assoc($result)) {
+            // Loop of info here
 
+                if ($row["Currentcourse"] != $course){
+                    $course = $row["Currentcourse"];
+                    echo "<table class='table table-hover'>";
+                    echo "<h2>$course</h2>";
+                    echo "<thead>";
+                    echo "<tr>";
+                    echo "<th scope='col'>UID</th>";
+                    echo "<th scope='col'>First name</th>";
+                    echo "<th scope='col'>Last name</th>";
+                    echo "<th scope='col'>Job</th>";
+                    echo "<th scope='col' id='remove'>Remove</th>";
+                    echo "</tr>";
+                    echo "</thead>";
+                    echo "<tbody>";
+                }
+                    echo "<tr>";
+                    echo "<td>".$row['UID']."</td>";
+                    echo "<td>".$row['Fname']."</td>";
+                    echo "<td>".$row['Lname']."</td>";
+                    echo "<td>".$row['Jobtitle']."</td>";
+                    echo "<td><button data-id='".$row['UID']."'class='btn bg-danger text-white remove'>Remove from course</button></td>";
+                    echo "</tr>";
+            }
+            echo "</tbody>";
+            echo "</table>";
             break;
         }
     }
@@ -206,27 +211,36 @@ if (isset($_GET['case']))
                 courseValF($db_connect);
                 break;
             case "accessSelector":
-                function accessValF($db_connect){
-                    $query = "SELECT DISTINCT `Access` FROM `t_users`;";
-                    $run = mysqli_query($db_connect, $query);
-                    if (mysqli_num_rows($run) > 0) {
-                        // Get Course current value
-                        $access = $_POST["accessVal"];
-                        $course_options ="";
-                        while ($result = mysqli_fetch_assoc($run)){
-                            //Display course titles as options
-                            $title = $result["Access"];
-                            $course_options .= "<option value='$title'";
-                            if ($title == $access) {
-                              $course_options .= "selected='selected'";
+                function accessValF($db_connect, $auth){
+                    if ($auth == "user" ){
+                        // Don't give option to change access level
+                        echo "user";
+                    }
+                    else if ($auth == "admin"){
+                        $query = "SELECT DISTINCT `Access` FROM `t_users`;";
+                        $run = mysqli_query($db_connect, $query);
+                        if (mysqli_num_rows($run) > 0) {
+                            // Get Course current value
+                            $access = $_POST["accessVal"];
+                            $course_options ="";
+                            while ($result = mysqli_fetch_assoc($run)){
+                                //Display course titles as options
+                                $title = $result["Access"];
+                                $course_options .= "<option value='$title'";
+                                if ($title == $access) {
+                                    $course_options .= "selected='selected'";
+                                }
+                                $course_options .= ">$title</option>";
                             }
-                            $course_options .= ">$title</option>";
+                            $selectCourse = '<select class="form-control form-control-user primary selectors" id="course" name="course_option">' .$course_options.'</select>';
+                            echo $selectCourse;
                         }
-                        $selectCourse = '<select class="form-control form-control-user primary selectors" id="course" name="course_option">' .$course_options.'</select>';
-                        echo $selectCourse;
+                    }
+                    else {
+                        die("You do not have permission for this page");
                     }
                 }
-                accessValF($db_connect);
+                accessValF($db_connect, $auth);
                 break;
             case "saveUser":
                 //Set id to correct UID
@@ -351,33 +365,53 @@ if (isset($_GET['case']))
                     echo "Failed to update record: No ID!";
                 }
                 break;
-            case "insertUserToCourse":
-                if (isset($_POST['newUserCid'])){
-                    $id = $_POST['newUserCid'];
+            case "enrolOnCourse":
+                if (isset($_POST['id'])){
+                    $id = $_POST['id'];
                     if (isset($id)){
                         // Function to insert a new record to enrolment table
                         function enrolmentTable($db_connect, $id){
-                                $sql = "INSERT INTO t_enrolment (UID, CID) VALUES (" . $_SESSION['userid']  .", $id);";
+                                $sql = "INSERT INTO `t_enrolment` (`EID`,`UID`, `CID`) VALUES (`EID`, '" . $_SESSION['userid']  ."', '$id');";
                                 mysqli_query($db_connect, $sql);
                         }
                         enrolmentTable($db_connect, $id);
                         // Function to change current course to one just clicked
                         function userCourse($db_connect, $id){
-                            $sql = "UPDATE `t_users` SET `Currentcourse` = (SELECT `Title` FROM `t_courses` WHERE `CID` = $id) WHERE `UID` = " . $_SESSION['userid'] . ";";
+                            $sql = "UPDATE `t_users` SET `Currentcourse` = (SELECT `Title` FROM `t_courses` WHERE `CID` = '$id') WHERE `UID` = '" . $_SESSION['userid'] . "';";
                             mysqli_query($db_connect, $sql);
                         }
                         userCourse($db_connect, $id);
                         echo "Records updated successfully";
                     }
+                    else{
+                        echo "no ID set!";
+                    }
                 }else{
-                    echo "Failed to update record!";
+                    die($_POST['id']);
                 }
                 break;
-            case "userCourseOptions":
-               // function(){}
+            case "removeUserFromCourse":
+                if (isset($_POST['id'])){
+                    $id = $_POST['id'];
+                    if (isset($id)){
+                        function removeUser($db_connect, $id){
+                            $sql="UPDATE `t_users` SET `Currentcourse` = 'None' WHERE `UID` = '$id';";
+                            mysqli_query($db_connect, $sql);
+                        }
+                        removeUser($db_connect, $id);
+                        function removeEnrolment($db_connect, $id){
+                            $sql="DELETE FROM `t_enrolment` WHERE `t_enrolment`.`UID` = '$id';";
+                            mysqli_query($db_connect, $sql);
+                        }
+                        removeEnrolment($db_connect, $id);
+                        echo "Records updated successfully";
+                    }else{
+                        die("No ID set!");
+                    }
+                }
                 break;
         }
-
     }else{
         die("No case set");
     }
+

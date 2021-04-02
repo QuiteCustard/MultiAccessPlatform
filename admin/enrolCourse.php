@@ -33,7 +33,7 @@ require_once("_loginCheck.php");
         //Enrol
         $('body').off('click', '.enrol').on('click', '.enrol', function(e) {
             const enrolButton = $(e.target);
-            const insertUserToCourse = "insertUserToCourse";
+            const enrolOnCourse = "enrolOnCourse";
             var enrolid = $(this).data('id');
             // Log course being created
             console.log('ENROLING on course');
@@ -45,7 +45,7 @@ require_once("_loginCheck.php");
                     type: 'POST',
                     data: {
                         id: enrolid,
-                        case: insertUserToCourse
+                        case: enrolOnCourse
                     }
                 }).done(function(response) {
                     console.log(response);

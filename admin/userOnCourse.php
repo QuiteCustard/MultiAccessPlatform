@@ -19,24 +19,25 @@ include_once("_logincheck.php");
         }
         getEnrolCourseData();
         //Enrol
-        $('body').off('click', '.enrol').on('click', '.enrol', function(e) {
-            const enrolButton = $(e.target);
-            const insertUserToCourse = "insertUserToCourse";
-            var enrolid = $(this).data('id');
+        $('body').off('click', '.remove').on('click', '.remove', function(e) {
+            const removeButton = $(e.target);
+            const removeUserFromCourse = "removeUserFromCourse";
+            var removeid = $(this).data('id');
             // Log course being created
-            console.log('ENROLING on course');
-            var c = confirm("Are you sure you want to enrol on this course?");
+            console.log('REMOVING from course');
+            var c = confirm("Are you sure you want to remove this user from this course?");
             if (c == true) {
                 // AJAX Request
                 $.ajax({
                     url: 'cases.php',
                     type: 'POST',
                     data: {
-                        id: enrolid,
-                        case: insertUserToCourse
+                        id: removeid,
+                        case: removeUserFromCourse
                     }
                 }).done(function(response) {
                     console.log(response);
+                    getEnrolCourseData();
                 });
             }
         });
