@@ -101,33 +101,35 @@ if (isset($_GET['case']))
                     die(mysqli_error($db_connect));
                 }
                 while ($row = mysqli_fetch_assoc($result)) {
-                    // Loop of info here
-                    if ($row["Currentcourse"] != $course){
-                        $course = $row["Currentcourse"];
-                        $attendee = $row["Max_attendees"];
-                        echo "<table class='table table-hover'>";
-                        echo "<div class='row'><div class='col-md-12 d-flex'><h3>$course:</h3><p class='ml-auto'>Max attendees:$attendee attendee(s)</p></div></div>";
-                        echo "<thead>";
-                        echo "<tr>";
-                        echo "<th scope='col'>UID</th>";
-                        echo "<th scope='col'>First name</th>";
-                        echo "<th scope='col'>Last name</th>";
-                        echo "<th scope='col'>Job</th>";
-                        echo "<th scope='col' id='remove'>Remove</th>";
-                        echo "</tr>";
-                        echo "</thead>";
-                        echo "<tbody>";
-                    }
-                        echo "<tr>";
-                        echo "<td>".$row['UID']."</td>";
-                        echo "<td>".$row['Fname']."</td>";
-                        echo "<td>".$row['Lname']."</td>";
-                        echo "<td>".$row['Jobtitle']."</td>";
-                        echo "<td><button data-id='".$row['UID']."'class='btn bg-danger text-white remove'>Remove from course</button></td>";
-                        echo "</tr>";
+                    $data[$row["Currentcourse"]][$row['UID']]["fname"] = $row['Fname'];
+                    $data[$row["Currentcourse"]][$row['UID']]["lname"] = $row['Lname'];
+                    $data[$row["Currentcourse"]][$row['UID']]["job"] = $row['Jobtitle'];
                 }
-            echo "</tbody>";
-            echo "</table>";
+                foreach ($data as $courseKey => $courseUsers) {
+                    echo "<table class='table table-hover'>";
+                    echo "<div class='row'><div class='col-md-12 d-flex'><h3>{$courseKey}</h3>";
+                    echo "<p class='ml-auto counter'>" . count($courseUsers) ." People In This Course</p></div></div>";
+                    echo "<thead>";
+                    echo "<tr>";
+                    echo "<th scope='col'>UID</th>";
+                    echo "<th scope='col'>First name</th>";
+                    echo "<th scope='col'>Last name</th>";
+                    echo "<th scope='col'>Job</th>";
+                    echo "<th scope='col' id='remove'>Remove</th>";
+                    echo "</tr>";
+                    echo "</thead>";
+                    echo "<tbody class='removeUserBody ${courseKey}Course'>";
+                    foreach ($courseUsers as $uid => $user){
+                        echo "<tr>";
+                        echo "<td>{$uid}</td>";
+                        echo "<td>{$user['fname']}</td>";
+                        echo "<td>{$user['lname']}</td>";
+                        echo "<td>{$user['job']}</td>";
+                        echo "<td><button data-id='{$uid}'class='btn bg-danger text-white remove'>Remove from course</button></td>";
+                        echo "</tr>";
+                    }
+                    echo "</table>";
+                }
             }
             userNumOnCourse($db_connect);
             break;

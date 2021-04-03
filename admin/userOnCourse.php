@@ -2,6 +2,15 @@
 include_once("_logincheck.php");
     if ($auth == "admin") {
 ?>
+<div class='row'>
+    <div class='col-md-10'>
+        <h3>Courses</h3>
+    </div>
+    <div class='col-md-2'>
+        <input type="text" id="search" class="form-control primary inputs" placeholder="Search.." />
+        <p class="text-center">You can search by all rows</p>
+    </div>
+</div>
 <div class='table-responsive tUserCourse'></div>
 <script type="text/javascript">
     function getEnrolCourseData() {
@@ -17,6 +26,40 @@ include_once("_logincheck.php");
         });
     }
     getEnrolCourseData();
+    // User search
+    function userSearch() {
+        // Update data after every key press
+        $('#search').on('keyup', function() {
+            const input = $("#search");
+            const filter = input.val().toUpperCase();
+            const table = $(".removeUserBody");
+            const tr = table.find("tr");
+            for (i = 0; i < tr.length; i++) {
+                // Find all tds
+                tds = $(tr[i]).find("td");
+                // Set found to false so I can update styles later if results are found/not
+                var found = false;
+                // Set all tds to be searchable
+                for (j = 0; j < tds.length; j++) {
+                    td = tds[j];
+                    if (td) {
+                        if (td.innerText.toUpperCase().indexOf(filter) > -1) {
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+
+                // Styles
+                if (found) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        });
+    };
+    userSearch();
     //Enrol
     $('body').off('click', '.remove').on('click', '.remove', function(e) {
         const removeButton = $(e.target);
