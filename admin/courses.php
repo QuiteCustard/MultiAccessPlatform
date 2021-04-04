@@ -1,6 +1,6 @@
 <?php 
 include_once("_logincheck.php");
-if ($auth == "admin" || $auth == "user") {
+if ($auth == "admin" || $auth == "user" || $auth == "owner") {
   // Table headers
   ?>
 <div class='row'>
@@ -24,7 +24,7 @@ if ($auth == "admin" || $auth == "user") {
                 <th scope='col'>Max Attendees</th>
                 <th scope='col'>Time</th>
                 <?php
-    if ($auth == "admin") {
+    if ($auth == "admin" || $auth == "owner") {
        // Check to ensure only admin accounts can access
   ?>
 
@@ -289,4 +289,4 @@ else {
 header("Location:../index.php");
 echo "Please enter admin credentials";
 die("access denied");
-};
+}

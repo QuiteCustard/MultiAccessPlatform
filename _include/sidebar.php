@@ -41,7 +41,7 @@
                 <a class="collapse-item" href="#" id="course">View All Courses</a>
                 <a class="collapse-item" href="#" id="enrolCourse">Enrol on Course</a>
                 <?php
-                if ($auth == "admin") {
+                if ($auth == "admin" || $auth == "owner") {
 ?>
                 <a class="collapse-item" href="#" id="insert">Insert Users/Courses</a>
                 <a class="collapse-item" href="#" id="userOnCourse">Users on courses</a>

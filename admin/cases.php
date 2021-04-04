@@ -8,7 +8,7 @@ if (isset($_GET['case']))
     {
         // Get user data
         case "getUserData":
-            if ($auth == "admin"){
+            if ($auth == "owner" || $auth == "admin"){
                 $query = "SELECT * FROM `t_users`;";
             }
             else{
@@ -34,7 +34,7 @@ if (isset($_GET['case']))
                     echo "<td>".$row['Timestamp']."</td>";
                     echo "<td><button data-id='".$row['UID']."'class='btn bg-warning text-white edit'>Edit</button></td>";
                     // Prevent user from deleting their own account
-                    if ($auth == "admin"){
+                    if ($auth == "admin" || $auth == "owner"){
                         echo "<td><button data-id='".$row['UID']."'class='btn bg-danger text-white delete'>Delete</button></td>";
                     }
                     echo"</tr>";
@@ -60,7 +60,7 @@ if (isset($_GET['case']))
                         echo "<td class='descriptionResult'>".$row['Description']."</td>";
                         echo "<td class='attendeesResult'>".$row['Max_attendees']."</td>";
                         echo "<td>".$row['Timestamp']."</td>";
-                        if ($auth == "admin"){
+                        if ($auth == "admin" || $auth == "owner"){
                             echo "<td><button data-id='".$row['CID']."'class='btn bg-warning text-white edit'>Edit</button></td>";
                             echo "<td><button data-id='".$row['CID']."'class='btn bg-danger text-white delete'>Delete</button></td>";
                         }
@@ -190,38 +190,16 @@ if (isset($_GET['case']))
                 }
                 break;
             // save user data
-            case "courseSelector":
-                function courseValF($db_connect){
-                    $query = "SELECT `CID`,`Title` FROM `t_courses`;";
-                    $run = mysqli_query($db_connect, $query);
-                    if (mysqli_num_rows($run) > 0) {
-                        // Get Course current value
-                        $course = $_POST["courseVal"];
-                        $course_options ="";
-                        // output data of each row
-                        while($row = mysqli_fetch_assoc($run)) {
-                            //Display course titles as options
-                            $title = $row["Title"];
-                            $cid = $row["CID"];
-                            $course_options .= "<option data-cid='$cid' value='$title'";
-                            if ($title == $course) {
-                                $course_options .= "selected='selected'";
-                            }
-                            $course_options .= ">$title</option>";
-                        }
-                        $selectCourse = '<select class="form-control primary selectors" id="courseSelect" name="course_option"><option value="None">None</option>'.$course_options.'</select>';
-                        echo $selectCourse;
-                    }
-                }
-                courseValF($db_connect);
-                break;
             case "accessSelector":
                 function accessValF($db_connect, $auth){
-                    if ($auth == "user" ){
+                    if ($auth == "user"){
                         // Don't give option to change access level
                         echo "user";
                     }
                     else if ($auth == "admin"){
+                        echo "admin";
+                    }
+                    else if ($auth == "owner"){
                         $query = "SELECT DISTINCT `Access` FROM `t_users`;";
                         $run = mysqli_query($db_connect, $query);
                         if (mysqli_num_rows($run) > 0) {
@@ -337,7 +315,7 @@ if (isset($_GET['case']))
                         // Insert new record
                         $sqlQuery = "INSERT INTO `t_users` (`UID`, `Fname`, `Lname`, `Jobtitle`, `Email`, `Password`, `Access`, `Currentcourse`, `Attempts`, `Timestamp`, `Serial`) VALUES ('$id', '$fname', '$lname', '$job', '$email', '$password', '$access', '$course', '0', current_timestamp(), NULL);";
                         mysqli_query($db_connect, $sqlQuery);
-                        echo "Record updated successfully";
+                        echo "Record INSERTED successfully";
                         // Function to insert a new record to enrolment table
                         function insertEnrolmentTable($db_connect, $id, $cid){
                             $sql = "INSERT INTO t_enrolment (UID, CID) VALUES ($id, $cid);";

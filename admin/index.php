@@ -2,14 +2,14 @@
 // Main admin page
 // Check to ensure only admin or user accounts can access this page
     include_once("_logincheck.php");
-    if ($auth == "admin" || $auth == "user")
+    if ($auth == "owner" || $auth == "admin" || $auth == "user")
         {
             include_once("../_include/head.php");
             ?>
 
 <body id="page-top" class="body">
     <!-- Page Wrapper -->
-    <div id="wrapper" >
+    <div id="wrapper">
         <?php
             include_once("../_include/sidebar.php");
             include_once("../_include/navbar.php");

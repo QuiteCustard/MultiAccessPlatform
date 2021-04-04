@@ -1,7 +1,7 @@
 <?php 
 include_once("_logincheck.php");
 // Check to ensure only logged in accounts can access this page
-if ($auth == "admin" || $auth == "user"){
+if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
   ?>
 <div class='row'>
     <div class='col-md-10'>
@@ -29,7 +29,7 @@ if ($auth == "admin" || $auth == "user"){
                 <th scope='col'>Time</th>
                 <th scope='col' id='editHeader'>Edit</th>
                 <?php
-   if ($auth == "admin"){
+   if ($auth == "admin" || $auth == "owner"){
 ?>
                 <th scope='col' id='deleteHeader'>Delete</th>
                 <?php
@@ -133,7 +133,8 @@ if ($auth == "admin" || $auth == "user"){
             const editButton = $(e.target);
             var editid = $(this).data('id').toString();
             // First line of defence against editing
-            if (editid == 1) {
+            const authchecker = <?php echo json_encode($_SESSION['userid']) ?>;
+            if (editid == 1 && authchecker != 1) {
                 alert("You cannot edit this account.");
             } else {
                 // Set delete button to variable
@@ -172,23 +173,6 @@ if ($auth == "admin" || $auth == "user"){
                 const accessFieldChange = editButton.closest('tr').find('.accessResult');
                 // Set variable to value of td column
                 const accessCurrValue = accessFieldChange.text();
-                // Current course
-                // Find correct table data column
-                const courseFieldChange = editButton.closest('tr').find('.courseResult');
-                // Set variable to value of td column
-                const courseCurrValue = courseFieldChange.text();
-                const courseSelector = "courseSelector";
-                $.ajax({
-                    url: 'cases.php',
-                    type: 'POST',
-                    data: {
-                        case: courseSelector,
-                        courseVal: courseCurrValue
-                    }
-                }).done(function(response) {
-                    // Set result as input with data inside
-                    courseFieldChange.html(response);
-                });
                 const accessSelector = "accessSelector";
                 $.ajax({
                     url: 'cases.php',

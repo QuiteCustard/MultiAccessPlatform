@@ -1,6 +1,6 @@
  <?php
 require_once("_loginCheck.php");
-    if ($auth == "admin" || $auth == "user") {
+    if ($auth == "admin" || $auth == "owner" || $auth == "user") {
 ?>
  <div class='row'>
      <div class='col-md-10'>
@@ -97,4 +97,8 @@ require_once("_loginCheck.php");
 
  </script>
  <?php
-    }
+    }else{
+    header("Location:../index.php");
+    echo "Please enter admin credentials";
+    die("access denied");
+}
