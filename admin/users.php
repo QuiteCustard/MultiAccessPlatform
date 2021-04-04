@@ -199,9 +199,7 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
         });
         // Append "selected" to the correct option if it is selected
         $(document).on("change", "select", function() {
-            $("option[value=" + this.value + "]", this)
-                .attr("selected", true).siblings()
-                .removeAttr("selected")
+            $("option[value=" + this.value + "]", this).attr("selected", true).siblings().removeAttr("selected")
         });
         // Save
         $('body').off('click', '.save').on('click', '.save', function(e) {

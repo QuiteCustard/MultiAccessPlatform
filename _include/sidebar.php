@@ -3,8 +3,8 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+        <div class="sidebar-brand-icon rotate-n-0">
+            <i class="fas fa-dungeon"></i>
         </div>
         <div class="sidebar-brand-text mx-3">Management system</div>
     </a>
@@ -15,19 +15,15 @@
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
         <a class="nav-link" href="/admin/index.php">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <i class="fas fa-chalkboard-teacher"></i>
             <span>Dashboard</span></a>
     </li>
-
     <!-- Divider -->
     <hr class="sidebar-divider">
-
-
     <!-- Heading -->
     <div class="sidebar-heading">
         Addons
     </div>
-
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
@@ -35,13 +31,13 @@
             <span>Tools</span>
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="body py-2 collapse-inner rounded">
+            <div class="body py-2 collapse-inner rounded secondaryBorder">
                 <h6 class="collapse-header">Tools:</h6>
                 <a class="collapse-item" id="user" href="#">View Users</a>
                 <a class="collapse-item" href="#" id="course">View All Courses</a>
                 <a class="collapse-item" href="#" id="enrolCourse">Enrol on Course</a>
-                <?php
-                if ($auth == "admin" || $auth == "owner") {
+<?php
+if ($auth == "admin" || $auth == "owner") {
 ?>
                 <a class="collapse-item" href="#" id="insert">Insert Users/Courses</a>
                 <a class="collapse-item" href="#" id="userOnCourse">Users on courses</a>
@@ -174,12 +170,6 @@
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
-
-    <!-- Sidebar Message -->
-    <div class="sidebar-card">
-        <img class="sidebar-card-illustration mb-2" src="/img/undraw_rocket.svg" alt="">
-    </div>
-
 </ul>
 <!-- End of Sidebar -->
 

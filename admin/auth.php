@@ -14,7 +14,7 @@ $password = mysqli_escape_string($db_connect,hash("SHA256",$_POST["Password"]));
 $currentAttempts = mysqli_fetch_assoc(mysqli_query($db_connect, "SELECT `Email`,`Attempts` FROM `t_users` WHERE `Email` = '$email'"))['Attempts'];
 
 $newAttempts = $currentAttempts + 1;
-mysqli_query($db_connect, "UPDATE `t_users` SET `Attempts` = '$newAttempts' WHERE `email` = '$email'");
+mysqli_query($db_connect, "UPDATE `t_users` SET `Attempts` = '$newAttempts' WHERE `email` = '$email';");
 
 if($currentAttempts > 4)
 {
@@ -39,10 +39,8 @@ if($currentAttempts > 4)
     }
 }
 }
-
 //run query
 $query = "SELECT * FROM `t_users` WHERE `Email` = '$email' AND `Password` = '$password'";
-
 
 $run = mysqli_query($db_connect,$query);
 //count matches.  Will return 1 if match found.
@@ -59,7 +57,7 @@ if ($count === 1){
     $_SESSION["auth"] = $access;
     // Reset login attempts
     $resetAttempts = 0;
-    $sqlQuery="INSERT INTO `t_users` (`Attempts`) VALUES ('$resetAttempts');";
+    $sqlQuery="UPDATE `t_users` SET `Attempts` = '0' WHERE `t_users`.`UID` = '$userid';";
     mysqli_query($db_connect,$sqlQuery);
     echo "Record updated successfully";
     // Remember name
