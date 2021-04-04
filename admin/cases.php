@@ -81,16 +81,19 @@ if (isset($_GET['case']))
                 while ($row = mysqli_fetch_assoc($result)) {
                     $data[$row["CID"]][$row['CID']]["title"] = $row['Title'];
                     $data[$row["CID"]][$row['CID']]["max_attendees"] = $row['Max_attendees'];
+
                 }
                 foreach ($data as $courseKey => $courses) {
+                    foreach ($courses as $cid => $course){
                         echo "<tr>";
                         echo "<td>{$courseKey}</td>";
-                        echo "<td>{$courses['title']}</td>";
+                        echo "<td>{$course['title']}</td>";
                         echo "<td>" .count($courses) . " out of ";
-                        echo "{$courses['max_attendees']}" . " places booked</td>";
+                        echo "{$course['max_attendees']}" . " places booked</td>";
                        // echo "<td>{$courses['']}</td>";
                         echo "<td><button data-id='{$courseKey} 'class='btn bg-success text-white enrol'>Enrol</button></td>";
                         echo "</tr>";
+                    }
                 }
             }
             else {
