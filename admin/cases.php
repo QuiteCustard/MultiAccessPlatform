@@ -84,7 +84,7 @@ if (isset($_GET['case']))
                 }
                 foreach ($data as $courseKey => $courses) {
                         echo "<tr>";
-                        echo "<td>{$CourseKey}</td>";
+                        echo "<td>{$courseKey}</td>";
                         echo "<td>{$courses['title']}</td>";
                         echo "<td>" .count($courses) . " out of ";
                         echo "{$courses['max_attendees']}" . " places booked</td>";
