@@ -1,5 +1,5 @@
  <?php
-    require_once("_loginCheck.php");
+    include_once("_loginCheck.php");
     if ($auth == "admin" || $auth == "owner") {
 ?>
  <main class="container-fluid">
