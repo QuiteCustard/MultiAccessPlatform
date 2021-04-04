@@ -53,6 +53,7 @@ include_once("_logincheck.php");
                 // Styles
                 if (found) {
                     tr[i].style.display = "";
+                    $(tr[i]).addClass("tertiary");
                 } else {
                     tr[i].style.display = "none";
                 }
