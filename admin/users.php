@@ -169,22 +169,24 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
                 // Set result as input with data inside
                 jobFieldChange.html(`<input class="form-control form-control-user primary" value="${jobCurrValue}" />`);
                 // Access level
+                if (editid != 1) {
+                    const accessFieldChange = editButton.closest('tr').find('.accessResult');
+                    // Set variable to value of td column
+                    const accessCurrValue = accessFieldChange.text();
+                    const accessSelector = "accessSelector";
+                    $.ajax({
+                        url: 'cases.php',
+                        type: 'POST',
+                        data: {
+                            case: accessSelector,
+                            accessVal: accessCurrValue
+                        }
+                    }).done(function(response) {
+                        // Set result as input with data inside
+                        accessFieldChange.html(response);
+                    });
+                }
                 // Find correct table data column
-                const accessFieldChange = editButton.closest('tr').find('.accessResult');
-                // Set variable to value of td column
-                const accessCurrValue = accessFieldChange.text();
-                const accessSelector = "accessSelector";
-                $.ajax({
-                    url: 'cases.php',
-                    type: 'POST',
-                    data: {
-                        case: accessSelector,
-                        accessVal: accessCurrValue
-                    }
-                }).done(function(response) {
-                    // Set result as input with data inside
-                    accessFieldChange.html(response);
-                });
                 // Class change to be able to run save & cancel functions
                 // Turn edit button into save button
                 editButton.html('Save');

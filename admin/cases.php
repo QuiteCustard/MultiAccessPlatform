@@ -208,8 +208,8 @@ if (isset($_GET['case']))
                     else if ($auth == "admin"){
                         echo "admin";
                     }
-                    else if ($auth == "owner"){
-                        $query = "SELECT DISTINCT `Access` FROM `t_users`;";
+                    else if ($auth == "owner" ){
+                        $query = "SELECT DISTINCT `Access` FROM `t_users` WHERE `Access` != 'Owner';";
                         $run = mysqli_query($db_connect, $query);
                         if (mysqli_num_rows($run) > 0) {
                             // Get access current value
