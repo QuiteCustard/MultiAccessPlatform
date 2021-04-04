@@ -367,16 +367,15 @@ if (isset($_GET['case']))
                         function counter($db_connect, $title){
                             $sql = "SELECT COUNT(`Currentcourse`) as num FROM `t_users` WHERE `Currentcourse` = '$title';";
                             $result = mysqli_query($db_connect, $sql);
-                             while($row = mysqli_fetch_assoc($result)){
+                            while($row = mysqli_fetch_assoc($result)){
                                  $count = $row["num"];
                              }
                                 return $count;
                         }
                         counter($db_connect, $title);
                         $countNum = counter($db_connect, $title);
-                        if ($countNum >= $attendees)
-                        {
-                            echo "Course is full. You cannot enrol on this.";
+                        if ($countNum >= $attendees){
+                            echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>This course is full!</strong> You cannot enrol on this course!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
                         }else{
                             // Function to insert a new record to enrolment table
                             function enrolmentTable($db_connect, $id){
@@ -390,14 +389,13 @@ if (isset($_GET['case']))
                                 mysqli_query($db_connect, $sql);
                             }
                             userCourse($db_connect, $id);
-                            echo "Records updated successfully";
+                            echo "<div class='alert alert-success alert-dismissible fade show' role='alert'><strong>You have enrolled on this course!</strong> The performed action was successful!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
                         }
-                    }
-                    else{
+                    }else{
                         echo "no ID set!";
                     }
                 }else{
-                    die($_POST['id']);
+                    echo "no ID set!";
                 }
                 break;
             case "removeUserFromCourse":

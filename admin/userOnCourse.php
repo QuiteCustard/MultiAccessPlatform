@@ -30,7 +30,7 @@ require_once("_logincheck.php");
                 $('.tUserCourse').html(response);
             });
         }
-        getEnrolCourseData();
+        var intervalTiming = setInterval(getEnrolCourseData(), 60000);
         // User search
         function userSearch() {
             // Update data after every key press
@@ -61,6 +61,7 @@ require_once("_logincheck.php");
 
                     } else {
                         tr[i].style.display = "none";
+                        $(tr[i]).removeClass("tertiarySelect");
                     }
                 }
             });

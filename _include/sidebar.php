@@ -50,7 +50,7 @@ if ($auth == "admin" || $auth == "owner") {
     </li>
     <script>
         $(document).ready(function() {
-            $("#user").click(function(str) {
+            $("#user, .user-button").click(function(str) {
                 // If content is already filled then remove it
                 if (str == "") {
                     $("ajaxContent").html = "";
@@ -67,7 +67,7 @@ if ($auth == "admin" || $auth == "owner") {
                 };
             })
 
-            $("#course").click(function(str) {
+            $("#course, .course-button").click(function(str) {
                 // If content is already filled then remove it
                 if (str == "") {
                     $("ajaxContent").html = "";
@@ -84,7 +84,7 @@ if ($auth == "admin" || $auth == "owner") {
                 };
             })
 
-            $("#insert").click(function(str) {
+            $("#insert, .remove-button").click(function(str) {
                 // If content is already filled then remove it
                 if (str == "") {
                     $("ajaxContent").html = "";
@@ -101,7 +101,7 @@ if ($auth == "admin" || $auth == "owner") {
                 };
             });
 
-            $("#enrolCourse").click(function(str) {
+            $("#enrolCourse, .enrol-button").click(function(str) {
                 // If content is already filled then remove it
                 if (str == "") {
                     $("ajaxContent").html = "";

@@ -12,7 +12,7 @@
 [data-theme="dark"] {
     --primary: #2A2C2C;
     --secondary: #474747;
-    --secondaryBorder:#474747;
+    --secondaryBorder: #474747;
     --tertiary: #2A2C2C;
     --text-icon-colour: white;
     --body: #373737;
@@ -38,7 +38,7 @@
 
 .sidebar,
 .navbar,
-body {
+body,.card {
     transition: 1s;
 }
 
@@ -60,7 +60,7 @@ body {
 }
 
 .secondaryBorder {
-   border: var(--secondaryBorder) 1px solid !important;
+    border: var(--secondaryBorder) 1px solid !important;
 }
 
 .secondary:hover {
@@ -89,8 +89,9 @@ body {
 .textOuter a {
     color: black;
 }
+
 .textOuter a:hover {
-    color:black;
+    color: black;
     background-color: white;
 }
 
@@ -130,6 +131,7 @@ a:hover,
 .fa-bars {
     color: var(--secondary) !important;
 }
+
 /* Actual theme button styles */
 .theme {
     place-self: center;
@@ -166,6 +168,7 @@ i,
 a {
     font-size: 1.2em;
 }
+
 .hide {
     display: none !important;
 }
@@ -181,13 +184,18 @@ a {
     background-color: black !important;
 }
 
-.alert-success{
-    background-color:#1cc88a!important;
-    color:white;
-    border-color:#1cc88a!important;
+.alert-success {
+    background-color: #1cc88a !important;
+    color: white;
+    border-color: #1cc88a !important;
 }
-.alert-danger{
-    background-color:#e74a3b!important;
-    color:white;
-    border-color:#e74a3b!important;
+
+.alert-danger {
+    background-color: #e74a3b !important;
+    color: white;
+    border-color: #e74a3b !important;
+}
+
+.card {
+    border: 1px;
 }

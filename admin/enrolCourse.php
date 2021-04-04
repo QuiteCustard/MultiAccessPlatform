@@ -1,5 +1,6 @@
  <?php
-    include_once("_logincheck.php");
+    // Check to ensure only admin or user accounts can access this page
+    require_once("_logincheck.php");
     if ($auth == "admin" || $auth == "owner" || $auth == "user") {
 ?>
  <div class='row'>
@@ -24,75 +25,81 @@
          <tbody class="courseEnrolTable"></tbody>
      </table>
  </div>
- <script type="text/javascript">
-     function getEnrolCourseData() {
-         const getEnrolCourse = "getEnrolCourse";
-         $.ajax({
-             url: 'cases.php',
-             type: 'GET',
-             data: {
-                 case: getEnrolCourse
-             }
+ <div class="response"></div>
+ <script>
+     $(document).ready(function() {
+         const responseDiv = $(".response");
 
-         }).done(function(response) {
-             $('.courseEnrolTable').html(response);
-         });
-     }
-     getEnrolCourseData();
-     // User search
-     function courseSearch() {
-         // Update data after every key press
-         $('#search').on('keyup', function() {
-             const input = $("#search");
-             const filter = input.val().toUpperCase();
-             const table = $(".courseEnrolTable");
-             const tr = table.find("tr");
-             for (i = 0; i < tr.length; i++) {
-                 // Find all tds
-                 tds = $(tr[i]).find("td");
-                 // Set found to false so I can update styles later if results are found/not
-                 var found = false;
-                 // Set all tds to be searchable
-                 for (j = 0; j < tds.length; j++) {
-                     td = tds[j];
-                     if (td) {
-                         if (td.innerText.toUpperCase().indexOf(filter) > -1) {
-                             found = true;
-                             break;
-                         }
-                     }
-                 }
-                 // Styles
-                 if (found) {
-                     tr[i].style.display = "";
-                 } else {
-                     tr[i].style.display = "none";
-                 }
-             }
-         });
-     };
-     courseSearch();
-     //Enrol
-     $('body').off('click', '.enrol').on('click', '.enrol', function(e) {
-         const enrolButton = $(e.target);
-         const enrolOnCourse = "enrolOnCourse";
-         var enrolid = $(this).data('id');
-         // Log course being created
-         console.log('ENROLING on course');
-         var c = confirm("Are you sure you want to enrol on this course?");
-         if (c == true) {
-             // AJAX Request
+         function getEnrolCourseData() {
+             const getEnrolCourse = "getEnrolCourse";
              $.ajax({
                  url: 'cases.php',
-                 type: 'POST',
+                 type: 'GET',
                  data: {
-                     id: enrolid,
-                     case: enrolOnCourse
+                     case: getEnrolCourse
                  }
+
              }).done(function(response) {
-                 console.log(response);
+                 $('.courseEnrolTable').html(response);
              });
          }
+         intervalTiming = setInterval(getEnrolCourseData(), 60000);
+         // User search
+         function courseSearch() {
+             // Update data after every key press
+             $('#search').on('keyup', function() {
+                 const input = $("#search");
+                 const filter = input.val().toUpperCase();
+                 const table = $(".courseEnrolTable");
+                 const tr = table.find("tr");
+                 for (i = 0; i < tr.length; i++) {
+                     // Find all tds
+                     tds = $(tr[i]).find("td");
+                     // Set found to false so I can update styles later if results are found/not
+                     var found = false;
+                     // Set all tds to be searchable
+                     for (j = 0; j < tds.length; j++) {
+                         td = tds[j];
+                         if (td) {
+                             if (td.innerText.toUpperCase().indexOf(filter) > -1) {
+                                 found = true;
+                                 break;
+                             }
+                         }
+                     }
+                     // Styles
+                     if (found) {
+                         tr[i].style.display = "";
+                     } else {
+                         tr[i].style.display = "none";
+                     }
+                 }
+             });
+         };
+         courseSearch();
+         //Enrol
+         $('body').off('click', '.enrol').on('click', '.enrol', function(e) {
+             const enrolButton = $(e.target);
+             clearInterval(intervalTiming);
+             const enrolOnCourse = "enrolOnCourse";
+             var enrolid = $(this).data('id');
+             // Log course being created
+             var c = confirm("Are you sure you want to enrol on this course?");
+             if (c == true) {
+                 // AJAX Request
+                 $.ajax({
+                     url: 'cases.php',
+                     type: 'POST',
+                     data: {
+                         id: enrolid,
+                         case: enrolOnCourse
+                     }
+                 }).done(function(response) {
+                     responseDiv.html(response);
+                     intervalTiming = setInterval(getEnrolCourseData(), 60000);
+                 });
+             }
+         });
      });
 
  </script>
