@@ -78,14 +78,21 @@ if (isset($_GET['case']))
             $query = "SELECT * FROM `t_courses`;";
             $result = mysqli_query($db_connect, $query);
             if (mysqli_num_rows($result) > 0) {
-                // output data of each row
-                while($row = mysqli_fetch_assoc($result)) {
-                    echo "<tr>";
-                    echo "<td class='idResult'>".$row['CID']."</td>";
-                    echo "<td class='titleResult'>".$row['Title']."</td>";
-                    echo "<td><button data-id='".$row['CID']."'class='btn bg-success text-white enrol'>Enrol</button></td>";
-                    echo"</tr>";
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $data[$row["Title"]][$row['CID']]["title"] = $row['Title'];
+                    $data[$row["Title"]][$row['CID']]["Max_attendees"] = $row['Max_attendees'];
                 }
+                foreach ($data as $courseKey => $courses) {
+                        echo "<tr>";
+                        echo "<td>{$CourseKey}</td>";
+                        echo "<td>{$courses['title']}</td>";
+                        echo "<td>" .count($courses) . " out of ";
+                        echo "{$courses['Max_attendees']}" . " places booked</td>";
+                        echo "<td>{$courses['']}</td>";
+                        echo "<td><button data-id='".$row['CID']."'class='btn bg-success text-white enrol'>Enrol</button></td>";
+                        echo "</tr>";
+                }
+
             }
             else {
                 echo "0 results";
@@ -352,19 +359,41 @@ if (isset($_GET['case']))
                 if (isset($_POST['id'])){
                     $id = $_POST['id'];
                     if (isset($id)){
-                        // Function to insert a new record to enrolment table
-                        function enrolmentTable($db_connect, $id){
+                        $sql = "SELECT `Title`, `Max_attendees` FROM `t_courses` WHERE `CID` = '$id';";
+                        $result = mysqli_query($db_connect, $sql);
+                         while($row = mysqli_fetch_assoc($result)){
+                             $title = $row["Title"];
+                             $attendees = $row["Max_attendees"];
+                         }
+                         // Check to see if course is full
+                        function counter($db_connect, $title){
+                            $sql = "SELECT COUNT(`Currentcourse`) as num FROM `t_users` WHERE `Currentcourse` = '$title';";
+                            $result = mysqli_query($db_connect, $sql);
+                             while($row = mysqli_fetch_assoc($result)){
+                                 $count = $row["num"];
+                             }
+                                return $count;
+                        }
+                        counter($db_connect, $title);
+                        $countNum = counter($db_connect, $title);
+                        if ($countNum >= $attendees)
+                        {
+                            echo "Course is full. You cannot enrol on this.";
+                        }else{
+                            // Function to insert a new record to enrolment table
+                            function enrolmentTable($db_connect, $id){
                                 $sql = "INSERT INTO `t_enrolment` (`EID`,`UID`, `CID`) VALUES (`EID`, '" . $_SESSION['userid']  ."', '$id');";
                                 mysqli_query($db_connect, $sql);
+                            }
+                            enrolmentTable($db_connect, $id);
+                            // Function to change current course to one just clicked
+                            function userCourse($db_connect, $id){
+                                $sql = "UPDATE `t_users` SET `Currentcourse` = (SELECT `Title` FROM `t_courses` WHERE `CID` = '$id') WHERE `UID` = '" . $_SESSION['userid'] . "';";
+                                mysqli_query($db_connect, $sql);
+                            }
+                            userCourse($db_connect, $id);
+                            echo "Records updated successfully";
                         }
-                        enrolmentTable($db_connect, $id);
-                        // Function to change current course to one just clicked
-                        function userCourse($db_connect, $id){
-                            $sql = "UPDATE `t_users` SET `Currentcourse` = (SELECT `Title` FROM `t_courses` WHERE `CID` = '$id') WHERE `UID` = '" . $_SESSION['userid'] . "';";
-                            mysqli_query($db_connect, $sql);
-                        }
-                        userCourse($db_connect, $id);
-                        echo "Records updated successfully";
                     }
                     else{
                         echo "no ID set!";
