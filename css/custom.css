@@ -61,7 +61,13 @@
 .tertiary {
     background: var(--tertiary) !important;
 }
-
+.tertiarySelect {
+    background: var(--tertiary) !important;
+    color: white;
+}
+.tertiarySelect:hover {
+    color:white!important;
+}
 .icon-top {
     color: white;
 }
@@ -148,3 +154,5 @@ a {
     font-size: 1rem !important;
     border-radius: 10rem;
 }
+
+.blackout{background-color:black!important;}

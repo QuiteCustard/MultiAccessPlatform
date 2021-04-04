@@ -134,7 +134,7 @@ if (isset($_GET['case']))
                         echo "<td>{$user['fname']}</td>";
                         echo "<td>{$user['lname']}</td>";
                         echo "<td>{$user['job']}</td>";
-                        echo "<td><button data-id='{$uid}'class='btn bg-danger text-white remove'>Remove from course</button></td>";
+                        echo "<td><button data-id='{$uid}'class='btn bg-danger blackout text-white remove'>Remove from course</button></td>";
                         echo "</tr>";
                     }
                     echo "</table>";
