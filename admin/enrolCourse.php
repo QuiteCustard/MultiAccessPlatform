@@ -1,5 +1,5 @@
  <?php
-    include_once("_loginCheck.php");
+    include_once("_logincheck.php");
     if ($auth == "admin" || $auth == "owner" || $auth == "user") {
 ?>
  <div class='row'>
