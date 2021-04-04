@@ -212,20 +212,20 @@ if (isset($_GET['case']))
                         $query = "SELECT DISTINCT `Access` FROM `t_users`;";
                         $run = mysqli_query($db_connect, $query);
                         if (mysqli_num_rows($run) > 0) {
-                            // Get Course current value
-                            $access = $_POST["accessVal"];
-                            $course_options ="";
+                            // Get access current value
+                            $accessVal = $_POST["accessVal"];
+                            $access_options ="";
                             while ($result = mysqli_fetch_assoc($run)){
-                                //Display course titles as options
-                                $title = $result["Access"];
-                                $course_options .= "<option value='$title'";
-                                if ($title == $access) {
-                                    $course_options .= "selected='selected'";
+                                //Display access levels as options
+                                $access = $result["Access"];
+                                $access_options .= "<option value='$access'";
+                                if ($access == $accessVal) {
+                                    $access_options .= "selected='selected'";
                                 }
-                                $course_options .= ">$title</option>";
+                                $access_options .= ">$access</option>";
                             }
-                            $selectCourse = '<select class="form-control form-control-user primary selectors" id="course" name="course_option">' .$course_options.'</select>';
-                            echo $selectCourse;
+                            $selectAccess = '<select class="form-control form-control-user primary selectors" id="access" name="access_option">' .$access_options.'</select>';
+                            echo $selectAccess;
                         }
                     }
                     else {
@@ -233,6 +233,32 @@ if (isset($_GET['case']))
                     }
                 }
                 accessValF($db_connect, $auth);
+                break;
+                case "courseSelector":
+                function courseValF($db_connect){
+                    $query = "SELECT DISTINCT `Title` FROM `t_courses`;";
+                        $run = mysqli_query($db_connect, $query);
+                        if (mysqli_num_rows($run) > 0) {
+                            // Get Course current value
+                            $course = $_POST["courseVal"];
+                            $course_options ="";
+                            while ($result = mysqli_fetch_assoc($run)){
+                                //Display course titles as options
+                                $title = $result["Title"];
+                                $course_options .= "<option value='$title'";
+                                if ($title == $course) {
+                                    $course_options .= "selected='selected'";
+                                }
+                                $course_options .= ">$title</option>";
+                            }
+                            $selectCourse = '<select class="form-control form-control-user primary selectors" id="course" name="course_option">' .$course_options.'</select>';
+                            echo $selectCourse;
+                        }
+                    else {
+                        die("You do not have permission for this page");
+                    }
+                }
+                courseValF($db_connect);
                 break;
             case "saveUser":
                 //Set id to correct UID
