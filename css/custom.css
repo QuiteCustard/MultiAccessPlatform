@@ -35,7 +35,7 @@
     --body: white;
 
 }
-
+.sidebar,.navbar,body{transition: 1s;}
 .body {
     background: var(--body) !important;
 
