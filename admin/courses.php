@@ -38,9 +38,11 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner") {
         <tbody class="courseTable"></tbody>
     </table>
 </div>
+<div class="response"></div>
 <!-- Jquery Ajax to get user data and display in <tbody>-->
 <script type="text/javascript">
     $(document).ready(function() {
+        const responseDiv = $(".response");
         function getData() {
             const getCourseData = "getCourseData";
             $.ajax({
@@ -97,7 +99,6 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner") {
             // Delete id
             var deleteid = $(this).data('id');
             const deleteCase = "deleteCourse";
-            console.log('DELETE', deleteid);
             // Check to confirm correct record
             var c = confirm("Are you sure you want delete this course?");
             if (c == true) {
@@ -110,12 +111,10 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner") {
                         case: deleteCase
                     }
                 }).done(function(response) {
+                    // Paste response from php into div
+                    responseDiv.html(response);
                     getData();
                 });
-
-            } else {
-                //Do nothing
-                console.log("course", deleteid, "not deleted");
             }
         });
         // Edit
@@ -128,7 +127,6 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner") {
             var editid = $(this).data('id').toString();
             // Set delete button to variable
             const deleteButton = $(`.delete[data-id=${editid}]`);
-            console.log('EDITING', editid);
             // Title
             // Find correct table data column
             const titleFieldChange = editButton.closest('tr').find('.titleResult');
@@ -193,7 +191,6 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner") {
             var duration = $('.durationResult').find('input').val();
             var description = $('.descriptionResult').find('input').val();
             var attendees = $('.attendeesResult').find('input').val();
-            console.log('SAVING', saveid);
             // AJAX Request
             // Check to confirm correct record
             var c = confirm("Are you sure you want to save the inputted details for this course?");
@@ -211,6 +208,8 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner") {
                         case: saveCase
                     }
                 }).done(function(response) {
+                    // Paste response from php into div
+                    responseDiv.html(response);
                     //Restart timer
                     intervalTiming = setInterval(getData(), 60000);
                     // Paste new values back into table so you don't need to refresh
@@ -250,11 +249,7 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner") {
                     cancelButton.removeClass('bg-primary cancel');
                     cancelButton.addClass('bg-danger');
                 });
-            } else {
-                //Do nothing
-                console.log("course", saveid, "not edited");
             }
-
         });
 
         //Cancel

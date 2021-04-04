@@ -35,7 +35,13 @@
     --body: white;
 
 }
-.sidebar,.navbar,body{transition: 1s;}
+
+.sidebar,
+.navbar,
+body {
+    transition: 1s;
+}
+
 .body {
     background: var(--body) !important;
 
@@ -61,17 +67,30 @@
 .tertiary {
     background: var(--tertiary) !important;
 }
+
 .tertiarySelect {
     background: var(--tertiary) !important;
     color: white;
 }
+
 .tertiarySelect:hover {
-    color:white!important;
+    color: white !important;
 }
+
 .icon-top {
     color: white;
 }
 
+/* Login form text colour (forgot password etc) */
+.textOuter a {
+    color: black;
+}
+.textOuter a:hover {
+    color:black;
+    background-color: white;
+}
+
+/* Default a colours */
 .dropdown-item,
 a,
 fas {
@@ -99,12 +118,15 @@ a:hover,
     color: white;
 }
 
-.collapse-header, .collapse-item {
-    color: var(--text-icon-color)!important;
+.collapse-header,
+.collapse-item {
+    color: var(--text-icon-color) !important;
 }
 
-.fa-bars {color: var(--secondary) !important;}
-
+.fa-bars {
+    color: var(--secondary) !important;
+}
+/* Actual theme button styles */
 .theme {
     place-self: center;
     margin-bottom: 10px;
@@ -140,19 +162,17 @@ i,
 a {
     font-size: 1.2em;
 }
-
-.badge {
-    background-color: var(--secondary);
-    font-size: 0.9em;
+.hide {
+    display: none !important;
 }
 
-.hide{display:none!important;}
-
-.selectors{
-    padding:0!important;
-    padding-left:0.5vw!important;
+.selectors {
+    padding: 0 !important;
+    padding-left: 0.5vw !important;
     font-size: 1rem !important;
     border-radius: 10rem;
 }
 
-.blackout{background-color:black!important;}
+.blackout {
+    background-color: black !important;
+}

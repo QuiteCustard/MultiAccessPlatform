@@ -1,5 +1,5 @@
 <?php 
-include_once("_logincheck.php");
+require_once("_logincheck.php");
 // Check to ensure only logged in accounts can access this page
 if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
   ?>
@@ -12,15 +12,13 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
         <p class="text-center">You can search by all rows</p>
     </div>
 </div>
-
-<!-- Table headers-->
+<!-- Table for users -->
 <div class='table-responsive'>
     <table class='table table-hover' id="tTable">
         <thead>
             <tr>
                 <th scope='col'>UID</th>
                 <th scope='col'>Email</th>
-                <!--<th scope='col'>Password</th>-->
                 <th scope='col'>Fname</th>
                 <th scope='col'>Lname</th>
                 <th scope='col'>Job title</th>
@@ -29,6 +27,7 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
                 <th scope='col'>Time</th>
                 <th scope='col' id='editHeader'>Edit</th>
                 <?php
+    // Prevent user from seeing delete header of table
    if ($auth == "admin" || $auth == "owner"){
 ?>
                 <th scope='col' id='deleteHeader'>Delete</th>
@@ -37,13 +36,16 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
      ?>
             </tr>
         </thead>
-        <!-- Table body that gets populated by GetUser.php -->
+        <!-- Table body that gets populated by getUser.php -->
         <tbody class="userTable"></tbody>
     </table>
 </div>
+<div class="response"></div>
 <!-- Jquery Ajax to get user data and display in <tbody>-->
 <script type="text/javascript">
     $(document).ready(function() {
+        const responseDiv = $(".response");
+
         function getData() {
             const getUserData = "getUserData";
             $.ajax({
@@ -100,7 +102,6 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
                 alert("You cannot delete this account!");
             } else {
                 const deleteCase = "deleteUser";
-                console.log('DELETE', deleteid);
                 // Check to confirm correct record
                 var c = confirm("Are you sure you want delete this user?");
                 if (c == true) {
@@ -111,20 +112,16 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
                         data: {
                             id: deleteid,
                             case: deleteCase
-                        },
-                        success: function(data) {
-                            console.log(data);
                         }
                     }).done(function(response) {
+                        // Paste response from php into div
+                        responseDiv.html(response);
+                        // Refresh data
                         getData();
                     });
-                } else {
-                    //Do nothing
-                    console.log("user", deleteid, "not deleted");
                 }
             }
         });
-
         //Edit
         $('body').off('click', '.edit').on('click', '.edit', function(e) {
             // Stop timer to allow for editing
@@ -133,13 +130,13 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
             const editButton = $(e.target);
             var editid = $(this).data('id').toString();
             // First line of defence against editing
+            // Don't allow editing of owner if the session var does not equal the user being edited
             const authchecker = <?php echo json_encode($_SESSION['userid']) ?>;
             if (editid == 1 && authchecker != 1) {
                 alert("You cannot edit this account.");
             } else {
                 // Set delete button to variable
                 const deleteButton = $(`.delete[data-id=${editid}]`);
-                console.log('EDITING', editid);
                 // Email
                 // Find correct table data column
                 const emailFieldChange = editButton.closest('tr').find('.emailResult');
@@ -168,8 +165,9 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
                 const jobCurrValue = jobFieldChange.text();
                 // Set result as input with data inside
                 jobFieldChange.html(`<input class="form-control form-control-user primary" value="${jobCurrValue}" />`);
-                // Access level
+                // Access level -- This can only be edited by the owner account
                 if (editid != 1) {
+                    // Find correct table data column
                     const accessFieldChange = editButton.closest('tr').find('.accessResult');
                     // Set variable to value of td column
                     const accessCurrValue = accessFieldChange.text();
@@ -186,7 +184,6 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
                         accessFieldChange.html(response);
                     });
                 }
-                // Find correct table data column
                 // Class change to be able to run save & cancel functions
                 // Turn edit button into save button
                 editButton.html('Save');
@@ -200,7 +197,7 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
                 deleteButton.addClass('bg-primary');
             }
         });
-
+        // Append "selected" to the correct option if it is selected
         $(document).on("change", "select", function() {
             $("option[value=" + this.value + "]", this)
                 .attr("selected", true).siblings()
@@ -211,8 +208,6 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
             // Set save button to variable
             const saveButton = $(e.target);
             var saveid = $(this).data('id').toString();
-            //
-            var cid = $('.courseResult').find(":selected").data('cid');
             const saveCase = "saveUser";
             // Set cancel button to variable
             const cancelButton = $(`.cancel[data-id=${saveid}]`);
@@ -221,11 +216,8 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
             var lname = $('.lNameResult').find('input').val();
             var job = $('.jobResult').find('input').val();
             var access = $('.accessResult').find('select').val();
-            var course = $('.courseResult').find('select').val();
             // Check to confirm correct record
             var c = confirm("Are you sure you want to save the inputted details for this user?");
-            console.log('SAVING', saveid);
-
             if (c == true) {
                 // AJAX Request
                 $.ajax({
@@ -238,17 +230,16 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
                         lname: lname,
                         job: job,
                         access: access,
-                        course: course,
-                        case: saveCase,
-                        cid: cid
+                        case: saveCase
                     }
                 }).done(function(response) {
+                    // Paste response from php into div
+                    response.html(response);
                     // Restart timer
                     intervalTiming = setInterval(getData(), 60000);
                     // Paste new values back into table so you don't need to refresh
                     // Email
                     const emailField = saveButton.closest('tr').find('.emailResult');
-                    // const emailValue = emailField.html();
                     emailField.html(email);
                     // Fname
                     const fNameField = saveButton.closest('tr').find('.fNameResult');
@@ -262,9 +253,6 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
                     // Access
                     const accessField = saveButton.closest('tr').find('.accessResult');
                     accessField.html(access);
-                    // Course
-                    const courseField = saveButton.closest('tr').find('.courseResult');
-                    courseField.html(course);
                     // Turn save button into edit button
                     saveButton.html('Edit');
                     saveButton.addClass('edit');
@@ -276,11 +264,7 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
                     cancelButton.removeClass('bg-primary cancel');
                     cancelButton.addClass('bg-danger');
                 });
-            } else {
-                //Do nothing
-                console.log("user", saveid, "not edited");
             }
-
         });
         //Cancel
         $('body').off('click', '.cancel').on('click', '.cancel', function(e) {

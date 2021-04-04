@@ -1,6 +1,6 @@
 <?php
 require_once ("connect.php");
-include_once("_logincheck.php");
+require_once("_logincheck.php");
 if (isset($_GET['case']))
 {
     $case = $_GET['case'];
@@ -166,10 +166,10 @@ if (isset($_GET['case']))
                             // Delete record
                             $query = "DELETE FROM `t_users` WHERE `t_users`.`UID`=" . $id;
                             mysqli_query($db_connect, $query);
-                            echo "Record successfully deleted";
+                            echo "<div class='alert alert-success alert-dismissible fade show' role='alert'><strong>User deleted!</strong> The performed action was successful!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
                             exit;
                         }else{
-                            echo "Record unsuccessfully deleted";
+                            echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>User not deleted!</strong> The performed action was unsuccessful!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
                             exit;
                         }
                    }
@@ -189,10 +189,10 @@ if (isset($_GET['case']))
                             // Delete record
                             $query = "DELETE FROM `t_courses` WHERE `t_courses`.`CID`=" . $id;
                             mysqli_query($db_connect, $query);
-                            echo "Record successfully deleted";
+                            echo "<div class='alert alert-success alert-dismissible fade show' role='alert'><strong>Course deleted!</strong> The performed action was successful!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
                             exit;
                         }else{
-                            echo "Record unsuccessfully deleted";
+                            echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Course not deleted!</strong> The performed action was unsuccessful!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
                             exit;
                         }
                     }
@@ -276,35 +276,16 @@ if (isset($_GET['case']))
                         $lname = $_POST['lname'];
                         $job = $_POST['job'];
                         $access = $_POST['access'];
-                        $course = $_POST['course'];
-                        $cid = $_POST['cid'];
                         if ($totalrows > 0){
                             // edit record
-                            $sqlQuery = "UPDATE `t_users` SET `Fname` = '$fname', `Lname` = '$lname', `Jobtitle` = '$job', `Email` = '$email', `Access` = '$access', `Currentcourse` = '$course' WHERE `t_users`.`UID` = '$id';";
+                            $sqlQuery = "UPDATE `t_users` SET `Fname` = '$fname', `Lname` = '$lname', `Jobtitle` = '$job', `Email` = '$email', `Access` = '$access' WHERE `t_users`.`UID` = '$id';";
                             mysqli_query($db_connect, $sqlQuery);
-                            // Function to insert a new record to enrolment table
-                            function updateEnrolmentTable($db_connect, $id, $cid, $course){
-                                $checker = mysqli_query($db_connect,"SELECT * FROM `t_enrolment` WHERE `t_enrolment`.`UID`=$id;");
-                                $rowChecker = mysqli_num_rows($checker);
-                                if ($rowChecker > 0){
-                                    if ($course == "None"){
-                                        $sql = "DELETE FROM `t_enrolment` WHERE `t_enrolment`.`UID` = '$id';";
-                                        mysqli_query($db_connect, $sql);
-                                    }else{
-                                        $sql ="UPDATE `t_enrolment` SET `UID` = `UID`, `CID` = '$cid' WHERE `t_enrolment`.`UID` = $id;";
-                                        mysqli_query($db_connect, $sql);
-                                        }
-                                }
-                                else{
-                                    $sql = "INSERT INTO `t_enrolment`(`EID`, `UID`, `CID`) VALUES('". rand(). "', '$id', '$cid');";
-                                    mysqli_query($db_connect,$sql);
-                                }
+                            echo "<div class='alert alert-success alert-dismissible fade show' role='alert'><strong>New details saved!</strong> The performed action was successful!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+                            exit;
+                        }else{
+                            echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Details not saved!</strong> The performed action was unsuccessful!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+                            exit;
                             }
-                                updateEnrolmentTable($db_connect, $id, $cid, $course);
-                                echo "Record updated successfully";
-                            }else{
-                                echo "Update failed, no records found.";
-                                }
                         }
                 }
                 break;
@@ -326,66 +307,50 @@ if (isset($_GET['case']))
                             // edit record
                             $sqlQuery = "UPDATE `t_courses` SET `Title` = '$title', `Date` = '$date', `Duration` = '$duration', `Description` = '$description', `Max_Attendees` = '$attendees' WHERE `CID` = $id;";
                             mysqli_query($db_connect, $sqlQuery);
-                            echo "Record updated successfully";
+                            echo "<div class='alert alert-success alert-dismissible fade show' role='alert'><strong>Course details updated!</strong> The performed action was successful!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+                            exit;
                         }else{
-                            echo "Update failed, no records found.";
+                            echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Course details not updated!</strong> The performed action was unsuccessful!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+                            exit;
                         }
                     }
                 }else{
-                    echo "Failed to update record: No ID!";
+                    die("Failed to update record: No ID!");
                 }
                 break;
             case "insertUser":
-                if (isset($_POST['email'])){
-                    $email = mysqli_real_escape_string($db_connect, $_POST['email']);
-                    if ($email == ""){
-                        die("your email is empty somehow");
-                    }
-                    else{
-                        if (isset($email)){
-                            $id = rand();
-                            $password = $_POST['password'];
-                            $fname = $_POST['fname'];
-                            $lname = $_POST['lname'];
-                            $job = $_POST['job'];
-                            $access = $_POST['access'];
-                            $course = $_POST['course'];
-                            $cid = $_POST['newUserCid'];
-                            // Insert new record
-                            $sqlQuery = "INSERT INTO `t_users` (`UID`, `Fname`, `Lname`, `Jobtitle`, `Email`, `Password`, `Access`, `Currentcourse`, `Attempts`, `Timestamp`, `Serial`) VALUES ('$id', '$fname', '$lname', '$job', '$email', '$password', '$access', '$course', '0', current_timestamp(), NULL);";
-                            mysqli_query($db_connect, $sqlQuery);
-                            echo "Record INSERTED successfully";
-                            // Function to insert a new record to enrolment table
-                            function insertEnrolmentTable($db_connect, $id, $cid){
-                                $sql = "INSERT INTO t_enrolment (UID, CID) VALUES ($id, $cid);";
-                                mysqli_query($db_connect, $sql);
-                            }
-                            insertEnrolmentTable($db_connect, $id, $cid);
-                        }
-                    }
+                $data = array();
+                parse_str($_POST['data'], $data);
+                $email = $data['email'];
+                if (isset($email)){
+                    $id = rand();
+                    $fname = $data['fname'];
+                    $lname = $data['lname'];
+                    $access = $data['access'];
+                    $job = $data['job'];
+                    $password = $data['password'];
+                    $sql = "INSERT INTO `t_users` (`UID`, `Fname`, `Lname`, `Jobtitle`, `Email`, `Password`, `Access`, `Currentcourse`, `Attempts`, `Timestamp`, `Serial`) VALUES ('$id', '$fname', '$lname', '$job', '$email', '$password', '$access', 'None', '0', current_timestamp(), NULL);";
+                    mysqli_query($db_connect, $sql);
+                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'><strong>New user added!</strong> The performed action was successful!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
                 }else{
-                    echo "Failed to update record: No ID!";
+                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>User not added. Check that all values are inputted!</strong> The performed action was unsuccessful!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
                 }
                 break;
             case "insertCourse":
-                if (isset($_POST['title']))
-                {
-                    $title = mysqli_real_escape_string($db_connect, $_POST['title']);
-                    if (isset($title)){
-                        // Check record exists
-                        $id = rand();
-                        $duration = $_POST['duration'];
-                        $description = $_POST['description'];
-                        $date = $_POST['date'];
-                        $attendees = $_POST['attendees'];
-                        echo $date;
-                        // Insert new record
-                        $sqlQuery = "INSERT INTO `t_courses` (`CID`, `Title`, `Date`, `Duration`, `Description`, `Timestamp`, `Max_attendees`) VALUES ('$id', '$title', '$date', '$duration', '$description', current_timestamp(), '$attendees');";
-                        mysqli_query($db_connect, $sqlQuery);
-                        echo "Record updated successfully";
-                    }
+                $data = array();
+                parse_str($_POST['data'], $data);
+                $title = $data['title'];
+                if (isset($title)){
+                    $id = rand();
+                    $date = $data['date'];
+                    $duration = $data['duration'];
+                    $description = $data['description'];
+                    $attendee = $data['attendees'];
+                    $sql = "INSERT INTO `t_courses` (`CID`, `Title`, `Date`, `description`, `Duration`, `Max_attendees`) VALUES ('$id', '$title', '$date', '$description', '$duration', '$attendee');";
+                    mysqli_query($db_connect, $sql);
+                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'><strong>New course added!</strong> The performed action was successful!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
                 }else{
-                    echo "Failed to update record: No ID!";
+                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Course not added. Check that all values are inputted!</strong> The performed action was unsuccessful!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
                 }
                 break;
             case "enrolOnCourse":
@@ -449,9 +414,11 @@ if (isset($_GET['case']))
                             mysqli_query($db_connect, $sql);
                         }
                         removeEnrolment($db_connect, $id);
-                        echo "Records updated successfully";
-                    }else{
-                        die("No ID set!");
+                        echo "<div class='alert alert-success alert-dismissible fade show' role='alert'><strong>User removed!</strong> The performed action was successful!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+                        exit;
+                        }else{
+                            echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>User not removed!</strong> The performed action was unsuccessful!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+                            exit;
                     }
                 }
                 break;

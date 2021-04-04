@@ -1,18 +1,13 @@
 <!-- Admin Log in-->
-
 <!DOCTYPE html>
 <html lang="en">
-
-<?php include_once("_include/head.php")?>
+<?php include_once ("_include/head.php") ?>
 
 <body class="bg-gradient-primary">
     <div class="container">
-
         <!-- Outer Row -->
         <div class="row justify-content-center">
-
             <div class="col-xl-10 col-lg-12 col-md-9">
-
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
@@ -32,28 +27,11 @@
                                             <input type="password" class="form-control form-control-user" name="Password" id="inputPassword" placeholder="Password" required>
                                         </div>
                                         <?php
-                                            if(isset($_GET["e"])){
-                                                 include_once("admin/logging.php");
-
-
-                                                if($_GET["e"]=="1")
-                                                {
-                                                    echo "<h3> No username or password entered </h3>";
-                                                }
-                                                else if ($_GET["e"]=="2")
-                                                {
-                                                    echo "<h3> Wrong information </h3>";
-                                                }
-                                                else if ($_GET["e"]=="3")
-                                                {
-                                                    echo "<h3>Trying to enter page you don't have permission for / Insecure </h3>";
-                                                }
-                                                else if ($_GET["e"]=="4")
-                                                {
-                                                    echo "Logged out";
-                                                }
-                                            }
-                                            ?>
+// Get errors
+if (isset($_GET["e"])){
+    include_once ("admin/logging.php");
+}
+?>
                                         <button class="btn btn-primary btn-user btn-block" action="submit " type="submit">Sign in</button>
                                         <script>
                                             grecaptcha.ready(function() {
@@ -68,11 +46,13 @@
                                         </script>
                                         <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                                     </form>
-                                    <div class="text-center">
-                                        <a class="small" href="forgotPassword.php">Forgot Password?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
+                                    <div class="textOuter">
+                                        <div class="text-center">
+                                            <a class="small" href="forgotPassword.php">Forgot Password?</a>
+                                        </div>
+                                        <div class="text-center">
+                                            <a class="small" href="register.html">Create an Account!</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +62,7 @@
             </div>
         </div>
     </div>
-    <?php include_once("_include/footer.php")?>
+    <?php include_once ("_include/footer.php"); ?>
 </body>
 
 </html>

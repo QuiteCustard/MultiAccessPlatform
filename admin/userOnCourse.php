@@ -1,5 +1,6 @@
 <?php
-include_once("_logincheck.php");
+// Check to ensure only logged in accounts can access this page
+require_once("_logincheck.php");
     if ($auth == "admin" || $auth == "owner") {
 ?>
 <div class='row'>
@@ -12,83 +13,86 @@ include_once("_logincheck.php");
     </div>
 </div>
 <div class='table-responsive tUserCourse'></div>
-<script type="text/javascript">
-    function getEnrolCourseData() {
-        const getUsersOnCourse = "getUsersOnCourse";
-        $.ajax({
-            url: 'cases.php',
-            type: 'GET',
-            data: {
-                case: getUsersOnCourse
-            }
-        }).done(function(response) {
-            $('.tUserCourse').html(response);
-        });
-    }
-    getEnrolCourseData();
-    // User search
-    function userSearch() {
-        // Update data after every key press
-        $('#search').on('keyup', function() {
-            const input = $("#search");
-            const filter = input.val().toUpperCase();
-            const table = $(".removeUserBody");
-            const tr = table.find("tr");
-            for (i = 0; i < tr.length; i++) {
-                // Find all tds
-                tds = $(tr[i]).find("td");
-                // Set found to false so I can update styles later if results are found/not
-                var found = false;
-                // Set all tds to be searchable
-                for (j = 0; j < tds.length; j++) {
-                    td = tds[j];
-                    if (td) {
-                        if (td.innerText.toUpperCase().indexOf(filter) > -1) {
-                            found = true;
-                            break;
-                        }
-                    }
-                }
+<div class="response"></div>
+<script>
+    $(document).ready(function() {
+        const responseDiv = $(".response");
 
-                // Styles
-                if (found) {
-                    tr[i].style.display = "";
-                    $(tr[i]).addClass("tertiarySelect");
-
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        });
-    };
-    userSearch();
-    //Enrol
-    $('body').off('click', '.remove').on('click', '.remove', function(e) {
-        const removeButton = $(e.target);
-        const removeUserFromCourse = "removeUserFromCourse";
-        var removeid = $(this).data('id');
-        // Log course being created
-        console.log('REMOVING from course');
-        var c = confirm("Are you sure you want to remove this user from this course?");
-        if (c == true) {
-            // AJAX Request
+        function getEnrolCourseData() {
+            const getUsersOnCourse = "getUsersOnCourse";
             $.ajax({
                 url: 'cases.php',
-                type: 'POST',
+                type: 'GET',
                 data: {
-                    id: removeid,
-                    case: removeUserFromCourse
+                    case: getUsersOnCourse
                 }
             }).done(function(response) {
-                console.log(response);
-                getEnrolCourseData();
+                $('.tUserCourse').html(response);
             });
         }
+        getEnrolCourseData();
+        // User search
+        function userSearch() {
+            // Update data after every key press
+            $('#search').on('keyup', function() {
+                const input = $("#search");
+                const filter = input.val().toUpperCase();
+                const table = $(".removeUserBody");
+                const tr = table.find("tr");
+                for (i = 0; i < tr.length; i++) {
+                    // Find all tds
+                    tds = $(tr[i]).find("td");
+                    // Set found to false so I can update styles later if results are found/not
+                    var found = false;
+                    // Set all tds to be searchable
+                    for (j = 0; j < tds.length; j++) {
+                        td = tds[j];
+                        if (td) {
+                            if (td.innerText.toUpperCase().indexOf(filter) > -1) {
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+                    // Styles
+                    if (found) {
+                        tr[i].style.display = "";
+                        $(tr[i]).addClass("tertiarySelect");
+
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            });
+        };
+        userSearch();
+        // Remove user from course
+        $('body').off('click', '.remove').on('click', '.remove', function(e) {
+            const removeButton = $(e.target);
+            const removeUserFromCourse = "removeUserFromCourse";
+            var removeid = $(this).data('id');
+            // Log course being created
+            var c = confirm("Are you sure you want to remove this user from this course?");
+            if (c == true) {
+                // AJAX Request
+                $.ajax({
+                    url: 'cases.php',
+                    type: 'POST',
+                    data: {
+                        id: removeid,
+                        case: removeUserFromCourse
+                    }
+                }).done(function(response) {
+                    responseDiv.html(response);
+                    getEnrolCourseData();
+                });
+            }
+        });
     });
 
 </script>
 <?php
-    }else{
+}   else{
         header("Location:../index.php");
         echo "Please enter admin credentials";
         die("access denied");

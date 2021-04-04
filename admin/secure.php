@@ -2,13 +2,11 @@
 session_start();
 // Allow login if auth is correct
 if(isset($_SESSION["auth"])){
-if( $_SESSION["auth"] == "admin" || $_SESSION["auth"] == "user" || $_SESSION["auth"] == "owner"){
+    if( $_SESSION["auth"] == "admin" || $_SESSION["auth"] == "user" || $_SESSION["auth"] == "owner"){
     echo "Secure login";
-}
-}
-else
-{
+    }
+}else{
  die("Invalid login");   
 }
-?>
-<a href="logout.php"></a>
+
+echo "<a href='logout.php'></a">;

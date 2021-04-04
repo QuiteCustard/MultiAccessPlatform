@@ -1,8 +1,7 @@
 <?php
-//Connect
+//Connect to db
 include_once("admin/connect.php");
-
-
+// Make sure token is recieved
 if(isset($_GET["token"]))
 {
     // If form has been completed
@@ -10,7 +9,6 @@ if(isset($_GET["token"]))
     {
         $myToken = $_GET["token"];
         $password = hash("SHA256",$_POST["newPassword"]);
-
         $sqlQuery = "UPDATE `t_users` set `Password` = '$password', `Serial` = NULL WHERE `t_users`.`Serial` = '$myToken';";
         $runQuery = mysqli_query($db_connect,$sqlQuery);
         die("Password has been updated");
@@ -24,9 +22,9 @@ if(isset($_GET["token"]))
 
     if ($count === 1)
     {
+        // Only include styles if user has token
         include_once("/include/head.php");
 ?>
-
 <form method="POST" action="#">
     <input name="newPassword" type="password" required placeholder="new password">
     <button class="btn btn-primary" type="submit">Update Password</button>
@@ -36,5 +34,7 @@ if(isset($_GET["token"]))
 }
 else
 {
-    echo "Token does not exist";
+    //If token does not exist, send user back to log in
+    header("location:index.php");
+    die("Token did not exist");
 }
