@@ -79,20 +79,19 @@ if (isset($_GET['case']))
             $result = mysqli_query($db_connect, $query);
             if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
-                    $data[$row["Title"]][$row['CID']]["title"] = $row['Title'];
-                    $data[$row["Title"]][$row['CID']]["Max_attendees"] = $row['Max_attendees'];
+                    $data[$row["CID"]][$row['CID']]["title"] = $row['Title'];
+                    $data[$row["CID"]][$row['CID']]["max_attendees"] = $row['Max_attendees'];
                 }
                 foreach ($data as $courseKey => $courses) {
                         echo "<tr>";
                         echo "<td>{$CourseKey}</td>";
                         echo "<td>{$courses['title']}</td>";
                         echo "<td>" .count($courses) . " out of ";
-                        echo "{$courses['Max_attendees']}" . " places booked</td>";
-                        echo "<td>{$courses['']}</td>";
-                        echo "<td><button data-id='".$row['CID']."'class='btn bg-success text-white enrol'>Enrol</button></td>";
+                        echo "{$courses['max_attendees']}" . " places booked</td>";
+                       // echo "<td>{$courses['']}</td>";
+                        echo "<td><button data-id='{$courseKey} 'class='btn bg-success text-white enrol'>Enrol</button></td>";
                         echo "</tr>";
                 }
-
             }
             else {
                 echo "0 results";
