@@ -29,30 +29,60 @@
 ?>
                                 <div class="col-sm">
                                     <div class="card body" style="width: 18rem;">
-                                        <img class="img-profile rounded-circle" src="/img/undraw_profile.svg">
+                                        <img class="img-profile rounded-circle" src="/img/undraw_profile_2.svg">
                                         <div class="card-body text-center">
-                                            <h5 class="card-title">Edit users</h5>
-                                            <p class="card-text">Edit user records here!</p>
+                                            <h5 class="card-title">View and edit users</h5>
+                                            <p class="card-text">View and edit user records here!</p>
                                             <a href="#" class="btn btn-success align-center user-button">Go!</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="card body" style="width: 18rem;">
-                                        <img class="img-profile rounded-circle" src="/img/undraw_profile.svg">
+                                        <img class="img-profile" src="/img/book-pack.svg">
                                         <div class="card-body text-center">
-                                            <h5 class="card-title">Edit Courses</h5>
-                                            <p class="card-text">Edit course records here!</p>
+                                            <h5 class="card-title">View and edit Courses</h5>
+                                            <p class="card-text">View and course records here!</p>
                                             <a href="#" class="btn btn-success align-center course-button">Go!</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="card body" style="width: 18rem;">
-                                        <img class="img-profile rounded-circle" src="/img/undraw_profile.svg">
+                                        <img class="img-profile" src="/img/matt-icons_contact-add.svg">
                                         <div class="card-body text-center">
-                                            <h5 class="card-title">View and Remove users from courses</h5>
-                                            <p class="card-text">View records here!</p>
+                                            <h5 class="card-title">Add new users</h5>
+                                            <p class="card-text">Add new users here!</p>
+                                            <a href="#" class="btn btn-success align-center insert-button">Go!</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="card body" style="width: 18rem;">
+                                        <img class="img-profile" src="/img/jean_victor_balin_book.svg">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">Add new courses</h5>
+                                            <p class="card-text">Add new courses here!</p>
+                                            <a href="#" class="btn btn-success align-center insert-button">Go!</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="card body" style="width: 18rem;">
+                                        <img class="img-profile" src="/img/antiFlash-icons-book.svg">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">Enrol on courses</h5>
+                                            <p class="card-text">Enrol on courses here!</p>
+                                            <a href="#" class="btn btn-success align-center enrol-button">Go!</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="card body" style="width: 18rem;">
+                                        <img class="img-profile rounded-circle" src="/img/undraw_profile_3.svg">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">Remove users from courses</h5>
+                                            <p class="card-text">Remove users from courses here!</p>
                                             <a href="#" class="btn btn-success align-center remove-button">Go!</a>
                                         </div>
                                     </div>
@@ -63,7 +93,7 @@
 ?>
                                 <div class="col-sm">
                                     <div class="card body" style="width: 18rem;">
-                                        <img class="img-profile rounded-circle" src="/img/undraw_profile.svg">
+                                        <img class="img-profile rounded-circle" src="/img/book-pack.svg">
                                         <div class="card-body text-center">
                                             <h5 class="card-title">View your details</h5>
                                             <p class="card-text">View details here!</p>
@@ -73,7 +103,7 @@
                                 </div>
                                 <div class="col-sm">
                                     <div class="card body" style="width: 18rem;">
-                                        <img class="img-profile rounded-circle" src="/img/undraw_profile.svg">
+                                        <img class="img-profile rounded-circle" src="/img/matt-icons_contact-add.svg">
                                         <div class="card-body text-center">
                                             <h5 class="card-title">View Courses</h5>
                                             <p class="card-text">View all courses here!</p>
@@ -83,7 +113,7 @@
                                 </div>
                                 <div class="col-sm">
                                     <div class="card body" style="width: 18rem;">
-                                        <img class="img-profile rounded-circle" src="/img/undraw_profile.svg">
+                                        <img class="img-profile rounded-circle" src="/img/undraw_profile_3.svg">
                                         <div class="card-body text-center">
                                             <h5 class="card-title">Enrol on courses</h5>
                                             <p class="card-text">Enrol on courses here!</p>
