@@ -33,8 +33,8 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="body py-2 collapse-inner rounded secondaryBorder">
                 <h6 class="collapse-header">Tools:</h6>
-                <a class="collapse-item" id="user" href="#">View Users</a>
-                <a class="collapse-item" href="#" id="course">View All Courses</a>
+                <a class="collapse-item" id="user" data-toggle="user" href="#">View Users</a>
+                <a class="collapse-item" href="#" data-toggle="course" id="course">View All Courses</a>
                 <a class="collapse-item" href="#" id="enrolCourse">Enrol on Course</a>
 <?php
 if ($auth == "admin" || $auth == "owner") {
@@ -142,27 +142,29 @@ if ($auth == "admin" || $auth == "owner") {
     <hr class="sidebar-divider d-none d-md-block">
 
     <!-- buttons to select theme -->
-    <div class=" container-fluid justify-content-centre theme">
+    <div class="container-fluid justify-content-centre theme">
         <button id="light" value="light"></button>
         <button id="dark" value="dark"></button>
         <button id="purple" value="purple"></button>
         <button id="forest" value="forest"></button>
 
     </div>
-    <!-- Select theme depending on which button clicked -->
     <script>
-        const themeBtns = document.querySelectorAll('.theme > button')
+        // Select page depending on last one user was on
+        const links = $(".collapse-item");
+        if (links.data("toggle") == "user"){
+            localStorage.setItem('page');
+        }
 
+        // Select theme depending on which button clicked
+        const themeBtns = document.querySelectorAll('.theme > button')
         themeBtns.forEach((btn) => {
             btn.addEventListener('click', handleThemeUpdate)
         })
-
-
         function handleThemeUpdate(e) {
             document.documentElement.setAttribute('data-theme', e.target.value);
             localStorage.setItem('theme', e.target.value);
         }
-
     </script>
 
 

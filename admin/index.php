@@ -10,7 +10,7 @@
 <body id="page-top" class="body">
     <!-- Page Wrapper -->
     <div id="wrapper">
-<?php
+        <?php
     include_once("../_include/sidebar.php");
     include_once("../_include/navbar.php");
 ?>
@@ -87,7 +87,7 @@
                                         </div>
                                     </div>
                                 </div>
-<?php
+                                <?php
         }else if($auth == "user")
         {
 ?>
@@ -121,7 +121,7 @@
                                         </div>
                                     </div>
                                 </div>
-<?php
+                                <?php
         }
 ?>
                             </div>
@@ -154,10 +154,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-    <div class="cd-cover-layer"></div>
-    <div class="cd-loading-bar"></div>
-    <script>
-    </script>
     <?php
         include_once("../_include/footer.php");
         ?>

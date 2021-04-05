@@ -199,22 +199,3 @@ a {
 .card {
     border: 1px;
 }
-
-body::after, body::before {
-  /* these are the 2 half blocks which cover the content once the animation is triggered */
-  height: 50vh;
-  width: 100%;
-  position: fixed;
-  left: 0;
-}
-body::before {
-  top: 0;
-  transform: translateY(-100%);
-}
-body::after {
-  bottom: 0;
-  transform: translateY(100%);
-}
-body.page-is-changing::after, body.page-is-changing::before {
-  transform: translateY(0);
-}
