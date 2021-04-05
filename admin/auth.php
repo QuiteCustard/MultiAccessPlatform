@@ -5,16 +5,16 @@ if( !isset($_POST["Email"]) or !isset($_POST["Password"]))
 //if no values are passed from login form, return to previous page (login)
 header("Location: ../index.php?e=1");
 }
-include_once("connect.php");
+require_once("connect.php");
 //if values are found, proceed:
-$email = mysqli_escape_string($db_connect, $_POST["Email"]);
+$email = mysqli_escape_string($mysqli, $_POST["Email"]);
 //convert plain password to a hash
-$password = mysqli_escape_string($db_connect,hash("SHA256",$_POST["Password"]));
+$password = mysqli_escape_string($mysqli,hash("SHA256",$_POST["Password"]));
 
-$currentAttempts = mysqli_fetch_assoc(mysqli_query($db_connect, "SELECT `Email`,`Attempts` FROM `t_users` WHERE `Email` = '$email'"))['Attempts'];
+$currentAttempts = mysqli_fetch_assoc(mysqli_query($mysqli, "SELECT `Email`,`Attempts` FROM `t_users` WHERE `Email` = '$email'"))['Attempts'];
 
 $newAttempts = $currentAttempts + 1;
-mysqli_query($db_connect, "UPDATE `t_users` SET `Attempts` = '$newAttempts' WHERE `email` = '$email';");
+mysqli_query($mysqli, "UPDATE `t_users` SET `Attempts` = '$newAttempts' WHERE `email` = '$email';");
 
 if($currentAttempts > 4)
 {
@@ -42,7 +42,7 @@ if($currentAttempts > 4)
 //run query
 $query = "SELECT * FROM `t_users` WHERE `Email` = '$email' AND `Password` = '$password'";
 
-$run = mysqli_query($db_connect,$query);
+$run = mysqli_query($mysqli,$query);
 //count matches.  Will return 1 if match found.
 $result =  mysqli_fetch_assoc($run);
 $count = mysqli_num_rows($run);
@@ -58,7 +58,7 @@ if ($count === 1){
     // Reset login attempts
     $resetAttempts = 0;
     $sqlQuery="UPDATE `t_users` SET `Attempts` = '0' WHERE `t_users`.`UID` = '$userid';";
-    mysqli_query($db_connect,$sqlQuery);
+    mysqli_query($mysqli,$sqlQuery);
     echo "Record updated successfully";
     // Remember name
     $_SESSION["name"] = $result["Fname"] . " " . $result["Lname"];

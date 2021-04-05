@@ -8,7 +8,7 @@ $email = $_POST["email"];
 if(isset($email)){
         // edit record
     $query = "UPDATE `t_users` SET `Serial` = '$token' WHERE `t_users`.`Email` = '$email';";
-    $run = mysqli_query($db_connect,$query);
+    $run = mysqli_query($mysqli,$query);
     echo "Query has been run";
     //SEND THE EMAIL
     $to = "$email";

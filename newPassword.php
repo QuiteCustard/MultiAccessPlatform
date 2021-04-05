@@ -10,14 +10,14 @@ if(isset($_GET["token"]))
         $myToken = $_GET["token"];
         $password = hash("SHA256",$_POST["newPassword"]);
         $sqlQuery = "UPDATE `t_users` set `Password` = '$password', `Serial` = NULL WHERE `t_users`.`Serial` = '$myToken';";
-        $runQuery = mysqli_query($db_connect,$sqlQuery);
+        $runQuery = mysqli_query($mysqli,$sqlQuery);
         die("Password has been updated");
     }
 
     // If form hasn't been completed
     $token = $_GET["token"];
     $query = "SELECT * FROM `t_users` WHERE `Serial` = '$token';";
-    $run = mysqli_query($db_connect,$query);
+    $run = mysqli_query($mysqli,$query);
     $count = mysqli_num_rows($run);
 
     if ($count === 1)

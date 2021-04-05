@@ -97,29 +97,24 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
         // Delete function
         $('body').off('click', '.delete').on('click', '.delete', function() {
             var deleteid = $(this).data('id');
-            // First line of defence against deleting
-            if (deleteid == 1) {
-                alert("You cannot delete this account!");
-            } else {
-                const deleteCase = "deleteUser";
-                // Check to confirm correct record
-                var c = confirm("Are you sure you want delete this user?");
-                if (c == true) {
-                    // AJAX Request
-                    $.ajax({
-                        url: 'cases.php',
-                        type: 'POST',
-                        data: {
-                            id: deleteid,
-                            case: deleteCase
-                        }
-                    }).done(function(response) {
-                        // Paste response from php into div
-                        responseDiv.html(response);
-                        // Refresh data
-                        getData();
-                    });
-                }
+            // Check to confirm correct record
+            const deleteCase = "deleteUser";
+            var c = confirm("Are you sure you want delete this user?");
+            if (c == true) {
+                // AJAX Request
+                $.ajax({
+                    url: 'cases.php',
+                    type: 'POST',
+                    data: {
+                        id: deleteid,
+                        case: deleteCase
+                    }
+                }).done(function(response) {
+                    // Paste response from php into div
+                    responseDiv.html(response);
+                    // Refresh data
+                    getData();
+                });
             }
         });
         //Edit
@@ -129,73 +124,64 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
             // Set edit button to variable
             const editButton = $(e.target);
             var editid = $(this).data('id').toString();
-            // First line of defence against editing
-            // Don't allow editing of owner if the session var does not equal the user being edited
-            const authchecker = <?php echo json_encode($_SESSION['userid']) ?>;
-            if (editid == 1 && authchecker != 1) {
-                alert("You cannot edit this account.");
-            } else {
-                // Set delete button to variable
-                const deleteButton = $(`.delete[data-id=${editid}]`);
-                // Email
-                // Find correct table data column
-                const emailFieldChange = editButton.closest('tr').find('.emailResult');
-                // Set variable to value of td column
-                const emailCurValue = emailFieldChange.text();
-                // Set result as input with data inside
-                emailFieldChange.html(`<input class="form-control form-control-user primary" value="${emailCurValue}" />`);
-                // Fname
-                // Find correct table data column
-                const fNameFieldChange = editButton.closest('tr').find('.fNameResult');
-                // Set variable to value of td column
-                const fNameCurValue = fNameFieldChange.text();
-                // Set result as input with data inside
-                fNameFieldChange.html(`<input class="form-control form-control-user primary" value="${fNameCurValue}" />`);
-                // Lname
-                // Find correct table data column
-                const lNameFieldChange = editButton.closest('tr').find('.lNameResult');
-                // Set variable to value of td column
-                const lNameCurrValue = lNameFieldChange.text();
-                // Set result as input with data inside
-                lNameFieldChange.html(`<input class="form-control form-control-user primary" value="${lNameCurrValue}" />`);
-                // Job
-                // Find correct table data column
-                const jobFieldChange = editButton.closest('tr').find('.jobResult');
-                // Set variable to value of td column
-                const jobCurrValue = jobFieldChange.text();
-                // Set result as input with data inside
-                jobFieldChange.html(`<input class="form-control form-control-user primary" value="${jobCurrValue}" />`);
-                // Access level -- This can only be edited by the owner account
-                if (editid != 1) {
-                    // Find correct table data column
-                    const accessFieldChange = editButton.closest('tr').find('.accessResult');
-                    // Set variable to value of td column
-                    const accessCurrValue = accessFieldChange.text();
-                    const accessSelector = "accessSelector";
-                    $.ajax({
-                        url: 'cases.php',
-                        type: 'POST',
-                        data: {
-                            case: accessSelector,
-                            accessVal: accessCurrValue
-                        }
-                    }).done(function(response) {
-                        // Set result as input with data inside
-                        accessFieldChange.html(response);
-                    });
+            // Set delete button to variable
+            const deleteButton = $(`.delete[data-id=${editid}]`);
+            // Email
+            // Find correct table data column
+            const emailFieldChange = editButton.closest('tr').find('.emailResult');
+            // Set variable to value of td column
+            const emailCurValue = emailFieldChange.text();
+            // Set result as input with data inside
+            emailFieldChange.html(`<input class="form-control form-control-user primary" value="${emailCurValue}" />`);
+            // Fname
+            // Find correct table data column
+            const fNameFieldChange = editButton.closest('tr').find('.fNameResult');
+            // Set variable to value of td column
+            const fNameCurValue = fNameFieldChange.text();
+            // Set result as input with data inside
+            fNameFieldChange.html(`<input class="form-control form-control-user primary" value="${fNameCurValue}" />`);
+            // Lname
+            // Find correct table data column
+            const lNameFieldChange = editButton.closest('tr').find('.lNameResult');
+            // Set variable to value of td column
+            const lNameCurrValue = lNameFieldChange.text();
+            // Set result as input with data inside
+            lNameFieldChange.html(`<input class="form-control form-control-user primary" value="${lNameCurrValue}" />`);
+            // Job
+            // Find correct table data column
+            const jobFieldChange = editButton.closest('tr').find('.jobResult');
+            // Set variable to value of td column
+            const jobCurrValue = jobFieldChange.text();
+            // Set result as input with data inside
+            jobFieldChange.html(`<input class="form-control form-control-user primary" value="${jobCurrValue}" />`);
+            // Access level -- This can only be edited by the owner account
+            // Find correct table data column
+            const accessFieldChange = editButton.closest('tr').find('.accessResult');
+            // Set variable to value of td column
+            const accessCurrValue = accessFieldChange.text();
+            const accessSelector = "accessSelector";
+            $.ajax({
+                url: 'cases.php',
+                type: 'POST',
+                data: {
+                    case: accessSelector,
+                    accessVal: accessCurrValue
                 }
-                // Class change to be able to run save & cancel functions
-                // Turn edit button into save button
-                editButton.html('Save');
-                editButton.addClass('save');
-                editButton.removeClass('bg-warning edit');
-                editButton.addClass('bg-success');
-                // Turn delete button into cancel button
-                deleteButton.html('Cancel');
-                deleteButton.addClass('cancel');
-                deleteButton.removeClass('bg-danger delete');
-                deleteButton.addClass('bg-primary');
-            }
+            }).done(function(response) {
+                // Set result as input with data inside
+                accessFieldChange.html(response);
+            });
+            // Class change to be able to run save & cancel functions
+            // Turn edit button into save button
+            editButton.html('Save');
+            editButton.addClass('save');
+            editButton.removeClass('bg-warning edit');
+            editButton.addClass('bg-success');
+            // Turn delete button into cancel button
+            deleteButton.html('Cancel');
+            deleteButton.addClass('cancel');
+            deleteButton.removeClass('bg-danger delete');
+            deleteButton.addClass('bg-primary');
         });
         // Append "selected" to the correct option if it is selected
         $(document).on("change", "select", function() {
@@ -232,7 +218,7 @@ if ($auth == "admin" || $auth == "user" || $auth == "owner" ){
                     }
                 }).done(function(response) {
                     // Paste response from php into div
-                    response.html(response);
+                    responseDiv.html(response);
                     // Restart timer
                     intervalTiming = setInterval(getData(), 60000);
                     // Paste new values back into table so you don't need to refresh

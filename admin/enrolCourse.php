@@ -18,6 +18,7 @@
              <tr>
                  <th scope='col'>CID</th>
                  <th scope='col'>Title</th>
+                 <th scope='col'>Date</th>
                  <th scope='col'>Max people allowed on course</th>
                  <th scope='col' id='enrol'>Enrol</th>
              </tr>
