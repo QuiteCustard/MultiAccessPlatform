@@ -84,7 +84,7 @@ if ($auth == "admin" || $auth == "owner") {
                 };
             })
 
-            $("#insert, .remove-button").click(function(str) {
+            $("#insert, .insert-button").click(function(str) {
                 // If content is already filled then remove it
                 if (str == "") {
                     $("ajaxContent").html = "";
@@ -118,7 +118,7 @@ if ($auth == "admin" || $auth == "owner") {
                 };
             });
 
-            $("#userOnCourse").click(function(str) {
+            $("#userOnCourse, .remove-button").click(function(str) {
                 // If content is already filled then remove it
                 if (str == "") {
                     $("ajaxContent").html = "";

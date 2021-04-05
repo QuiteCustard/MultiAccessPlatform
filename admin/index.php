@@ -10,9 +10,9 @@
 <body id="page-top" class="body">
     <!-- Page Wrapper -->
     <div id="wrapper">
-        <?php
-            include_once("../_include/sidebar.php");
-            include_once("../_include/navbar.php");
+<?php
+    include_once("../_include/sidebar.php");
+    include_once("../_include/navbar.php");
 ?>
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -124,6 +124,10 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+    <div class="cd-cover-layer"></div>
+    <div class="cd-loading-bar"></div>
+    <script>
+    </script>
     <?php
         include_once("../_include/footer.php");
         ?>
