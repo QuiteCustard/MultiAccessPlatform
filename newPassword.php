@@ -12,6 +12,7 @@ if(isset($_GET["token"]))
         $password = hash("SHA256",$_POST["newPassword"]);
         $sqlQuery = "UPDATE `t_users` set `Password` = '$password', `Serial` = NULL WHERE `t_users`.`Serial` = '$myToken';";
         $runQuery = mysqli_query($mysqli,$sqlQuery);
+        header("Location: index.php");
         die("Password has been updated");
     }
 
@@ -51,11 +52,7 @@ if(isset($_GET["token"]))
                                         </div>
                                         <button class="btn btn-primary btn-user btn-block secondary secondaryBorder" required placeholder="new password" action="submit" type="submit">Update Password</button>
                                     </form>
-
-
-
-
-                                    <?php
+<?php
     }
 }
 else
