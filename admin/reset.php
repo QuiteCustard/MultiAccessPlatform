@@ -12,7 +12,7 @@ if(isset($email)){
     echo "Query has been run";
     //SEND THE EMAIL
     $to = "$email";
-    $subject = "ATW Password Reset";
+    $subject = "Password Reset";
     $headers = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
     $headers .= "Cc: WS269058@weston.ac.uk"."\r\n";
@@ -26,7 +26,7 @@ if(isset($email)){
                         <h1>Reset your password </h1>
                         <p>Reset your password by clicking the following link: <a href='https://ws269058wad.remote.ac/newPassword.php?token=$token'>Reset Here</a></p>
                         <p>Thanks</p>
-                        <p><i>ATW Team</i></p>
+                        <p><i>Enrolment team</i></p>
                     </body>
                 </html>";
     mail($to, $subject,$message,$headers);

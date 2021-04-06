@@ -1,6 +1,7 @@
 <?php
 //Connect to db
 require_once("admin/connect.php");
+include_once("/include/head.php");
 // Make sure token is recieved
 if(isset($_GET["token"]))
 {
@@ -22,8 +23,7 @@ if(isset($_GET["token"]))
 
     if ($count === 1)
     {
-        // Only include styles if user has token
-        include_once("/include/head.php");
+        // Only include if user has token
 ?>
 <body class="tertiary">
     <div class="container">
@@ -45,11 +45,8 @@ if(isset($_GET["token"]))
                                             <input name="newPassword" type="password" required placeholder="new password">
                                         </div>
                                         <button class="btn btn-primary btn-user btn-block secondary secondaryBorder" required placeholder="new password" action="submit" type="submit">Update Password</button>
+                                    </form>
 
-<form method="POST" action="#">
-    <input name="newPassword" type="password" required placeholder="new password">
-    <button class="btn btn-primary" type="submit"></button>
-</form>
 <?php
     }
 }
