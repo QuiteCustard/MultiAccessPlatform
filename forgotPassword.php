@@ -2,7 +2,7 @@
 <html lang="en">
 <?php include_once("_include/head.php")?>
 <body class="tertiary">
-    <div class="container">
+<div class="container">
 
         <!-- Outer Row -->
         <div class="row justify-content-center">

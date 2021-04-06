@@ -352,7 +352,7 @@ if (isset($_GET['case']))
                 $lname = $data['lname'];
                 $access = $data['access'];
                 $job = $data['job'];
-                $password = $data['password'];
+                $password = hash("SHA256",$data['password']);
                 if (isset($email)){
                     // Prepared statement
                     $stmt = $mysqli->prepare("INSERT INTO `t_users` (`UID`, `Fname`, `Lname`, `Jobtitle`, `Email`, `Password`, `Access`) VALUES (?, ?, ?, ?, ?, ?, ?)");
