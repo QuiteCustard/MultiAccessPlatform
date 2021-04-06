@@ -1,7 +1,7 @@
 <?php
 //Connect to db
 require_once("admin/connect.php");
-include_once("/include/head.php");
+include_once("/_include/head.php");
 // Make sure token is recieved
 if(isset($_GET["token"]))
 {
