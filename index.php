@@ -3,7 +3,7 @@
 <html lang="en">
 <?php include_once ("_include/head.php") ?>
 
-<body class="bg-gradient-primary">
+<body class="tertiary">
     <div class="container">
         <!-- Outer Row -->
         <div class="row justify-content-center">
@@ -13,18 +13,17 @@
                         <!-- Nested Row within Card Body -->
                         <div class="row">
                             <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 primary text">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <h1 class="h4 mb-4 textOuter">Welcome Back!</h1>
                                     </div>
-
                                     <form class="user" id="loginForm" method="post" action="admin/auth.php">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user" name="Email" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." required>
+                                            <input type="email" class="form-control form-control-user primary" name="Email" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." required>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" name="Password" id="inputPassword" placeholder="Password" required>
+                                            <input type="password" class="form-control form-control-user primary" name="Password" id="inputPassword" placeholder="Password" required>
                                         </div>
                                         <?php
 // Get errors
@@ -32,7 +31,7 @@ if (isset($_GET["e"])){
     include_once ("admin/logging.php");
 }
 ?>
-                                        <button class="btn btn-primary btn-user btn-block" action="submit " type="submit">Sign in</button>
+                                        <button class="btn btn-primary btn-user btn-block secondary secondaryBorder" action="submit" type="submit">Sign in</button>
                                         <script>
                                             grecaptcha.ready(function() {
                                                 grecaptcha.execute('6Le7Tm4aAAAAAOnwdIrgEorh4MnL8giOGo2N-z8-', {

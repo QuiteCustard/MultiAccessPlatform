@@ -1,12 +1,7 @@
-<!-- Admin Log in-->
-
 <!DOCTYPE html>
 <html lang="en">
-
 <?php include_once("_include/head.php")?>
-
-<body class="bg-gradient-primary">
-
+<body class="tertiary">
     <div class="container">
 
         <!-- Outer Row -->
@@ -18,20 +13,20 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6 primary">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-2">Forgot Your Password?</h1>
+                                        <h1 class="h4 textOuter mb-2">Forgot Your Password?</h1>
                                         <p class="mb-4">We get it, stuff happens. Just enter your email address below
                                             and we'll send you a link to reset your password!</p>
                                     </div>
                                     <form class="user">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user emailInput" aria-describedby="emailHelp" placeholder="Enter Email Address..." required>
+                                            <input type="email" class="form-control form-control-user emailInput primary" aria-describedby="emailHelp" placeholder="Enter Email Address..." required>
                                         </div>
 
-                                        <a href="#" class="btn btn-primary btn-user btn-block reset">
+                                        <a href="#" class="btn secondary secondaryBorder btn-user btn-block reset">
                                             Reset Password
                                         </a>
                                     </form>
@@ -42,7 +37,6 @@
                                             $('body').on('click', '.reset', function(e) {
                                                 // email reset
                                                 var resetEmail = $('.emailInput').val();
-                                                console.log('RESET', resetEmail);
                                                 // AJAX Request
                                                 $.ajax({
                                                     url: 'admin/reset.php',
@@ -58,10 +52,10 @@
 
                                     </script>
                                     <hr>
-                                    <div class="text-center">
+                                    <div class="text-center textOuter">
                                         <a class="small" href="register.html">Create an Account!</a>
                                     </div>
-                                    <div class="text-center">
+                                    <div class="text-center textOuter">
                                         <a class="small" href="index.php">Already have an account? Login!</a>
                                     </div>
                                 </div>

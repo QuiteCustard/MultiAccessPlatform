@@ -5,6 +5,8 @@
     --tertiary: #f67280;
     --text-icon-colour: black;
     --body: white;
+    --text-outer: black;
+    --bg-image: url(https://source.unsplash.com/random/600x800);
 
 }
 
@@ -16,6 +18,7 @@
     --tertiary: #2A2C2C;
     --text-icon-colour: white;
     --body: #373737;
+    --text-outer: grey;
 }
 
 /* Candy coloured*/
@@ -25,6 +28,7 @@
     --tertiary: #BA68C8;
     --text--icon-colour: black;
     --body: white;
+    --text-outer: black;
 }
 
 [data-theme="forest"] {
@@ -33,6 +37,7 @@
     --tertiary: #008933;
     --text-icon-colour: black;
     --body: white;
+    --text-outer: black;
 
 }
 
@@ -49,7 +54,6 @@ body,.card {
 
 .primary {
     background: var(--primary) !important;
-
 }
 
 .secondary {
@@ -86,13 +90,13 @@ body,.card {
 }
 
 /* Login form text colour (forgot password etc) */
-.textOuter a {
-    color: black;
+.textOuter a, .textOuter h4 {
+    color: var(--text-outer);
 }
 
 .textOuter a:hover {
-    color: black;
-    background-color: white;
+    color: var(--text-outer);
+    background-color: var(--primary);
 }
 
 /* Default a colours */
@@ -198,4 +202,10 @@ a {
 
 .card {
     border: 1px;
+}
+
+.bg-login-image {
+    background: var(--bg-image);
+    background-position: center;
+    background-size: cover;
 }

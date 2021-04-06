@@ -1,6 +1,6 @@
 <?php
 //Connect to db
-include_once("admin/connect.php");
+require_once("admin/connect.php");
 // Make sure token is recieved
 if(isset($_GET["token"]))
 {
