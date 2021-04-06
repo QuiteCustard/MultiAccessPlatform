@@ -62,7 +62,7 @@ if ($auth == "admin" || $auth == "owner") {
                         url: "users.php",
                         dataType: "html", //expect html to be returned
                         success: function(response) {
-                            ajaxContent.hide().html(response).fadeIn(3000);
+                            ajaxContent.hide().fadeOut(1).html(response).fadeIn(3000);
                         }
                     });
                 };
@@ -79,7 +79,7 @@ if ($auth == "admin" || $auth == "owner") {
                         url: "courses.php",
                         dataType: "html", //expect html to be returned
                         success: function(response) {
-                            $("#ajaxContent").hide().html(response).fadeIn(3000);
+                           ajaxContent.hide().fadeOut(1).html(response).fadeIn(3000);
                         }
                     });
                 };
@@ -96,7 +96,7 @@ if ($auth == "admin" || $auth == "owner") {
                         url: "insertUserAndCourse.php",
                         dataType: "html", //expect html to be returned
                         success: function(response) {
-                           ajaxContent.hide().html(response).fadeIn();
+                           ajaxContent.hide().fadeOut(1).html(response).fadeIn(3000);
                         }
                     });
                 };
@@ -113,7 +113,7 @@ if ($auth == "admin" || $auth == "owner") {
                         url: "enrolCourse.php",
                         dataType: "html", //expect html to be returned
                         success: function(response) {
-                            ajaxContent.html(response);
+                            ajaxContent.hide().fadeOut(1).html(response).fadeIn(3000);
                         }
                     });
                 };
@@ -130,7 +130,7 @@ if ($auth == "admin" || $auth == "owner") {
                         url: "userOnCourse.php",
                         dataType: "html", //expect html to be returned
                         success: function(response) {
-                            ajaxContent.html(response);
+                            ajaxContent.hide().fadeOut(1).html(response).fadeIn(3000);
                         }
                     });
                 };
