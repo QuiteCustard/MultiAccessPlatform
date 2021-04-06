@@ -50,10 +50,11 @@ if ($auth == "admin" || $auth == "owner") {
     </li>
     <script>
         $(document).ready(function() {
+            const ajaxContent = $("#ajaxContent");
             $("#user, .user-button").click(function(str) {
                 // If content is already filled then remove it
                 if (str == "") {
-                    $("ajaxContent").html = "";
+                    ajaxContent.html = "";
                     return;
                 } else {
                     $.ajax({ //create an ajax request to users.php
@@ -61,7 +62,7 @@ if ($auth == "admin" || $auth == "owner") {
                         url: "users.php",
                         dataType: "html", //expect html to be returned
                         success: function(response) {
-                            $("#ajaxContent").html(response);
+                            ajaxContent.hide().html(response).fadeIn(3000);
                         }
                     });
                 };
@@ -70,7 +71,7 @@ if ($auth == "admin" || $auth == "owner") {
             $("#course, .course-button").click(function(str) {
                 // If content is already filled then remove it
                 if (str == "") {
-                    $("ajaxContent").html = "";
+                    ajaxContent.html = "";
                     return;
                 } else {
                     $.ajax({ //create an ajax request to courses.php
@@ -78,7 +79,7 @@ if ($auth == "admin" || $auth == "owner") {
                         url: "courses.php",
                         dataType: "html", //expect html to be returned
                         success: function(response) {
-                            $("#ajaxContent").html(response);
+                            $("#ajaxContent").hide().html(response).fadeIn(3000);
                         }
                     });
                 };
@@ -87,7 +88,7 @@ if ($auth == "admin" || $auth == "owner") {
             $("#insert, .insert-button").click(function(str) {
                 // If content is already filled then remove it
                 if (str == "") {
-                    $("ajaxContent").html = "";
+                    ajaxContent.html = "";
                     return;
                 } else {
                     $.ajax({ //create an ajax request to courses.php
@@ -95,7 +96,7 @@ if ($auth == "admin" || $auth == "owner") {
                         url: "insertUserAndCourse.php",
                         dataType: "html", //expect html to be returned
                         success: function(response) {
-                            $("#ajaxContent").html(response);
+                           ajaxContent.hide().html(response).fadeIn();
                         }
                     });
                 };
@@ -104,7 +105,7 @@ if ($auth == "admin" || $auth == "owner") {
             $("#enrolCourse, .enrol-button").click(function(str) {
                 // If content is already filled then remove it
                 if (str == "") {
-                    $("ajaxContent").html = "";
+                    ajaxContent.html = "";
                     return;
                 } else {
                     $.ajax({ //create an ajax request to courses.php
@@ -112,7 +113,7 @@ if ($auth == "admin" || $auth == "owner") {
                         url: "enrolCourse.php",
                         dataType: "html", //expect html to be returned
                         success: function(response) {
-                            $("#ajaxContent").html(response);
+                            ajaxContent.html(response);
                         }
                     });
                 };
@@ -121,7 +122,7 @@ if ($auth == "admin" || $auth == "owner") {
             $("#userOnCourse, .remove-button").click(function(str) {
                 // If content is already filled then remove it
                 if (str == "") {
-                    $("ajaxContent").html = "";
+                    ajaxContent.html = "";
                     return;
                 } else {
                     $.ajax({ //create an ajax request to courses.php
@@ -129,7 +130,7 @@ if ($auth == "admin" || $auth == "owner") {
                         url: "userOnCourse.php",
                         dataType: "html", //expect html to be returned
                         success: function(response) {
-                            $("#ajaxContent").html(response);
+                            ajaxContent.html(response);
                         }
                     });
                 };
@@ -150,11 +151,6 @@ if ($auth == "admin" || $auth == "owner") {
 
     </div>
     <script>
-        // Select page depending on last one user was on
-        const links = $(".collapse-item");
-        if (links.data("toggle") == "user"){
-            localStorage.setItem('page');
-        }
 
         // Select theme depending on which button clicked
         const themeBtns = document.querySelectorAll('.theme > button')
