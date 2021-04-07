@@ -264,7 +264,7 @@ if (isset($_GET['case']))
                 if (isset($_POST['id'])){
                     $id = mysqli_real_escape_string($mysqli, $_POST['id']);
                     // Preventation of editing owner account
-                    if ($id == 1){
+                    if ($id == 1 &&  $_SESSION['userid'] == 1){
                         echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>You cannot edit this account!</strong> The performed action was unsuccessful!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
                     }elseif ($id > 0){
                         // Prepared statement
