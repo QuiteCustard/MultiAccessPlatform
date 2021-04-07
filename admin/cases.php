@@ -265,7 +265,7 @@ if (isset($_GET['case']))
                     $id = mysqli_real_escape_string($mysqli, $_POST['id']);
                     // Preventation of editing owner account
                     if ($id == 1){
-                        die("You cannot edit this account");
+                        echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>You cannot edit this account!</strong> The performed action was unsuccessful!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
                     }elseif ($id > 0){
                         // Prepared statement
                         $stmt = $mysqli->prepare("SELECT * FROM `t_users` WHERE UID = ?");
