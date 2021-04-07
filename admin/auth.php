@@ -68,8 +68,14 @@ if ($result->num_rows === 1) {
         $_SESSION["auth"] = $access;
         // Reset login attempts
         $resetAttempts = 0;
-        $sqlQuery="UPDATE `t_users` SET `Attempts` = '0' WHERE `t_users`.`UID` = '$userid';";
-        mysqli_query($mysqli,$sqlQuery);
+        // Prepared statement
+        $stmt = $mysqli->prepare("UPDATE `t_users` SET `Attempts` = ? WHERE `t_users`.`UID` = ?");
+        // Put parameters into query
+        $stmt->bind_param("is", $resetAttempts, $userid);
+        // Run statement
+        $stmt->execute();
+        // Close statement
+        $stmt->close();
         echo "Record updated successfully";
         // Remember name
         $_SESSION["name"] = $row["Fname"] . " " . $row["Lname"];
