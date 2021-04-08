@@ -1,13 +1,8 @@
 <?php
 // Check to ensure only logged in accounts can access this page
 require_once("_logincheck.php");
-    if ($auth == "admin" || $auth == "owner") {
+    if ($auth == "admin" || $auth == "owner" || $auth == "user") {
 ?>
-<div class='row'>
-    <div class='col-md-10'>
-        <h3>Courses</h3>
-    </div>
-</div>
 <div class='table-responsive tUserCourse'></div>
 <div class="response"></div>
 <script>

@@ -109,40 +109,66 @@ if (isset($_GET['case']))
             break;
         case "getUsersOnCourse":
             // Show users on courses
-            $result = $mysqli->query("SELECT * FROM `t_users` LEFT JOIN `t_courses` ON `t_users`.`Currentcourse` = `t_courses`.`Title` WHERE `Currentcourse` != 'None' ORDER BY `Currentcourse`");
-            $course = Null;
-            if (!$result) {
-                die(mysqli_error($mysqli));
-            }
-            while ($row = $result->fetch_assoc()){
-                $data[$row["Currentcourse"]][$row['UID']]["fname"] = $row['Fname'];
-                $data[$row["Currentcourse"]][$row['UID']]["lname"] = $row['Lname'];
-                $data[$row["Currentcourse"]][$row['UID']]["job"] = $row['Jobtitle'];
-            }
-            foreach ($data as $courseKey => $courseUsers) {
-                echo "<table class='table table-hover'>";
-                echo "<div class='row'><div class='col-md-12 d-flex'><h3>{$courseKey}</h3>";
-                echo "<p class='ml-auto counter'>" . count($courseUsers) ." People In This Course</p></div></div>";
-                echo "<thead>";
-                echo "<tr>";
-                echo "<th scope='col'>UID</th>";
-                echo "<th scope='col'>First name</th>";
-                echo "<th scope='col'>Last name</th>";
-                echo "<th scope='col'>Job</th>";
-                echo "<th scope='col' id='remove'>Remove</th>";
-                echo "</tr>";
-                echo "</thead>";
-                echo "<tbody class='removeUserBody'>";
-                foreach ($courseUsers as $uid => $user){
-                    echo "<tr>";
-                    echo "<td>{$uid}</td>";
-                    echo "<td>{$user['fname']}</td>";
-                    echo "<td>{$user['lname']}</td>";
-                    echo "<td>{$user['job']}</td>";
-                    echo "<td><button data-id='{$uid}'class='btn bg-danger blackout text-white remove'>Remove from course</button></td>";
-                    echo "</tr>";
+            if ($auth == "user"){
+                // Prepared statement
+                $stmt = $mysqli->prepare("SELECT * FROM `t_users` LEFT JOIN `t_courses` ON `t_users`.`Currentcourse` = `t_courses`.`Title` WHERE `Currentcourse` != 'None' && `UID` = ? ORDER BY `Currentcourse`");
+                // Put parameter into query
+                $stmt->bind_param("i", $_SESSION['userid']);
+                // Run the statement
+                $stmt->execute();
+                // Set result to this query
+                $result = $stmt->get_result();
+                if ($result->num_rows > 0){
+                    while ($row = $result->fetch_assoc()){
+                        $course = $row["Currentcourse"];
+                        $id = $row['UID'];
+                        echo "<div class='text-center'>";
+                        echo "<h3>Want to leave your course?</h3>";
+                        echo "<p>Click here:</p>";
+                        echo "<button data-id='$id'class='btn bg-danger blackout text-white remove'>Leave course</button></div><br>";
+                    }
+                }else{
+                    echo "<div class='text-center'>";
+                    echo "<h3>You aren't currently enrolled on a course!</h3>";
+                    echo "<a class='nav-link' href='index.php'><span>Go back to the dashboard</span></a></div>";
                 }
-                echo "</table>";
+            }else{
+                echo "<h3>Courses</h3>";
+                $result = $mysqli->query("SELECT * FROM `t_users` LEFT JOIN `t_courses` ON `t_users`.`Currentcourse` = `t_courses`.`Title` WHERE `Currentcourse` != 'None' ORDER BY `Currentcourse`");
+                 $course = Null;
+                if (!$result) {
+                    die(mysqli_error($mysqli));
+                }
+                while ($row = $result->fetch_assoc()){
+                    $data[$row["Currentcourse"]][$row['UID']]["fname"] = $row['Fname'];
+                    $data[$row["Currentcourse"]][$row['UID']]["lname"] = $row['Lname'];
+                    $data[$row["Currentcourse"]][$row['UID']]["job"] = $row['Jobtitle'];
+                }
+                foreach ($data as $courseKey => $courseUsers) {
+                    echo "<table class='table table-hover'>";
+                    echo "<div class='row'><div class='col-md-12 d-flex'><h3>{$courseKey}</h3>";
+                    echo "<p class='ml-auto counter'>" . count($courseUsers) ." People In This Course</p></div></div>";
+                    echo "<thead>";
+                    echo "<tr>";
+                    echo "<th scope='col'>UID</th>";
+                    echo "<th scope='col'>First name</th>";
+                    echo "<th scope='col'>Last name</th>";
+                    echo "<th scope='col'>Job</th>";
+                    echo "<th scope='col' id='remove'>Remove</th>";
+                    echo "</tr>";
+                    echo "</thead>";
+                    echo "<tbody class='removeUserBody'>";
+                    foreach ($courseUsers as $uid => $user){
+                        echo "<tr>";
+                        echo "<td>{$uid}</td>";
+                        echo "<td>{$user['fname']}</td>";
+                        echo "<td>{$user['lname']}</td>";
+                        echo "<td>{$user['job']}</td>";
+                        echo "<td><button data-id='{$uid}'class='btn bg-danger blackout text-white remove'>Remove from course</button></td>";
+                        echo "</tr>";
+                    }
+                    echo "</table>";
+                }
             }
             break;
         }
