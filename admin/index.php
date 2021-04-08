@@ -113,11 +113,21 @@
                                 </div>
                                 <div class="col-sm">
                                     <div class="card body" style="width: 18rem;">
-                                        <img class="img-profile rounded-circle" src="/img/undraw_profile_3.svg">
+                                        <img class="img-profile rounded-circle" src="/img/antiFlash-icons-book.svg">
                                         <div class="card-body text-center">
                                             <h5 class="card-title">Enrol on courses</h5>
                                             <p class="card-text">Enrol on courses here!</p>
                                             <a href="#" class="btn btn-success align-center enrol-button">Go!</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="card body" style="width: 18rem;">
+                                        <img class="img-profile rounded-circle" src="/img/undraw_profile_3.svg">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">Remove your booking from a course</h5>
+                                            <p class="card-text">Remove your booking from a course here!</p>
+                                            <a href="#" class="btn btn-success align-center remove-button">Go!</a>
                                         </div>
                                     </div>
                                 </div>
