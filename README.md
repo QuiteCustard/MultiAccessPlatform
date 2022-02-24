@@ -22,4 +22,4 @@ Password: User
 Username: admin@admin.com
 Password: Admin
 
-* *DB information has been changed since this repo was made public * *
+*DB information has been changed since this repo was made public*
