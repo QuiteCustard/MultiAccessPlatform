@@ -15,11 +15,11 @@ This was a project I created in my second year of university. My assignment was 
 
 
 ### User account details:
-Username: user@user.com
-Password: User
+- Username: user@user.com
+- Password: User
 
 ### Admin account details:
-Username: admin@admin.com
-Password: Admin
+- Username: admin@admin.com
+- Password: Admin
 
 *DB information has been changed since this repo was made public*
