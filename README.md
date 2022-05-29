@@ -1,4 +1,5 @@
-# MultiAccessPlatform
+# MultiAccessPlatform 
+[View the site](https://ws269058-wad.remote.ac/ "MultiAccessPlatform")
 
 This was a project I created in my second year of university. My assignment was to create a CPD and training enrolment system.
 
